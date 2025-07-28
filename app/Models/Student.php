@@ -1,0 +1,115 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Student extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'user_id',
+        'student_id',
+        'class_id',
+        'admission_date',
+        'roll_number',
+        'blood_group',
+        'medical_info',
+        'guardian_name',
+        'guardian_phone',
+        'guardian_email',
+        'guardian_address',
+        'emergency_contact',
+        'is_active',
+    ];
+
+    protected $casts = [
+        'admission_date' => 'date',
+        'is_active' => 'boolean',
+    ];
+
+    /**
+     * Relationships
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function class()
+    {
+        return $this->belongsTo(SchoolClass::class, 'class_id');
+    }
+
+    public function parents()
+    {
+        return $this->belongsToMany(ParentModel::class, 'parent_student', 'student_id', 'parent_id')
+                    ->withPivot('relationship')
+                    ->withTimestamps();
+    }
+
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class);
+    }
+
+    public function examResults()
+    {
+        return $this->hasMany(ExamResult::class);
+    }
+
+    /**
+     * Scopes
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', true);
+    }
+
+    public function scopeByClass($query, $classId)
+    {
+        return $query->where('class_id', $classId);
+    }
+
+    /**
+     * Helper methods
+     */
+    public function getFullNameAttribute()
+    {
+        return $this->user->name;
+    }
+
+    public function getAttendancePercentage($startDate = null, $endDate = null)
+    {
+        $query = $this->attendances();
+        
+        if ($startDate) {
+            $query->where('date', '>=', $startDate);
+        }
+        if ($endDate) {
+            $query->where('date', '<=', $endDate);
+        }
+
+        $totalDays = $query->count();
+        $presentDays = $query->where('status', 'present')->count();
+
+        return $totalDays > 0 ? round(($presentDays / $totalDays) * 100, 2) : 0;
+    }
+
+    public function getCurrentGradeAverage()
+    {
+        $results = $this->examResults()->with('exam')->get();
+        if ($results->isEmpty()) {
+            return null;
+        }
+
+        $totalMarks = $results->sum('marks_obtained');
+        $totalPossible = $results->sum(function ($result) {
+            return $result->exam->total_marks;
+        });
+
+        return $totalPossible > 0 ? round(($totalMarks / $totalPossible) * 100, 2) : 0;
+    }
+}
