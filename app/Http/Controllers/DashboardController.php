@@ -38,10 +38,7 @@ class DashboardController extends Controller
             case 'parent':
                 return $this->getParentDashboard($user);
             default:
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Invalid user role'
-                ], 400);
+                return redirect()->route('dashboard')->with('error', 'Invalid user role');
         }
     }
 

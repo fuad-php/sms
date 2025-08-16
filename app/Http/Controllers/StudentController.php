@@ -46,10 +46,16 @@ class StudentController extends Controller
         $perPage = $request->get('per_page', 15);
         $students = $query->paginate($perPage);
 
-        return response()->json([
-            'success' => true,
-            'data' => $students
-        ]);
+        return view('students.index', compact('students'));
+    }
+
+    /**
+     * Show the form for creating a new student
+     */
+    public function create()
+    {
+        $classes = SchoolClass::active()->get();
+        return view('students.create', compact('classes'));
     }
 
     /**
@@ -122,19 +128,11 @@ class StudentController extends Controller
 
             $student->load('user', 'class');
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Student created successfully',
-                'data' => $student
-            ], 201);
+            return redirect()->route('students.index')->with('success', 'Student created successfully');
 
         } catch (\Exception $e) {
             DB::rollback();
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to create student',
-                'error' => $e->getMessage()
-            ], 500);
+            return back()->withErrors(['error' => 'Failed to create student: ' . $e->getMessage()])->withInput();
         }
     }
 
@@ -149,39 +147,42 @@ class StudentController extends Controller
             ->find($id);
 
         if (!$student) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Student not found'
-            ], 404);
+            abort(404, 'Student not found');
         }
 
         // Access control - parents can only see their children
         if ($user->role === 'parent') {
             $parent = $user->parent;
             if (!$parent->students->contains($student)) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Access denied'
-                ], 403);
+                abort(403, 'Access denied');
             }
         }
 
         // Students can only see their own profile
         if ($user->role === 'student' && $user->student->id !== $student->id) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Access denied'
-            ], 403);
+            abort(403, 'Access denied');
         }
 
         // Add additional statistics
         $student->attendance_percentage = $student->getAttendancePercentage();
         $student->grade_average = $student->getCurrentGradeAverage();
 
-        return response()->json([
-            'success' => true,
-            'data' => $student
-        ]);
+        return view('students.show', compact('student'));
+    }
+
+    /**
+     * Show the form for editing the specified student
+     */
+    public function edit($id)
+    {
+        $student = Student::with(['user', 'class'])->find($id);
+
+        if (!$student) {
+            abort(404, 'Student not found');
+        }
+
+        $classes = SchoolClass::active()->get();
+        return view('students.edit', compact('student', 'classes'));
     }
 
     /**
@@ -248,19 +249,11 @@ class StudentController extends Controller
 
             $student->load('user', 'class');
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Student updated successfully',
-                'data' => $student
-            ]);
+            return redirect()->route('students.show', $student->id)->with('success', 'Student updated successfully');
 
         } catch (\Exception $e) {
             DB::rollback();
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to update student',
-                'error' => $e->getMessage()
-            ], 500);
+            return back()->withErrors(['error' => 'Failed to update student: ' . $e->getMessage()])->withInput();
         }
     }
 
@@ -272,10 +265,7 @@ class StudentController extends Controller
         $student = Student::find($id);
 
         if (!$student) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Student not found'
-            ], 404);
+            abort(404, 'Student not found');
         }
 
         try {
@@ -283,17 +273,10 @@ class StudentController extends Controller
             $student->update(['is_active' => false]);
             $student->user->update(['is_active' => false]);
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Student deactivated successfully'
-            ]);
+            return redirect()->route('students.index')->with('success', 'Student deactivated successfully');
 
         } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to deactivate student',
-                'error' => $e->getMessage()
-            ], 500);
+            return back()->withErrors(['error' => 'Failed to deactivate student: ' . $e->getMessage()]);
         }
     }
 
@@ -305,20 +288,14 @@ class StudentController extends Controller
         $user = auth()->user();
 
         if ($user->role !== 'student') {
-            return response()->json([
-                'success' => false,
-                'message' => 'Access denied'
-            ], 403);
+            abort(403, 'Access denied');
         }
 
         $student = $user->student->load(['class', 'attendances.subject', 'examResults.exam.subject']);
         $student->attendance_percentage = $student->getAttendancePercentage();
         $student->grade_average = $student->getCurrentGradeAverage();
 
-        return response()->json([
-            'success' => true,
-            'data' => $student
-        ]);
+        return view('students.profile', compact('student'));
     }
 
     /**
@@ -329,10 +306,7 @@ class StudentController extends Controller
         $class = SchoolClass::find($classId);
 
         if (!$class) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Class not found'
-            ], 404);
+            abort(404, 'Class not found');
         }
 
         $students = Student::with('user')
@@ -341,13 +315,7 @@ class StudentController extends Controller
             ->orderBy('roll_number')
             ->get();
 
-        return response()->json([
-            'success' => true,
-            'data' => [
-                'class' => $class,
-                'students' => $students
-            ]
-        ]);
+        return view('students.by-class', compact('class', 'students'));
     }
 
     /**
@@ -411,24 +379,11 @@ class StudentController extends Controller
 
             DB::commit();
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Bulk import completed',
-                'data' => [
-                    'created' => $createdStudents,
-                    'errors' => $errors,
-                    'total_created' => count($createdStudents),
-                    'total_errors' => count($errors)
-                ]
-            ]);
+            return redirect()->route('students.index')->with('success', 'Bulk import completed. Created: ' . count($createdStudents) . ', Errors: ' . count($errors));
 
         } catch (\Exception $e) {
             DB::rollback();
-            return response()->json([
-                'success' => false,
-                'message' => 'Bulk import failed',
-                'error' => $e->getMessage()
-            ], 500);
+            return back()->withErrors(['error' => 'Bulk import failed: ' . $e->getMessage()])->withInput();
         }
     }
 }

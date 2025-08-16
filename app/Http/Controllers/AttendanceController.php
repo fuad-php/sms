@@ -24,6 +24,11 @@ class AttendanceController extends Controller
     {
         $user = auth()->user();
 
+        // If no parameters provided, just show the form
+        if (!$request->filled('date') || !$request->filled('class_id')) {
+            return view('attendance.index');
+        }
+
         $validator = Validator::make($request->all(), [
             'date' => 'required|date',
             'class_id' => 'required|exists:classes,id',
@@ -31,11 +36,7 @@ class AttendanceController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Validation failed',
-                'errors' => $validator->errors()
-            ], 422);
+            return back()->withErrors($validator)->withInput();
         }
 
         $date = $request->date;
@@ -52,10 +53,7 @@ class AttendanceController extends Controller
                     ->exists();
                 
                 if (!$hasAccess) {
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Access denied'
-                    ], 403);
+                    abort(403, 'Access denied');
                 }
             }
         }
@@ -100,25 +98,20 @@ class AttendanceController extends Controller
         $lateCount = $attendanceRecords->where('status', 'late')->count();
         $excusedCount = $attendanceRecords->where('status', 'excused')->count();
 
-        return response()->json([
-            'success' => true,
-            'data' => [
-                'date' => $date,
-                'class' => SchoolClass::find($classId),
-                'subject' => $subjectId ? Subject::find($subjectId) : null,
-                'attendance' => $attendanceData,
-                'statistics' => [
-                    'total_students' => $totalStudents,
-                    'marked' => $markedAttendance,
-                    'not_marked' => $totalStudents - $markedAttendance,
-                    'present' => $presentCount,
-                    'absent' => $absentCount,
-                    'late' => $lateCount,
-                    'excused' => $excusedCount,
-                    'attendance_rate' => $markedAttendance > 0 ? round(($presentCount / $markedAttendance) * 100, 2) : 0,
-                ]
-            ]
-        ]);
+        $class = SchoolClass::find($classId);
+        $subject = $subjectId ? Subject::find($subjectId) : null;
+        $statistics = [
+            'total_students' => $totalStudents,
+            'marked' => $markedAttendance,
+            'not_marked' => $totalStudents - $markedAttendance,
+            'present' => $presentCount,
+            'absent' => $absentCount,
+            'late' => $lateCount,
+            'excused' => $excusedCount,
+            'attendance_rate' => $markedAttendance > 0 ? round(($presentCount / $markedAttendance) * 100, 2) : 0,
+        ];
+
+        return view('attendance.index', compact('date', 'class', 'subject', 'attendanceData', 'statistics'));
     }
 
     /**
@@ -129,10 +122,7 @@ class AttendanceController extends Controller
         $user = auth()->user();
 
         if (!in_array($user->role, ['admin', 'teacher'])) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Access denied'
-            ], 403);
+            abort(403, 'Access denied');
         }
 
         $validator = Validator::make($request->all(), [
@@ -146,11 +136,7 @@ class AttendanceController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Validation failed',
-                'errors' => $validator->errors()
-            ], 422);
+            return back()->withErrors($validator)->withInput();
         }
 
         $date = $request->date;
@@ -165,10 +151,7 @@ class AttendanceController extends Controller
                 ->exists();
             
             if (!$hasAccess) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Access denied'
-                ], 403);
+                abort(403, 'Access denied');
             }
         }
 
@@ -193,18 +176,14 @@ class AttendanceController extends Controller
                 $markedAttendance[] = $attendance->load('student.user', 'markedBy');
             }
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Attendance marked successfully',
-                'data' => $markedAttendance
-            ]);
+            return redirect()->route('attendance.index', [
+                'date' => $date,
+                'class_id' => $classId,
+                'subject_id' => $subjectId
+            ])->with('success', 'Attendance marked successfully');
 
         } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to mark attendance',
-                'error' => $e->getMessage()
-            ], 500);
+            return back()->withErrors(['error' => 'Failed to mark attendance: ' . $e->getMessage()])->withInput();
         }
     }
 
@@ -217,27 +196,18 @@ class AttendanceController extends Controller
         $student = Student::find($studentId);
 
         if (!$student) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Student not found'
-            ], 404);
+            abort(404, 'Student not found');
         }
 
         // Access control
         if ($user->role === 'student' && $user->student->id !== $student->id) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Access denied'
-            ], 403);
+            abort(403, 'Access denied');
         }
 
         if ($user->role === 'parent') {
             $parent = $user->parent;
             if (!$parent->students->contains($student)) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Access denied'
-                ], 403);
+                abort(403, 'Access denied');
             }
         }
 
@@ -248,11 +218,7 @@ class AttendanceController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Validation failed',
-                'errors' => $validator->errors()
-            ], 422);
+            return back()->withErrors($validator)->withInput();
         }
 
         $startDate = $request->start_date ?? Carbon::now()->startOfMonth();
@@ -294,27 +260,22 @@ class AttendanceController extends Controller
             ];
         });
 
-        return response()->json([
-            'success' => true,
-            'data' => [
-                'student' => $student->load('user', 'class'),
-                'period' => [
-                    'start_date' => $startDate,
-                    'end_date' => $endDate,
-                ],
-                'subject' => $subjectId ? Subject::find($subjectId) : null,
-                'attendance_records' => $attendanceRecords,
-                'statistics' => [
-                    'total_days' => $totalDays,
-                    'present_days' => $presentDays,
-                    'absent_days' => $absentDays,
-                    'late_days' => $lateDays,
-                    'excused_days' => $excusedDays,
-                    'attendance_percentage' => $attendancePercentage,
-                ],
-                'monthly_trends' => $monthlyTrends->values(),
-            ]
-        ]);
+        $summary = [
+            'present_count' => $presentDays,
+            'absent_count' => $absentDays,
+            'late_count' => $lateDays,
+            'excused_count' => $excusedDays,
+            'attendance_rate' => $attendancePercentage,
+        ];
+
+        $monthlyData = $monthlyTrends->values();
+
+        return view('attendance.student-report', compact(
+            'student',
+            'attendanceRecords',
+            'summary',
+            'monthlyData'
+        ));
     }
 
     /**
@@ -334,10 +295,7 @@ class AttendanceController extends Controller
         $class = SchoolClass::find($classId);
 
         if (!$class) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Class not found'
-            ], 404);
+            abort(404, 'Class not found');
         }
 
         $validator = Validator::make($request->all(), [
@@ -346,11 +304,7 @@ class AttendanceController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Validation failed',
-                'errors' => $validator->errors()
-            ], 422);
+            return back()->withErrors($validator)->withInput();
         }
 
         $startDate = $request->start_date ?? Carbon::now()->startOfMonth();
@@ -385,21 +339,32 @@ class AttendanceController extends Controller
         $totalStudents = $students->count();
         $classAttendancePercentage = $studentReports->avg('percentage');
 
-        return response()->json([
-            'success' => true,
-            'data' => [
-                'class' => $class,
-                'period' => [
-                    'start_date' => $startDate,
-                    'end_date' => $endDate,
-                ],
-                'student_reports' => $studentReports,
-                'class_statistics' => [
-                    'total_students' => $totalStudents,
-                    'average_attendance' => round($classAttendancePercentage, 2),
-                ],
-            ]
-        ]);
+        $totalStudents = $students->count();
+        $studentAttendance = $studentReports->map(function ($report) {
+            return [
+                'id' => $report['student']->id,
+                'user' => $report['student']->user,
+                'student_id' => $report['student']->student_id,
+                'present_count' => $report['present_days'],
+                'absent_count' => $report['absent_days'],
+                'late_count' => $report['late_days'] ?? 0,
+                'attendance_rate' => $report['percentage'],
+            ];
+        });
+
+        $summary = [
+            'total_present' => $studentReports->sum('present_days'),
+            'total_absent' => $studentReports->sum('absent_days'),
+            'average_attendance' => round($classAttendancePercentage, 2),
+            'total_days' => $studentReports->first()['total_days'] ?? 0,
+        ];
+
+        return view('attendance.class-report', compact(
+            'class',
+            'totalStudents',
+            'studentAttendance',
+            'summary'
+        ));
     }
 
     /**
@@ -410,10 +375,7 @@ class AttendanceController extends Controller
         $user = auth()->user();
 
         if (!in_array($user->role, ['admin', 'teacher'])) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Access denied'
-            ], 403);
+            abort(403, 'Access denied');
         }
 
         $today = Carbon::today();
@@ -476,14 +438,29 @@ class AttendanceController extends Controller
                 ];
             });
 
-        return response()->json([
-            'success' => true,
-            'data' => [
-                'today_stats' => $todayStats,
-                'monthly_trends' => $monthlyTrends,
-                'class_attendance' => $classAttendance,
-                'date' => $today->format('Y-m-d'),
-            ]
-        ]);
+        $statistics = [
+            'total_students' => $todayStats['total'],
+            'average_attendance' => $todayStats['percentage'],
+            'total_days' => count($monthlyTrends),
+            'absent_rate' => $todayStats['total'] > 0 ? round((($todayStats['absent'] + $todayStats['late']) / $todayStats['total']) * 100, 2) : 0,
+        ];
+
+        $classStats = $classAttendance->map(function ($class) {
+            return [
+                'name' => $class['class']->name,
+                'total_students' => $class['total_students'],
+                'average_attendance' => $class['percentage'],
+                'best_day' => 'Today',
+                'worst_day' => 'N/A',
+            ];
+        });
+
+        $dailyTrends = $monthlyTrends;
+
+        return view('attendance.statistics', compact(
+            'statistics',
+            'classStats',
+            'dailyTrends'
+        ));
     }
 }
