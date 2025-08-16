@@ -77,17 +77,80 @@
             </div>
 
             @if(isset($attendanceData) && count($attendanceData) > 0)
-                <!-- Mark Attendance Form -->
-                <div class="mb-6">
-                    <h3 class="text-lg font-medium text-gray-900 mb-4">Mark Attendance</h3>
-                    <form action="{{ route('attendance.mark') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="date" value="{{ request('date') }}">
-                        <input type="hidden" name="class_id" value="{{ request('class_id') }}">
-                        @if(request('subject_id'))
-                            <input type="hidden" name="subject_id" value="{{ request('subject_id') }}">
-                        @endif
-                        
+                @if(in_array(auth()->user()->role, ['admin', 'teacher']))
+                    <!-- Mark Attendance Form -->
+                    <div class="mb-6">
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">Mark Attendance</h3>
+                        <form action="{{ route('attendance.mark') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="date" value="{{ request('date') }}">
+                            <input type="hidden" name="class_id" value="{{ request('class_id') }}">
+                            @if(request('subject_id'))
+                                <input type="hidden" name="subject_id" value="{{ request('subject_id') }}">
+                            @endif
+                            
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Student</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Remarks</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Marked By</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bg-white divide-y divide-gray-200">
+                                        @foreach($attendanceData as $data)
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="flex items-center">
+                                                    <div class="flex-shrink-0 h-10 w-10">
+                                                        <div class="h-10 w-10 rounded-full bg-gray-300 flex items-center justify-center">
+                                                            <span class="text-sm font-medium text-gray-700">{{ substr($data['student']->user->name, 0, 2) }}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ml-4">
+                                                        <div class="text-sm font-medium text-gray-900">{{ $data['student']->user->name }}</div>
+                                                        <div class="text-sm text-gray-500">{{ $data['student']->student_id }}</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <select name="attendance[{{ $data['student']->id }}][status]" 
+                                                        class="rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                                    <option value="present" {{ $data['status'] == 'present' ? 'selected' : '' }}>Present</option>
+                                                    <option value="absent" {{ $data['status'] == 'absent' ? 'selected' : '' }}>Absent</option>
+                                                    <option value="late" {{ $data['status'] == 'late' ? 'selected' : '' }}>Late</option>
+                                                    <option value="excused" {{ $data['status'] == 'excused' ? 'selected' : '' }}>Excused</option>
+                                                </select>
+                                                <input type="hidden" name="attendance[{{ $data['student']->id }}][student_id]" value="{{ $data['student']->id }}">
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <input type="text" name="attendance[{{ $data['student']->id }}][remarks]" 
+                                                       value="{{ $data['remarks'] ?? '' }}" placeholder="Optional remarks"
+                                                       class="rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                {{ $data['marked_by'] ? $data['marked_by']->name : 'Not marked' }}
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <div class="mt-6 flex justify-end">
+                                <button type="submit" 
+                                        class="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                                    Save Attendance
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                @else
+                    <!-- View Only for Parents and Students -->
+                    <div class="mb-6">
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">Attendance Records</h3>
                         <div class="overflow-x-auto">
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-gray-50">
@@ -115,19 +178,17 @@
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <select name="attendance[{{ $data['student']->id }}][status]" 
-                                                    class="rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                                                <option value="present" {{ $data['status'] == 'present' ? 'selected' : '' }}>Present</option>
-                                                <option value="absent" {{ $data['status'] == 'absent' ? 'selected' : '' }}>Absent</option>
-                                                <option value="late" {{ $data['status'] == 'late' ? 'selected' : '' }}>Late</option>
-                                                <option value="excused" {{ $data['status'] == 'excused' ? 'selected' : '' }}>Excused</option>
-                                            </select>
-                                            <input type="hidden" name="attendance[{{ $data['student']->id }}][student_id]" value="{{ $data['student']->id }}">
+                                            <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full
+                                                @if($data['status'] == 'present') bg-green-100 text-green-800
+                                                @elseif($data['status'] == 'absent') bg-red-100 text-red-800
+                                                @elseif($data['status'] == 'late') bg-yellow-100 text-yellow-800
+                                                @else bg-gray-100 text-gray-800
+                                                @endif">
+                                                {{ ucfirst($data['status']) }}
+                                            </span>
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <input type="text" name="attendance[{{ $data['student']->id }}][remarks]" 
-                                                   value="{{ $data['remarks'] ?? '' }}" placeholder="Optional remarks"
-                                                   class="rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            {{ $data['remarks'] ?? '-' }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                             {{ $data['marked_by'] ? $data['marked_by']->name : 'Not marked' }}
@@ -137,15 +198,8 @@
                                 </tbody>
                             </table>
                         </div>
-                        
-                        <div class="mt-6 flex justify-end">
-                            <button type="submit" 
-                                    class="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
-                                Save Attendance
-                            </button>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                @endif
             @else
                 <div class="text-center py-8">
                     <p class="text-gray-500">No students found in this class for the selected date.</p>

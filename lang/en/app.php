@@ -293,4 +293,12 @@ return [
     'parent_portal' => 'Parent Portal',
     'student_portal' => 'Student Portal',
     'contact_info' => 'Contact Info',
+    'school_name' => 'School Name',
+    'user_name' => 'User Name',
+    'full_name' => 'Full Name',
+    'first_name' => 'First Name',
+    'last_name' => 'Last Name',
+    'display_name' => 'Display Name',
+    'nickname' => 'Nickname',
+    'username' => 'Username',
 ];

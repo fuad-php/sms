@@ -256,7 +256,33 @@ class DashboardController extends Controller
     private function getParentDashboard(User $user)
     {
         $parent = $user->parent;
+        
+        // Check if parent record exists
+        if (!$parent) {
+            // If no parent record exists, create a basic parent dashboard
+            return view('dashboard.parent', [
+                'childrenData' => collect(),
+                'totalChildren' => 0,
+                'averageAttendance' => 0,
+                'averageGrades' => 0,
+                'announcements' => collect(),
+                'error' => 'Parent profile not found. Please contact administrator.'
+            ]);
+        }
+        
         $children = $parent->students()->with('class', 'user')->get();
+        
+        // Check if parent has any children
+        if ($children->isEmpty()) {
+            return view('dashboard.parent', [
+                'childrenData' => collect(),
+                'totalChildren' => 0,
+                'averageAttendance' => 0,
+                'averageGrades' => 0,
+                'announcements' => collect(),
+                'message' => 'No children assigned to this parent account.'
+            ]);
+        }
         
         $childrenData = $children->map(function ($child) {
             return [

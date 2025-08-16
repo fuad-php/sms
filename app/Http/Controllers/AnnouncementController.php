@@ -13,6 +13,43 @@ use Illuminate\Support\Facades\Validator;
 class AnnouncementController extends Controller
 {
     /**
+     * Display public announcements (accessible to everyone)
+     */
+    public function publicAnnouncements(Request $request)
+    {
+        $query = Announcement::with(['createdBy', 'class']);
+
+        // Only show published and active announcements
+        $query->active();
+
+        // Only show announcements with target_audience 'all' (public announcements)
+        $query->where('target_audience', 'all');
+
+        // Apply search filter
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('content', 'like', "%{$search}%");
+            });
+        }
+
+        // Apply priority filter
+        if ($request->filled('priority')) {
+            $query->where('priority', $request->priority);
+        }
+
+        // Order by priority and creation date
+        $announcements = $query->byPriority()
+                              ->orderBy('created_at', 'desc')
+                              ->paginate(12);
+
+        $priorities = ['low', 'medium', 'high', 'urgent'];
+
+        return view('announcements.public', compact('announcements', 'priorities'));
+    }
+
+    /**
      * Display a listing of announcements
      */
     public function index(Request $request)
@@ -42,14 +79,24 @@ class AnnouncementController extends Controller
             });
         } elseif ($user->role === 'parent') {
             // Parents can see announcements for their children's classes and general announcements
-            $childrenClasses = $user->parent->students->pluck('class_id');
-            $query->where(function ($q) use ($childrenClasses) {
-                $q->whereNull('class_id')
-                  ->orWhereIn('class_id', $childrenClasses);
-            })->where(function ($q) {
-                $q->where('target_audience', 'all')
-                  ->orWhere('target_audience', 'parents');
-            });
+            $parent = $user->parent;
+            if (!$parent) {
+                // If no parent record, show only general announcements
+                $query->whereNull('class_id')
+                      ->where(function ($q) {
+                          $q->where('target_audience', 'all')
+                            ->orWhere('target_audience', 'parents');
+                      });
+            } else {
+                $childrenClasses = $parent->students->pluck('class_id');
+                $query->where(function ($q) use ($childrenClasses) {
+                    $q->whereNull('class_id')
+                      ->orWhereIn('class_id', $childrenClasses);
+                })->where(function ($q) {
+                    $q->where('target_audience', 'all')
+                      ->orWhere('target_audience', 'parents');
+                });
+            }
         }
 
         // Apply filters
@@ -293,14 +340,24 @@ class AnnouncementController extends Controller
                   ->orWhere('target_audience', 'students');
             });
         } elseif ($user->role === 'parent') {
-            $childrenClasses = $user->parent->students->pluck('class_id');
-            $query->where(function ($q) use ($childrenClasses) {
-                $q->whereNull('class_id')
-                  ->orWhereIn('class_id', $childrenClasses);
-            })->where(function ($q) {
-                $q->where('target_audience', 'all')
-                  ->orWhere('target_audience', 'parents');
-            });
+            $parent = $user->parent;
+            if (!$parent) {
+                // If no parent record, show only general announcements
+                $query->whereNull('class_id')
+                      ->where(function ($q) {
+                          $q->where('target_audience', 'all')
+                            ->orWhere('target_audience', 'parents');
+                      });
+            } else {
+                $childrenClasses = $parent->students->pluck('class_id');
+                $query->where(function ($q) use ($childrenClasses) {
+                    $q->whereNull('class_id')
+                      ->orWhereIn('class_id', $childrenClasses);
+                })->where(function ($q) {
+                    $q->where('target_audience', 'all')
+                      ->orWhere('target_audience', 'parents');
+                });
+            }
         } elseif ($user->role === 'teacher') {
             $teacherClasses = $user->teacher->classes->pluck('id');
             $query->where(function ($q) use ($teacherClasses) {

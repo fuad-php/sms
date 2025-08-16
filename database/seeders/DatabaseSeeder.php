@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             TimetableSeeder::class,
             AnnouncementSeeder::class,
             SettingsSeeder::class,
+            ParentSeeder::class,
         ]);
     }
 }

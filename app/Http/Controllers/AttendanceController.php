@@ -206,6 +206,9 @@ class AttendanceController extends Controller
 
         if ($user->role === 'parent') {
             $parent = $user->parent;
+            if (!$parent) {
+                abort(403, 'Parent profile not found. Please contact administrator.');
+            }
             if (!$parent->students->contains($student)) {
                 abort(403, 'Access denied');
             }

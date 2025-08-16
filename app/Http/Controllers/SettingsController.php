@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Setting;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 class SettingsController extends Controller
 {
@@ -60,16 +61,35 @@ class SettingsController extends Controller
 
         $settings = $request->input('settings', []);
         
-        foreach ($settings as $key => $value) {
-            $setting = Setting::where('key', $key)->where('group', $group)->first();
-            if ($setting) {
-                $setting->setFormattedValue($value);
-                $setting->save();
-                Cache::forget("setting_{$key}");
+        Log::info("Updating settings for group: {$group}", ['settings' => $settings]);
+        
+        try {
+            foreach ($settings as $key => $value) {
+                Log::info("Processing setting: {$key} = {$value}");
+                
+                $setting = Setting::where('key', $key)->where('group', $group)->first();
+                if ($setting) {
+                    Log::info("Found setting: {$setting->id} - {$setting->key} (type: {$setting->type})");
+                    
+                    $oldValue = $setting->value;
+                    $setting->setFormattedValue($value);
+                    $setting->save();
+                    
+                    Log::info("Updated setting: {$key} from '{$oldValue}' to '{$setting->value}'");
+                    Cache::forget("setting_{$key}");
+                } else {
+                    Log::warning("Setting not found: {$key} in group {$group}");
+                }
             }
-        }
 
-        return redirect()->back()->with('success', ucwords(str_replace('_', ' ', $group)) . ' settings updated successfully!');
+            return redirect()->back()->with('success', ucwords(str_replace('_', ' ', $group)) . ' settings updated successfully!');
+        } catch (\Exception $e) {
+            Log::error("Error updating settings for group {$group}: " . $e->getMessage(), [
+                'exception' => $e,
+                'trace' => $e->getTraceAsString()
+            ]);
+            return redirect()->back()->with('error', 'An error occurred while updating settings: ' . $e->getMessage());
+        }
     }
 
     /**

@@ -293,4 +293,12 @@ return [
     'parent_portal' => 'অভিভাবক পোর্টাল',
     'student_portal' => 'ছাত্র পোর্টাল',
     'contact_info' => 'যোগাযোগের তথ্য',
+    'school_name' => 'বিদ্যালয়ের নাম',
+    'user_name' => 'ব্যবহারকারীর নাম',
+    'full_name' => 'পূর্ণ নাম',
+    'first_name' => 'নামের প্রথম অংশ',
+    'last_name' => 'নামের শেষ অংশ',
+    'display_name' => 'প্রদর্শনের নাম',
+    'nickname' => 'ডাকনাম',
+    'username' => 'ব্যবহারকারীর নাম',
 ];

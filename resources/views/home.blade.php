@@ -1,29 +1,71 @@
-<x-layout>    
+<x-public-layout>    
     <main class="main-content">
         <div class="fullwidth-block">
             <div class="container">
                 <div class="row">
                     <div class="col-md-4">
-                        <h2 class="section-title"><i class="icon-newspaper"></i> Latest News</h2>
-                        <ul class="posts">
-                            <li class="post">
-                                <h3 class="entry-title"><a href="#">Nostrud exercitation ullamco</a></h3>
-                                <span class="date"><i class="icon-calendar"></i> 6 APR 2014</span>
-                                <span class="author"><i class="icon-user"></i>Marco Baletti</span>
-                            </li>
-                            <li class="post">
-                                <h3 class="entry-title"><a href="#">Nostrud exercitation ullamco</a></h3>
-                                <span class="date"><i class="icon-calendar"></i> 6 APR 2014</span>
-                                <span class="author"><i class="icon-user"></i>Marco Baletti</span>
-                            </li>
-                            <li class="post">
-                                <h3 class="entry-title"><a href="#">Nostrud exercitation ullamco</a></h3>
-                                <span class="date"><i class="icon-calendar"></i> 6 APR 2014</span>
-                                <span class="author"><i class="icon-user"></i>Marco Baletti</span>
-                            </li>
-                        </ul>
+                        <h2 class="section-title"><i class="icon-newspaper"></i> Latest Announcements</h2>
+                        @php
+                            $latestAnnouncements = \App\Models\Announcement::with(['createdBy', 'class'])
+                                ->where('target_audience', 'all')
+                                ->where('is_published', true)
+                                ->where(function($q) {
+                                    $q->whereNull('publish_date')
+                                      ->orWhere('publish_date', '<=', now());
+                                })
+                                ->where(function($q) {
+                                    $q->whereNull('expire_date')
+                                      ->orWhere('expire_date', '>=', now());
+                                })
+                                ->orderBy('priority', 'asc')
+                                ->orderBy('created_at', 'desc')
+                                ->limit(3)
+                                ->get();
+                        @endphp
+                        
+                        @if($latestAnnouncements->count() > 0)
+                            <ul class="posts">
+                                @foreach($latestAnnouncements as $announcement)
+                                    <li class="post">
+                                        <h3 class="entry-title">
+                                            <a href="{{ route('announcements.show', $announcement) }}">
+                                                {{ Str::limit($announcement->title, 50) }}
+                                            </a>
+                                        </h3>
+                                        <span class="date">
+                                            <i class="icon-calendar"></i> 
+                                            {{ $announcement->created_at->format('d M Y') }}
+                                        </span>
+                                        <span class="author">
+                                            <i class="icon-user"></i>{{ $announcement->createdBy->name }}
+                                        </span>
+                                        @if($announcement->priority === 'urgent')
+                                            <span class="priority-badge" style="color: #dc2626; font-weight: bold; background: #fef2f2; padding: 2px 6px; border-radius: 4px;">
+                                                🚨 URGENT
+                                            </span>
+                                        @elseif($announcement->priority === 'high')
+                                            <span class="priority-badge" style="color: #ea580c; font-weight: bold; background: #fff7ed; padding: 2px 6px; border-radius: 4px;">
+                                                ⚠️ HIGH
+                                            </span>
+                                        @elseif($announcement->priority === 'medium')
+                                            <span class="priority-badge" style="color: #ca8a04; font-weight: bold; background: #fefce8; padding: 2px 6px; border-radius: 4px;">
+                                                📢 MEDIUM
+                                            </span>
+                                        @endif
+                                        @if($announcement->created_at->diffInDays(now()) <= 3)
+                                            <span class="new-badge" style="color: #059669; font-weight: bold; background: #ecfdf5; padding: 2px 6px; border-radius: 4px;">
+                                                🆕 NEW
+                                            </span>
+                                        @endif
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @else
+                            <p class="text-center text-gray-500">No announcements available at the moment.</p>
+                        @endif
+                        
                         <p class="text-center">
-                            <a href="#" class="more button secondary">See older News</a>
+                            <a href="{{ route('announcements.public') }}" class="more button secondary">View All Announcements</a>
                         </p>
                     </div>
                     <div class="col-md-4">

@@ -23,11 +23,39 @@ class SettingsHelper
     }
 
     /**
-     * Get school name
+     * Get school name (multilingual)
      */
     public static function getSchoolName()
     {
+        $locale = app()->getLocale();
+        $schoolNameKey = "school_name_{$locale}";
+        
+        // Try to get localized school name first
+        $localizedName = self::get($schoolNameKey);
+        if ($localizedName) {
+            return $localizedName;
+        }
+        
+        // Fallback to default school_name setting
         return self::get('school_name', 'School Management System');
+    }
+
+    /**
+     * Get school name for specific locale
+     */
+    public static function getSchoolNameForLocale($locale)
+    {
+        $schoolNameKey = "school_name_{$locale}";
+        return self::get($schoolNameKey, self::get('school_name', 'School Management System'));
+    }
+
+    /**
+     * Set school name for specific locale
+     */
+    public static function setSchoolNameForLocale($locale, $name)
+    {
+        $schoolNameKey = "school_name_{$locale}";
+        return self::set($schoolNameKey, $name);
     }
 
     /**

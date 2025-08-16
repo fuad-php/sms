@@ -108,6 +108,9 @@ Route::middleware(['auth', 'maintenance'])->group(function () {
         })->name('index');
     });
     
+    // Public Announcements Route (accessible to everyone)
+    Route::get('/announcement', [AnnouncementController::class, 'publicAnnouncements'])->name('announcements.public');
+
     // Announcements Routes
     Route::group(['prefix' => 'announcements', 'as' => 'announcements.'], function () {
         Route::get('/', [AnnouncementController::class, 'index'])->name('index');
@@ -192,5 +195,7 @@ Route::get('/test-lang', function () {
 Route::get('/test-simple', function () {
     return 'Simple test route working! Current locale: ' . app()->getLocale();
 });
+
+
 
 require __DIR__.'/auth.php';

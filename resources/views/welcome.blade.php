@@ -62,10 +62,12 @@
                         <a href="#announcements" class="text-gray-900 hover:text-blue-600 font-medium">{{ __('app.news') }}</a>
                         <a href="#contact" class="text-gray-900 hover:text-blue-600 font-medium">{{ __('app.contact') }}</a>
                     </div>
-                    <div class="md:hidden">
-                        <button type="button" class="text-gray-900 hover:text-blue-600" onclick="toggleMobileMenu()">
-                            <i class="fas fa-bars text-xl"></i>
-                        </button>
+                    <div class="flex items-center space-x-4">
+                        <div class="md:hidden">
+                            <button type="button" class="text-gray-900 hover:text-blue-600" onclick="toggleMobileMenu()">
+                                <i class="fas fa-bars text-xl"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <div id="mobile-menu" class="hidden md:hidden pb-4">
@@ -76,6 +78,13 @@
                         <a href="#activities" class="text-gray-900 hover:text-blue-600 font-medium py-2">{{ __('app.activities') }}</a>
                         <a href="#announcements" class="text-gray-900 hover:text-blue-600 font-medium py-2">{{ __('app.news') }}</a>
                         <a href="#contact" class="text-gray-900 hover:text-blue-600 font-medium py-2">{{ __('app.contact') }}</a>
+                        
+                        <!-- Language Switcher for Mobile -->
+                        <div class="pt-4 border-t border-gray-200">
+                            <div class="flex items-center justify-center">
+                                <x-language-switcher />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -604,7 +613,7 @@
                     <div>
                         <div class="flex items-center mb-4">
                             <img src="{{ asset('images/logo.png') }}" alt="School Logo" class="h-8 w-auto mr-3">
-                            <h3 class="text-xl font-bold">Excellence School</h3>
+                            <h3 class="text-xl font-bold">@schoolName</h3>
                         </div>
                         <p class="text-gray-400 mb-4">
                             {{ __('app.nurturing_minds_building_futures') }}
@@ -648,7 +657,7 @@
                 </div>
 
                 <div class="border-t border-gray-800 mt-8 pt-8 text-center">
-                    <p class="text-gray-400">&copy; {{ date('Y') }} Excellence School. All rights reserved.</p>
+                                            <p class="text-gray-400">&copy; {{ date('Y') }} @schoolName. All rights reserved.</p>
                 </div>
             </div>
         </footer>

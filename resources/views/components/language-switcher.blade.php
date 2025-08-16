@@ -1,75 +1,64 @@
 <div class="relative inline-block text-left">
-    <div>
-        <button type="button" 
-                class="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                id="language-menu-button"
-                aria-expanded="true"
-                aria-haspopup="true">
-            @if(app()->getLocale() === 'bn')
-                <span class="mr-2">🇧🇩 বাংলা</span>
-            @else
-                <span class="mr-2">🇺🇸 English</span>
+    <form method="GET" action="{{ request()->url() }}" class="inline">
+        @foreach(request()->query() as $key => $value)
+            @if($key !== 'lang')
+                <input type="hidden" name="{{ $key }}" value="{{ $value }}">
             @endif
-            <svg class="-mr-0.5 ml-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-            </svg>
-        </button>
-    </div>
-
-    <div class="hidden origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" 
-         role="menu" 
-         aria-orientation="vertical" 
-         aria-labelledby="language-menu-button" 
-         tabindex="-1"
-         id="language-menu">
-        <div class="py-1" role="none">
-            <a href="{{ request()->fullUrlWithQuery(['lang' => 'bn']) }}" 
-               class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" 
-               role="menuitem" 
-               tabindex="-1">
-                <span class="mr-3">🇧🇩</span>
-                বাংলা
-                @if(app()->getLocale() === 'bn')
-                    <svg class="ml-auto h-4 w-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                    </svg>
-                @endif
-            </a>
-            <a href="{{ request()->fullUrlWithQuery(['lang' => 'en']) }}" 
-               class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" 
-               role="menuitem" 
-               tabindex="-1">
-                <span class="mr-3">🇺🇸</span>
-                English
-                @if(app()->getLocale() === 'en')
-                    <svg class="ml-auto h-4 w-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                    </svg>
-                @endif
-            </a>
-        </div>
-    </div>
+        @endforeach
+        
+        <select name="lang" 
+                onchange="this.form.submit()" 
+                class="language-select inline-flex items-center px-3 py-1 border shadow-sm text-sm leading-4 font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2">
+            <option value="bn" {{ app()->getLocale() === 'bn' ? 'selected' : '' }}>🇧🇩 বাংলা</option>
+            <option value="en" {{ app()->getLocale() === 'en' ? 'selected' : '' }}>🇺🇸 English</option>
+        </select>
+    </form>
 </div>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const button = document.getElementById('language-menu-button');
-    const menu = document.getElementById('language-menu');
-    
-    button.addEventListener('click', function() {
-        const isHidden = menu.classList.contains('hidden');
-        if (isHidden) {
-            menu.classList.remove('hidden');
-        } else {
-            menu.classList.add('hidden');
-        }
-    });
-    
-    // Close menu when clicking outside
-    document.addEventListener('click', function(event) {
-        if (!button.contains(event.target) && !menu.contains(event.target)) {
-            menu.classList.add('hidden');
-        }
-    });
-});
-</script>
+<style>
+/* Language switcher for dark backgrounds (like top blue bar) */
+.bg-blue-900 .language-select,
+.bg-gray-900 .language-select,
+.bg-black .language-select {
+    border-color: rgba(255, 255, 255, 0.3);
+    color: white;
+    background-color: transparent;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+}
+
+.bg-blue-900 .language-select:hover,
+.bg-gray-900 .language-select:hover,
+.bg-black .language-select:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Language switcher for light backgrounds (like dashboard) */
+.language-select {
+    border-color: #d1d5db;
+    color: #374151;
+    background-color: white;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23374151' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.language-select:hover {
+    background-color: #f9fafb;
+    border-color: #9ca3af;
+}
+
+.language-select:focus {
+    border-color: #3b82f6;
+    ring-color: #3b82f6;
+}
+
+.language-select option {
+    background-color: white;
+    color: #374151;
+}
+</style>

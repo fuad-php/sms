@@ -127,6 +127,12 @@ class Setting extends Model
      */
     public function setFormattedValue($value)
     {
+        // Handle null values
+        if ($value === null) {
+            $this->value = '';
+            return;
+        }
+
         switch ($this->type) {
             case 'boolean':
                 $this->value = $value ? '1' : '0';
@@ -135,10 +141,27 @@ class Setting extends Model
                 $this->value = is_numeric($value) ? (string) $value : '0';
                 break;
             case 'json':
-                $this->value = is_array($value) ? json_encode($value) : $value;
+                if (is_array($value)) {
+                    $this->value = json_encode($value);
+                } elseif (is_string($value) && $this->isValidJson($value)) {
+                    $this->value = $value;
+                } else {
+                    $this->value = '';
+                }
                 break;
             default:
                 $this->value = (string) $value;
         }
+    }
+
+    /**
+     * Check if a string is valid JSON
+     */
+    private function isValidJson($string) {
+        if (!is_string($string)) {
+            return false;
+        }
+        json_decode($string);
+        return (json_last_error() == JSON_ERROR_NONE);
     }
 }
