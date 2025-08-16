@@ -183,4 +183,14 @@ Route::get('/health', function () {
     ]);
 });
 
+// Language test route
+Route::get('/test-lang', function () {
+    return view('test-lang');
+});
+
+// Simple test route
+Route::get('/test-simple', function () {
+    return 'Simple test route working! Current locale: ' . app()->getLocale();
+});
+
 require __DIR__.'/auth.php';

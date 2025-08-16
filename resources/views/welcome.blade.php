@@ -25,15 +25,18 @@
                         @endif
                     </div>
                     <div class="flex items-center space-x-4">
+                        <!-- Language Switcher -->
+                        <x-language-switcher />
+                        
                         @auth
-                            <a href="{{ route('school.dashboard') }}" class="hover:text-blue-200">Dashboard</a>
+                            <a href="{{ route('school.dashboard') }}" class="hover:text-blue-200">{{ __('app.dashboard') }}</a>
                             <form method="POST" action="{{ route('logout') }}" class="inline">
                                 @csrf
-                                <button type="submit" class="hover:text-blue-200">Logout</button>
+                                <button type="submit" class="hover:text-blue-200">{{ __('app.logout') }}</button>
                             </form>
                         @else
-                            <a href="{{ route('login') }}" class="hover:text-blue-200">Login</a>
-                            <a href="{{ route('register') }}" class="hover:text-blue-200">Register</a>
+                            <a href="{{ route('login') }}" class="hover:text-blue-200">{{ __('app.login') }}</a>
+                            <a href="{{ route('register') }}" class="hover:text-blue-200">{{ __('app.register') }}</a>
                         @endauth
                     </div>
                 </div>
@@ -52,12 +55,12 @@
                         </div>
                     </div>
                     <div class="hidden md:flex items-center space-x-8">
-                        <a href="#home" class="text-gray-900 hover:text-blue-600 font-medium">Home</a>
-                        <a href="#about" class="text-gray-900 hover:text-blue-600 font-medium">About</a>
-                        <a href="#academics" class="text-gray-900 hover:text-blue-600 font-medium">Academics</a>
-                        <a href="#activities" class="text-gray-900 hover:text-blue-600 font-medium">Activities</a>
-                        <a href="#announcements" class="text-gray-900 hover:text-blue-600 font-medium">News</a>
-                        <a href="#contact" class="text-gray-900 hover:text-blue-600 font-medium">Contact</a>
+                        <a href="#home" class="text-gray-900 hover:text-blue-600 font-medium">{{ __('app.home') }}</a>
+                        <a href="#about" class="text-gray-900 hover:text-blue-600 font-medium">{{ __('app.about') }}</a>
+                        <a href="#academics" class="text-gray-900 hover:text-blue-600 font-medium">{{ __('app.academics') }}</a>
+                        <a href="#activities" class="text-gray-900 hover:text-blue-600 font-medium">{{ __('app.activities') }}</a>
+                        <a href="#announcements" class="text-gray-900 hover:text-blue-600 font-medium">{{ __('app.news') }}</a>
+                        <a href="#contact" class="text-gray-900 hover:text-blue-600 font-medium">{{ __('app.contact') }}</a>
                     </div>
                     <div class="md:hidden">
                         <button type="button" class="text-gray-900 hover:text-blue-600" onclick="toggleMobileMenu()">
@@ -67,12 +70,12 @@
                 </div>
                 <div id="mobile-menu" class="hidden md:hidden pb-4">
                     <div class="flex flex-col space-y-2">
-                        <a href="#home" class="text-gray-900 hover:text-blue-600 font-medium py-2">Home</a>
-                        <a href="#about" class="text-gray-900 hover:text-blue-600 font-medium py-2">About</a>
-                        <a href="#academics" class="text-gray-900 hover:text-blue-600 font-medium py-2">Academics</a>
-                        <a href="#activities" class="text-gray-900 hover:text-blue-600 font-medium py-2">Activities</a>
-                        <a href="#announcements" class="text-gray-900 hover:text-blue-600 font-medium py-2">News</a>
-                        <a href="#contact" class="text-gray-900 hover:text-blue-600 font-medium py-2">Contact</a>
+                        <a href="#home" class="text-gray-900 hover:text-blue-600 font-medium py-2">{{ __('app.home') }}</a>
+                        <a href="#about" class="text-gray-900 hover:text-blue-600 font-medium py-2">{{ __('app.about') }}</a>
+                        <a href="#academics" class="text-gray-900 hover:text-blue-600 font-medium py-2">{{ __('app.academics') }}</a>
+                        <a href="#activities" class="text-gray-900 hover:text-blue-600 font-medium py-2">{{ __('app.activities') }}</a>
+                        <a href="#announcements" class="text-gray-900 hover:text-blue-600 font-medium py-2">{{ __('app.news') }}</a>
+                        <a href="#contact" class="text-gray-900 hover:text-blue-600 font-medium py-2">{{ __('app.contact') }}</a>
                     </div>
                 </div>
             </div>
@@ -86,10 +89,10 @@
                     <div class="absolute inset-0 bg-black bg-opacity-50"></div>
                     <div class="relative z-10 flex items-center justify-center h-full">
                         <div class="text-center text-white">
-                            <h1 class="text-4xl md:text-6xl font-bold mb-4">Welcome to Excellence School</h1>
-                            <p class="text-xl md:text-2xl mb-8">Where Learning Meets Innovation</p>
+                            <h1 class="text-4xl md:text-6xl font-bold mb-4">{{ __('app.welcome_to_school') }}</h1>
+                            <p class="text-xl md:text-2xl mb-8">{{ __('app.where_learning_meets_innovation') }}</p>
                             <a href="#about" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg text-lg font-semibold transition duration-300">
-                                Learn More
+                                {{ __('app.learn_more') }}
                             </a>
                         </div>
                     </div>
@@ -100,10 +103,10 @@
                     <div class="absolute inset-0 bg-black bg-opacity-50"></div>
                     <div class="relative z-10 flex items-center justify-center h-full">
                         <div class="text-center text-white">
-                            <h1 class="text-4xl md:text-6xl font-bold mb-4">Excellence in Education</h1>
-                            <p class="text-xl md:text-2xl mb-8">Preparing Students for Tomorrow's Challenges</p>
+                            <h1 class="text-4xl md:text-6xl font-bold mb-4">{{ __('app.excellence_in_education') }}</h1>
+                            <p class="text-xl md:text-2xl mb-8">{{ __('app.preparing_students_for_tomorrow') }}</p>
                             <a href="#academics" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg text-lg font-semibold transition duration-300">
-                                Our Programs
+                                {{ __('app.our_programs') }}
                             </a>
                         </div>
                     </div>
@@ -114,10 +117,10 @@
                     <div class="absolute inset-0 bg-black bg-opacity-50"></div>
                     <div class="relative z-10 flex items-center justify-center h-full">
                         <div class="text-center text-white">
-                            <h1 class="text-4xl md:text-6xl font-bold mb-4">Building Character</h1>
-                            <p class="text-xl md:text-2xl mb-8">Academic Excellence & Personal Growth</p>
+                            <h1 class="text-4xl md:text-6xl font-bold mb-4">{{ __('app.building_character') }}</h1>
+                            <p class="text-xl md:text-2xl mb-8">{{ __('app.academic_excellence_personal_growth') }}</p>
                             <a href="#activities" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg text-lg font-semibold transition duration-300">
-                                Student Life
+                                {{ __('app.student_life') }}
                             </a>
                         </div>
                     </div>
@@ -146,19 +149,19 @@
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
                     <div>
                         <div class="text-3xl md:text-4xl font-bold mb-2">500+</div>
-                        <div class="text-blue-100">Students</div>
+                        <div class="text-blue-100">{{ __('app.students') }}</div>
                     </div>
                     <div>
                         <div class="text-3xl md:text-4xl font-bold mb-2">50+</div>
-                        <div class="text-blue-100">Teachers</div>
+                        <div class="text-blue-100">{{ __('app.teachers') }}</div>
                     </div>
                     <div>
                         <div class="text-3xl md:text-4xl font-bold mb-2">25+</div>
-                        <div class="text-blue-100">Years</div>
+                        <div class="text-blue-100">{{ __('app.years') }}</div>
                     </div>
                     <div>
                         <div class="text-3xl md:text-4xl font-bold mb-2">95%</div>
-                        <div class="text-blue-100">Success Rate</div>
+                        <div class="text-blue-100">{{ __('app.success_rate') }}</div>
                     </div>
                 </div>
             </div>
@@ -168,10 +171,9 @@
         <section id="about" class="py-16 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">About Our School</h2>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{{ __('app.about_our_school') }}</h2>
                     <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                        Excellence School has been providing quality education for over 25 years, 
-                        fostering academic excellence and character development in a nurturing environment.
+                        {{ __('app.about_school_description') }}
                     </p>
                 </div>
 
@@ -183,19 +185,14 @@
                                 <i class="fas fa-user-tie text-6xl text-gray-600"></i>
                             </div>
                             <h3 class="text-2xl font-bold text-gray-900 mb-2">Dr. Sarah Johnson</h3>
-                            <p class="text-blue-600 font-semibold mb-4">Head Teacher</p>
+                            <p class="text-blue-600 font-semibold mb-4">{{ __('app.head_teacher') }}</p>
                         </div>
                         <div class="text-gray-600 text-left">
                             <p class="mb-4">
-                                "At Excellence School, we believe in nurturing not just academic excellence, 
-                                but also character, creativity, and critical thinking. Our dedicated team of 
-                                educators works tirelessly to provide a holistic learning experience that 
-                                prepares students for the challenges of tomorrow."
+                                "{{ __('app.head_teacher_quote_1') }}"
                             </p>
                             <p>
-                                "We are committed to creating an inclusive environment where every student 
-                                can thrive and reach their full potential. Our focus on innovation and 
-                                personalized learning ensures that each child receives the attention they deserve."
+                                "{{ __('app.head_teacher_quote_2') }}"
                             </p>
                         </div>
                     </div>
@@ -207,18 +204,14 @@
                                 <i class="fas fa-user text-6xl text-gray-600"></i>
                             </div>
                             <h3 class="text-2xl font-bold text-gray-900 mb-2">Mr. Robert Chen</h3>
-                            <p class="text-blue-600 font-semibold mb-4">School Chairman</p>
+                            <p class="text-blue-600 font-semibold mb-4">{{ __('app.school_chairman') }}</p>
                         </div>
                         <div class="text-gray-600 text-left">
                             <p class="mb-4">
-                                "Our school's mission is to develop well-rounded individuals who are not 
-                                only academically proficient but also socially responsible and globally aware. 
-                                We invest in modern facilities and technology to provide the best learning environment."
+                                "{{ __('app.chairman_quote_1') }}"
                             </p>
                             <p>
-                                "The success of our students is our greatest achievement. We take pride in 
-                                our alumni who have gone on to make significant contributions to society. 
-                                This motivates us to continue our commitment to educational excellence."
+                                "{{ __('app.chairman_quote_2') }}"
                             </p>
                         </div>
                     </div>
@@ -230,8 +223,8 @@
         <section id="announcements" class="py-16 bg-gray-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Latest News & Announcements</h2>
-                    <p class="text-xl text-gray-600">Stay updated with the latest happenings at our school</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{{ __('app.latest_news_announcements') }}</h2>
+                    <p class="text-xl text-gray-600">{{ __('app.stay_updated') }}</p>
                 </div>
 
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -267,7 +260,7 @@
                     @empty
                     <div class="col-span-full text-center py-12">
                         <i class="fas fa-newspaper text-4xl text-gray-400 mb-4"></i>
-                        <p class="text-gray-500">No announcements available at the moment.</p>
+                        <p class="text-gray-500">{{ __('app.no_announcements') }}</p>
                     </div>
                     @endforelse
                 </div>
@@ -275,7 +268,7 @@
                 @if($announcements->count() > 0)
                 <div class="text-center mt-8">
                     <a href="{{ route('announcements.index') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition duration-300">
-                        View All Announcements
+                        {{ __('app.view_all_announcements') }}
                     </a>
                 </div>
                 @endif
@@ -286,8 +279,8 @@
         <section id="academics" class="py-16 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Academic Excellence</h2>
-                    <p class="text-xl text-gray-600">Comprehensive programs designed for student success</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{{ __('app.academic_excellence') }}</h2>
+                    <p class="text-xl text-gray-600">{{ __('app.comprehensive_programs') }}</p>
                 </div>
 
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -295,24 +288,24 @@
                         <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                             <i class="fas fa-graduation-cap text-2xl text-blue-600"></i>
                         </div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Primary Education</h3>
-                        <p class="text-gray-600">Grades 1-5 with focus on foundational skills and character development.</p>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ __('app.primary_education') }}</h3>
+                        <p class="text-gray-600">{{ __('app.primary_education_desc') }}</p>
                     </div>
 
                     <div class="bg-gray-50 rounded-lg p-6 text-center">
                         <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                             <i class="fas fa-book text-2xl text-green-600"></i>
                         </div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Middle School</h3>
-                        <p class="text-gray-600">Grades 6-8 emphasizing critical thinking and subject specialization.</p>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ __('app.middle_school') }}</h3>
+                        <p class="text-gray-600">{{ __('app.middle_school_desc') }}</p>
                     </div>
 
                     <div class="bg-gray-50 rounded-lg p-6 text-center">
                         <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
                             <i class="fas fa-microscope text-2xl text-purple-600"></i>
                         </div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-2">High School</h3>
-                        <p class="text-gray-600">Grades 9-12 with advanced courses and college preparation.</p>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ __('app.high_school') }}</h3>
+                        <p class="text-gray-600">{{ __('app.high_school_desc') }}</p>
                     </div>
                 </div>
             </div>
@@ -322,41 +315,41 @@
         <section id="activities" class="py-16 bg-gray-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">School Activities</h2>
-                    <p class="text-xl text-gray-600">Enriching experiences beyond the classroom</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{{ __('app.school_activities') }}</h2>
+                    <p class="text-xl text-gray-600">{{ __('app.enriching_experiences') }}</p>
                 </div>
 
                 <div class="grid md:grid-cols-2 gap-12">
                     <!-- School Activities -->
                     <div>
-                        <h3 class="text-2xl font-bold text-gray-900 mb-6">Academic Activities</h3>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-6">{{ __('app.academic_activities') }}</h3>
                         <div class="space-y-4">
                             <div class="flex items-start">
                                 <i class="fas fa-trophy text-blue-600 mt-1 mr-3"></i>
                                 <div>
-                                    <h4 class="font-semibold text-gray-900">Science Fair</h4>
-                                    <p class="text-gray-600">Annual showcase of student scientific projects and innovations.</p>
+                                    <h4 class="font-semibold text-gray-900">{{ __('app.science_fair') }}</h4>
+                                    <p class="text-gray-600">{{ __('app.science_fair_desc') }}</p>
                                 </div>
                             </div>
                             <div class="flex items-start">
                                 <i class="fas fa-pen text-blue-600 mt-1 mr-3"></i>
                                 <div>
-                                    <h4 class="font-semibold text-gray-900">Essay Competition</h4>
-                                    <p class="text-gray-600">Creative writing contests to develop communication skills.</p>
+                                    <h4 class="font-semibold text-gray-900">{{ __('app.essay_competition') }}</h4>
+                                    <p class="text-gray-600">{{ __('app.essay_competition_desc') }}</p>
                                 </div>
                             </div>
                             <div class="flex items-start">
                                 <i class="fas fa-calculator text-blue-600 mt-1 mr-3"></i>
                                 <div>
-                                    <h4 class="font-semibold text-gray-900">Math Olympiad</h4>
-                                    <p class="text-gray-600">Competitive mathematics challenges for problem-solving skills.</p>
+                                    <h4 class="font-semibold text-gray-900">{{ __('app.math_olympiad') }}</h4>
+                                    <p class="text-gray-600">{{ __('app.math_olympiad_desc') }}</p>
                                 </div>
                             </div>
                             <div class="flex items-start">
                                 <i class="fas fa-language text-blue-600 mt-1 mr-3"></i>
                                 <div>
-                                    <h4 class="font-semibold text-gray-900">Debate Club</h4>
-                                    <p class="text-gray-600">Public speaking and critical thinking development.</p>
+                                    <h4 class="font-semibold text-gray-900">{{ __('app.debate_club') }}</h4>
+                                    <p class="text-gray-600">{{ __('app.debate_club_desc') }}</p>
                                 </div>
                             </div>
                         </div>
@@ -364,34 +357,34 @@
 
                     <!-- Co-curricular Activities -->
                     <div>
-                        <h3 class="text-2xl font-bold text-gray-900 mb-6">Co-curricular Activities</h3>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-6">{{ __('app.co_curricular_activities') }}</h3>
                         <div class="space-y-4">
                             <div class="flex items-start">
                                 <i class="fas fa-music text-green-600 mt-1 mr-3"></i>
                                 <div>
-                                    <h4 class="font-semibold text-gray-900">Music & Arts</h4>
-                                    <p class="text-gray-600">Choir, band, painting, and creative arts programs.</p>
+                                    <h4 class="font-semibold text-gray-900">{{ __('app.music_arts') }}</h4>
+                                    <p class="text-gray-600">{{ __('app.music_arts_desc') }}</p>
                                 </div>
                             </div>
                             <div class="flex items-start">
                                 <i class="fas fa-futbol text-green-600 mt-1 mr-3"></i>
                                 <div>
-                                    <h4 class="font-semibold text-gray-900">Sports</h4>
-                                    <p class="text-gray-600">Football, basketball, swimming, and athletics teams.</p>
+                                    <h4 class="font-semibold text-gray-900">{{ __('app.sports') }}</h4>
+                                    <p class="text-gray-600">{{ __('app.sports_desc') }}</p>
                                 </div>
                             </div>
                             <div class="flex items-start">
                                 <i class="fas fa-robot text-green-600 mt-1 mr-3"></i>
                                 <div>
-                                    <h4 class="font-semibold text-gray-900">Robotics Club</h4>
-                                    <p class="text-gray-600">STEM education through hands-on robotics projects.</p>
+                                    <h4 class="font-semibold text-gray-900">{{ __('app.robotics_club') }}</h4>
+                                    <p class="text-gray-600">{{ __('app.robotics_club_desc') }}</p>
                                 </div>
                             </div>
                             <div class="flex items-start">
                                 <i class="fas fa-hands-helping text-green-600 mt-1 mr-3"></i>
                                 <div>
-                                    <h4 class="font-semibold text-gray-900">Community Service</h4>
-                                    <p class="text-gray-600">Volunteer programs and social responsibility initiatives.</p>
+                                    <h4 class="font-semibold text-gray-900">{{ __('app.community_service') }}</h4>
+                                    <p class="text-gray-600">{{ __('app.community_service_desc') }}</p>
                                 </div>
                             </div>
                         </div>
@@ -404,8 +397,8 @@
         <section class="py-16 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Monthly Calendar</h2>
-                    <p class="text-xl text-gray-600">Important dates and upcoming events</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{{ __('app.monthly_calendar') }}</h2>
+                    <p class="text-xl text-gray-600">{{ __('app.important_dates') }}</p>
                 </div>
 
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -415,22 +408,22 @@
                             <div class="flex items-center">
                                 <div class="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-semibold mr-3">15</div>
                                 <div>
-                                    <h4 class="font-semibold text-gray-900">Winter Concert</h4>
-                                    <p class="text-sm text-gray-600">Annual music performance</p>
+                                    <h4 class="font-semibold text-gray-900">{{ __('app.winter_concert') }}</h4>
+                                    <p class="text-sm text-gray-600">{{ __('app.annual_music_performance') }}</p>
                                 </div>
                             </div>
                             <div class="flex items-center">
                                 <div class="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-semibold mr-3">20</div>
                                 <div>
-                                    <h4 class="font-semibold text-gray-900">Parent-Teacher Meeting</h4>
-                                    <p class="text-sm text-gray-600">Progress review session</p>
+                                    <h4 class="font-semibold text-gray-900">{{ __('app.parent_teacher_meeting') }}</h4>
+                                    <p class="text-sm text-gray-600">{{ __('app.progress_review_session') }}</p>
                                 </div>
                             </div>
                             <div class="flex items-center">
                                 <div class="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-semibold mr-3">25</div>
                                 <div>
-                                    <h4 class="font-semibold text-gray-900">Winter Break Begins</h4>
-                                    <p class="text-sm text-gray-600">School closed for holidays</p>
+                                    <h4 class="font-semibold text-gray-900">{{ __('app.winter_break_begins') }}</h4>
+                                    <p class="text-sm text-gray-600">{{ __('app.school_closed_holidays') }}</p>
                                 </div>
                             </div>
                         </div>
@@ -442,22 +435,22 @@
                             <div class="flex items-center">
                                 <div class="w-8 h-8 bg-green-600 text-white rounded-full flex items-center justify-center text-sm font-semibold mr-3">8</div>
                                 <div>
-                                    <h4 class="font-semibold text-gray-900">School Reopens</h4>
-                                    <p class="text-sm text-gray-600">New semester begins</p>
+                                    <h4 class="font-semibold text-gray-900">{{ __('app.school_reopens') }}</h4>
+                                    <p class="text-sm text-gray-600">{{ __('app.new_semester_begins') }}</p>
                                 </div>
                             </div>
                             <div class="flex items-center">
                                 <div class="w-8 h-8 bg-green-600 text-white rounded-full flex items-center justify-center text-sm font-semibold mr-3">15</div>
                                 <div>
-                                    <h4 class="font-semibold text-gray-900">Science Fair</h4>
-                                    <p class="text-sm text-gray-600">Student project showcase</p>
+                                    <h4 class="font-semibold text-gray-900">{{ __('app.science_fair') }}</h4>
+                                    <p class="text-sm text-gray-600">{{ __('app.science_fair_desc') }}</p>
                                 </div>
                             </div>
                             <div class="flex items-center">
                                 <div class="w-8 h-8 bg-green-600 text-white rounded-full flex items-center justify-center text-sm font-semibold mr-3">25</div>
                                 <div>
-                                    <h4 class="font-semibold text-gray-900">Sports Day</h4>
-                                    <p class="text-sm text-gray-600">Annual athletic competition</p>
+                                    <h4 class="font-semibold text-gray-900">{{ __('app.sports_day') }}</h4>
+                                    <p class="text-sm text-gray-600">{{ __('app.annual_athletic_competition') }}</p>
                                 </div>
                             </div>
                         </div>
@@ -469,22 +462,22 @@
                             <div class="flex items-center">
                                 <div class="w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center text-sm font-semibold mr-3">5</div>
                                 <div>
-                                    <h4 class="font-semibold text-gray-900">Art Exhibition</h4>
-                                    <p class="text-sm text-gray-600">Student artwork display</p>
+                                    <h4 class="font-semibold text-gray-900">{{ __('app.art_exhibition') }}</h4>
+                                    <p class="text-sm text-gray-600">{{ __('app.student_artwork_display') }}</p>
                                 </div>
                             </div>
                             <div class="flex items-center">
                                 <div class="w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center text-sm font-semibold mr-3">12</div>
                                 <div>
-                                    <h4 class="font-semibold text-gray-900">Debate Competition</h4>
-                                    <p class="text-sm text-gray-600">Inter-school debate</p>
+                                    <h4 class="font-semibold text-gray-900">{{ __('app.debate_competition') }}</h4>
+                                    <p class="text-sm text-gray-600">{{ __('app.inter_school_debate') }}</p>
                                 </div>
                             </div>
                             <div class="flex items-center">
                                 <div class="w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center text-sm font-semibold mr-3">20</div>
                                 <div>
-                                    <h4 class="font-semibold text-gray-900">Career Day</h4>
-                                    <p class="text-sm text-gray-600">Professional guidance session</p>
+                                    <h4 class="font-semibold text-gray-900">{{ __('app.career_day') }}</h4>
+                                    <p class="text-sm text-gray-600">{{ __('app.professional_guidance_session') }}</p>
                                 </div>
                             </div>
                         </div>
@@ -497,37 +490,37 @@
         <section class="py-16 bg-gray-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Useful Links</h2>
-                    <p class="text-xl text-gray-600">Quick access to important resources</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{{ __('app.useful_links') }}</h2>
+                    <p class="text-xl text-gray-600">{{ __('app.quick_access') }}</p>
                 </div>
 
                 <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                     <div class="bg-white rounded-lg p-6 text-center shadow-md hover:shadow-lg transition duration-300">
                         <i class="fas fa-calendar-alt text-3xl text-blue-600 mb-4"></i>
-                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Academic Calendar</h3>
-                        <p class="text-gray-600 mb-4">Important dates and holidays</p>
-                        <a href="#" class="text-blue-600 hover:text-blue-800 font-semibold">View Calendar</a>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ __('app.academic_calendar') }}</h3>
+                        <p class="text-gray-600 mb-4">{{ __('app.important_dates_holidays') }}</p>
+                        <a href="#" class="text-blue-600 hover:text-blue-800 font-semibold">{{ __('app.view_calendar') }}</a>
                     </div>
 
                     <div class="bg-white rounded-lg p-6 text-center shadow-md hover:shadow-lg transition duration-300">
                         <i class="fas fa-book text-3xl text-green-600 mb-4"></i>
-                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Library</h3>
-                        <p class="text-gray-600 mb-4">Online library resources</p>
-                        <a href="#" class="text-green-600 hover:text-green-800 font-semibold">Access Library</a>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ __('app.library') }}</h3>
+                        <p class="text-gray-600 mb-4">{{ __('app.online_library_resources') }}</p>
+                        <a href="#" class="text-green-600 hover:text-green-800 font-semibold">{{ __('app.access_library') }}</a>
                     </div>
 
                     <div class="bg-white rounded-lg p-6 text-center shadow-md hover:shadow-lg transition duration-300">
                         <i class="fas fa-bus text-3xl text-purple-600 mb-4"></i>
-                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Transportation</h3>
-                        <p class="text-gray-600 mb-4">Bus routes and schedules</p>
-                        <a href="#" class="text-purple-600 hover:text-purple-800 font-semibold">View Routes</a>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ __('app.transportation') }}</h3>
+                        <p class="text-gray-600 mb-4">{{ __('app.bus_routes_schedules') }}</p>
+                        <a href="#" class="text-purple-600 hover:text-purple-800 font-semibold">{{ __('app.view_routes') }}</a>
                     </div>
 
                     <div class="bg-white rounded-lg p-6 text-center shadow-md hover:shadow-lg transition duration-300">
                         <i class="fas fa-utensils text-3xl text-orange-600 mb-4"></i>
-                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Cafeteria</h3>
-                        <p class="text-gray-600 mb-4">Lunch menu and nutrition</p>
-                        <a href="#" class="text-orange-600 hover:text-orange-800 font-semibold">View Menu</a>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ __('app.cafeteria') }}</h3>
+                        <p class="text-gray-600 mb-4">{{ __('app.lunch_menu_nutrition') }}</p>
+                        <a href="#" class="text-orange-600 hover:text-orange-800 font-semibold">{{ __('app.view_menu') }}</a>
                     </div>
                 </div>
             </div>
@@ -537,39 +530,39 @@
         <section id="contact" class="py-16 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Contact Us</h2>
-                    <p class="text-xl text-gray-600">Get in touch with us</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{{ __('app.contact_us') }}</h2>
+                    <p class="text-xl text-gray-600">{{ __('app.get_in_touch') }}</p>
                 </div>
 
                 <div class="grid md:grid-cols-2 gap-12">
                     <div>
-                        <h3 class="text-2xl font-bold text-gray-900 mb-6">Get In Touch</h3>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-6">{{ __('app.get_in_touch') }}</h3>
                         <div class="space-y-4">
                             <div class="flex items-start">
                                 <i class="fas fa-map-marker-alt text-blue-600 mt-1 mr-3 text-xl"></i>
                                 <div>
-                                    <h4 class="font-semibold text-gray-900">Address</h4>
+                                    <h4 class="font-semibold text-gray-900">{{ __('app.address') }}</h4>
                                     <p class="text-gray-600">123 Education Street, Learning City, LC 12345</p>
                                 </div>
                             </div>
                             <div class="flex items-start">
                                 <i class="fas fa-phone text-blue-600 mt-1 mr-3 text-xl"></i>
                                 <div>
-                                    <h4 class="font-semibold text-gray-900">Phone</h4>
+                                    <h4 class="font-semibold text-gray-900">{{ __('app.phone') }}</h4>
                                     <p class="text-gray-600">+1 (555) 123-4567</p>
                                 </div>
                             </div>
                             <div class="flex items-start">
                                 <i class="fas fa-envelope text-blue-600 mt-1 mr-3 text-xl"></i>
                                 <div>
-                                    <h4 class="font-semibold text-gray-900">Email</h4>
+                                    <h4 class="font-semibold text-gray-900">{{ __('app.email') }}</h4>
                                     <p class="text-gray-600">info@excellenceschool.edu</p>
                                 </div>
                             </div>
                             <div class="flex items-start">
                                 <i class="fas fa-clock text-blue-600 mt-1 mr-3 text-xl"></i>
                                 <div>
-                                    <h4 class="font-semibold text-gray-900">Office Hours</h4>
+                                    <h4 class="font-semibold text-gray-900">{{ __('app.office_hours') }}</h4>
                                     <p class="text-gray-600">Monday - Friday: 8:00 AM - 4:00 PM</p>
                                 </div>
                             </div>
@@ -577,26 +570,26 @@
                     </div>
 
                     <div>
-                        <h3 class="text-2xl font-bold text-gray-900 mb-6">Send us a Message</h3>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-6">{{ __('app.send_us_message') }}</h3>
                         <form class="space-y-4">
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('app.name') }}</label>
                                 <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('app.email') }}</label>
                                 <input type="email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Subject</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('app.subject') }}</label>
                                 <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('app.message') }}</label>
                                 <textarea rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
                             </div>
                             <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition duration-300">
-                                Send Message
+                                {{ __('app.send_message') }}
                             </button>
                         </form>
                     </div>
@@ -614,7 +607,7 @@
                             <h3 class="text-xl font-bold">Excellence School</h3>
                         </div>
                         <p class="text-gray-400 mb-4">
-                            Nurturing minds and building futures through quality education and character development.
+                            {{ __('app.nurturing_minds_building_futures') }}
                         </p>
                         <div class="flex space-x-4">
                             <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook text-xl"></i></a>
@@ -625,31 +618,31 @@
                     </div>
 
                     <div>
-                        <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                        <h4 class="text-lg font-semibold mb-4">{{ __('app.quick_links') }}</h4>
                         <ul class="space-y-2">
-                            <li><a href="#about" class="text-gray-400 hover:text-white">About Us</a></li>
-                            <li><a href="#academics" class="text-gray-400 hover:text-white">Academics</a></li>
-                            <li><a href="#activities" class="text-gray-400 hover:text-white">Activities</a></li>
-                            <li><a href="#announcements" class="text-gray-400 hover:text-white">News</a></li>
+                            <li><a href="#about" class="text-gray-400 hover:text-white">{{ __('app.about') }}</a></li>
+                            <li><a href="#academics" class="text-gray-400 hover:text-white">{{ __('app.academics') }}</a></li>
+                            <li><a href="#activities" class="text-gray-400 hover:text-white">{{ __('app.activities') }}</a></li>
+                            <li><a href="#announcements" class="text-gray-400 hover:text-white">{{ __('app.news') }}</a></li>
                         </ul>
                     </div>
 
                     <div>
-                        <h4 class="text-lg font-semibold mb-4">Resources</h4>
+                        <h4 class="text-lg font-semibold mb-4">{{ __('app.resources') }}</h4>
                         <ul class="space-y-2">
-                            <li><a href="#" class="text-gray-400 hover:text-white">Parent Portal</a></li>
-                            <li><a href="#" class="text-gray-400 hover:text-white">Student Portal</a></li>
-                            <li><a href="#" class="text-gray-400 hover:text-white">Library</a></li>
-                            <li><a href="#" class="text-gray-400 hover:text-white">Calendar</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white">{{ __('app.parent_portal') }}</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white">{{ __('app.student_portal') }}</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white">{{ __('app.library') }}</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white">{{ __('app.academic_calendar') }}</a></li>
                         </ul>
                     </div>
 
                     <div>
-                        <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
+                        <h4 class="text-lg font-semibold mb-4">{{ __('app.contact_info') }}</h4>
                         <ul class="space-y-2 text-gray-400">
-                            <li><i class="fas fa-map-marker-alt mr-2"></i>123 Education Street</li>
-                            <li><i class="fas fa-phone mr-2"></i>+1 (555) 123-4567</li>
-                            <li><i class="fas fa-envelope mr-2"></i>info@excellenceschool.edu</li>
+                            <li><i class="fas fa-map-marker-alt mr-2"></i>{{ __('app.address') }}</li>
+                            <li><i class="fas fa-phone mr-2"></i>{{ __('app.phone') }}</li>
+                            <li><i class="fas fa-envelope mr-2"></i>{{ __('app.email') }}</li>
                         </ul>
                     </div>
                 </div>
