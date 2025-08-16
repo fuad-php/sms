@@ -148,19 +148,85 @@
 
     <!-- Recent Announcements -->
     <div class="bg-white rounded-lg shadow p-6">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Recent Announcements</h3>
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-lg font-semibold text-gray-900">Recent Announcements</h3>
+            <a href="{{ route('announcements.index') }}" class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                View All <i class="fas fa-arrow-right ml-1"></i>
+            </a>
+        </div>
         <div class="space-y-4">
-            @foreach($recentAnnouncements as $announcement)
+            @forelse($recentAnnouncements as $announcement)
             <div class="border-l-4 border-blue-500 pl-4">
-                <h4 class="text-sm font-medium text-gray-900">{{ $announcement->title }}</h4>
-                <p class="text-sm text-gray-600 mt-1">{{ Str::limit($announcement->content, 100) }}</p>
-                <div class="flex items-center mt-2 text-xs text-gray-500">
-                    <span>By {{ $announcement->createdBy->name }}</span>
-                    <span class="mx-2">•</span>
-                    <span>{{ $announcement->created_at->diffForHumans() }}</span>
+                <div class="flex justify-between items-start">
+                    <div class="flex-1">
+                        <h4 class="text-sm font-medium text-gray-900">{{ $announcement->title }}</h4>
+                        <p class="text-sm text-gray-600 mt-1">{{ Str::limit($announcement->content, 100) }}</p>
+                        <div class="flex items-center mt-2 text-xs text-gray-500">
+                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium {{ $announcement->getPriorityBadgeClass() }}">
+                                {{ ucfirst($announcement->priority) }}
+                            </span>
+                            <span class="mx-2">•</span>
+                            <span>By {{ $announcement->createdBy->name }}</span>
+                            <span class="mx-2">•</span>
+                            <span>{{ $announcement->created_at->diffForHumans() }}</span>
+                        </div>
+                    </div>
+                    <a href="{{ route('announcements.show', $announcement) }}" class="text-blue-600 hover:text-blue-800 text-xs">
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
                 </div>
             </div>
-            @endforeach
+            @empty
+            <div class="text-center py-4">
+                <p class="text-gray-500 text-sm">No recent announcements</p>
+            </div>
+            @endforelse
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="bg-white rounded-lg shadow p-6 mt-8">
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <a href="{{ route('settings.index') }}" class="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50">
+                <div class="p-2 bg-blue-100 text-blue-600 rounded-lg mr-4">
+                    <i class="fas fa-cog"></i>
+                </div>
+                <div>
+                    <h4 class="font-medium text-gray-900">School Settings</h4>
+                    <p class="text-sm text-gray-600">Manage school configuration</p>
+                </div>
+            </a>
+            
+            <a href="{{ route('admin.carousel.index') }}" class="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50">
+                <div class="p-2 bg-orange-100 text-orange-600 rounded-lg mr-4">
+                    <i class="fas fa-images"></i>
+                </div>
+                <div>
+                    <h4 class="font-medium text-gray-900">Carousel</h4>
+                    <p class="text-sm text-gray-600">Manage homepage slides</p>
+                </div>
+            </a>
+            
+            <a href="{{ route('students.create') }}" class="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50">
+                <div class="p-2 bg-green-100 text-green-600 rounded-lg mr-4">
+                    <i class="fas fa-user-plus"></i>
+                </div>
+                <div>
+                    <h4 class="font-medium text-gray-900">Add Student</h4>
+                    <p class="text-sm text-gray-600">Register new student</p>
+                </div>
+            </a>
+            
+            <a href="{{ route('announcements.create') }}" class="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50">
+                <div class="p-2 bg-purple-100 text-purple-600 rounded-lg mr-4">
+                    <i class="fas fa-bullhorn"></i>
+                </div>
+                <div>
+                    <h4 class="font-medium text-gray-900">New Announcement</h4>
+                    <p class="text-sm text-gray-600">Create announcement</p>
+                </div>
+            </a>
         </div>
     </div>
 </div>

@@ -10,6 +10,9 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -22,7 +25,7 @@
                 <div class="flex justify-between h-16">
                     <div class="flex">
                         <div class="shrink-0 flex items-center">
-                            <a href="{{ route('welcome') }}" class="text-xl font-bold text-gray-900">School Management System</a>
+                            <a href="{{ route('welcome') }}" class="text-xl font-bold text-gray-900">@schoolName</a>
                         </div>
 
                         @auth
@@ -36,6 +39,14 @@
                             <a href="{{ route('attendance.index') }}" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
                                 Attendance
                             </a>
+                            <a href="{{ route('announcements.index') }}" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
+                                Announcements
+                            </a>
+                            @if(auth()->user()->role === 'admin')
+                                <a href="{{ route('settings.index') }}" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
+                                    Settings
+                                </a>
+                            @endif
                         </div>
                         @endauth
                     </div>

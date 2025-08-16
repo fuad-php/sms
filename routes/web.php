@@ -4,7 +4,10 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\WebController;
+use App\Http\Controllers\CarouselController;
+use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,14 +22,20 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Public routes
-Route::get('/', [WebController::class, 'welcome'])->name('welcome');
+Route::get('/', [WebController::class, 'welcome'])->name('welcome')->middleware('maintenance');
+
+// Contact form routes (public)
+Route::group(['prefix' => 'contact', 'as' => 'contact.'], function () {
+    Route::get('/', [ContactController::class, 'index'])->name('index');
+    Route::post('/', [ContactController::class, 'store'])->name('store');
+});
 
 // Authentication Routes (using Laravel Breeze)
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'maintenance'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -101,9 +110,16 @@ Route::middleware('auth')->group(function () {
     
     // Announcements Routes
     Route::group(['prefix' => 'announcements', 'as' => 'announcements.'], function () {
-        Route::get('/', function () {
-            return view('announcements.index', ['message' => 'Announcement management - to be implemented']);
-        })->name('index');
+        Route::get('/', [AnnouncementController::class, 'index'])->name('index');
+        Route::get('/create', [AnnouncementController::class, 'create'])->name('create')->middleware('role:admin,teacher');
+        Route::post('/', [AnnouncementController::class, 'store'])->name('store')->middleware('role:admin,teacher');
+        Route::get('/{announcement}', [AnnouncementController::class, 'show'])->name('show');
+        Route::get('/{announcement}/edit', [AnnouncementController::class, 'edit'])->name('edit')->middleware('role:admin,teacher');
+        Route::put('/{announcement}', [AnnouncementController::class, 'update'])->name('update')->middleware('role:admin,teacher');
+        Route::delete('/{announcement}', [AnnouncementController::class, 'destroy'])->name('destroy')->middleware('role:admin,teacher');
+        Route::patch('/{announcement}/toggle-publish', [AnnouncementController::class, 'togglePublish'])->name('toggle-publish')->middleware('role:admin,teacher');
+        Route::get('/{announcement}/download', [AnnouncementController::class, 'downloadAttachment'])->name('download');
+        Route::get('/dashboard/data', [AnnouncementController::class, 'dashboard'])->name('dashboard');
     });
     
     // Parent Management Routes
@@ -122,9 +138,38 @@ Route::middleware('auth')->group(function () {
     
     // Settings/Configuration Routes
     Route::group(['prefix' => 'settings', 'as' => 'settings.'], function () {
-        Route::get('/', function () {
-            return view('settings.index', ['message' => 'Settings - to be implemented']);
-        })->name('index')->middleware('role:admin');
+        Route::get('/', [App\Http\Controllers\SettingsController::class, 'index'])->name('index')->middleware('role:admin');
+        Route::get('/group/{group}', [App\Http\Controllers\SettingsController::class, 'showGroup'])->name('group')->middleware('role:admin');
+        Route::put('/group/{group}', [App\Http\Controllers\SettingsController::class, 'updateGroup'])->name('update-group')->middleware('role:admin');
+        Route::get('/create', [App\Http\Controllers\SettingsController::class, 'create'])->name('create')->middleware('role:admin');
+        Route::post('/', [App\Http\Controllers\SettingsController::class, 'store'])->name('store')->middleware('role:admin');
+        Route::get('/{setting}/edit', [App\Http\Controllers\SettingsController::class, 'edit'])->name('edit')->middleware('role:admin');
+        Route::put('/{setting}', [App\Http\Controllers\SettingsController::class, 'updateSetting'])->name('update-setting')->middleware('role:admin');
+        Route::delete('/{setting}', [App\Http\Controllers\SettingsController::class, 'destroy'])->name('destroy')->middleware('role:admin');
+        Route::post('/clear-cache', [App\Http\Controllers\SettingsController::class, 'clearCache'])->name('clear-cache')->middleware('role:admin');
+        Route::post('/reset-defaults', [App\Http\Controllers\SettingsController::class, 'resetToDefaults'])->name('reset-defaults')->middleware('role:admin');
+    });
+
+    // Carousel Management Routes (Admin only)
+    Route::group(['prefix' => 'admin/carousel', 'as' => 'admin.carousel.'], function () {
+        Route::get('/', [CarouselController::class, 'index'])->name('index')->middleware('role:admin');
+        Route::get('/create', [CarouselController::class, 'create'])->name('create')->middleware('role:admin');
+        Route::post('/', [CarouselController::class, 'store'])->name('store')->middleware('role:admin');
+        Route::get('/{slide}/edit', [CarouselController::class, 'edit'])->name('edit')->middleware('role:admin');
+        Route::put('/{slide}', [CarouselController::class, 'update'])->name('update')->middleware('role:admin');
+        Route::delete('/{slide}', [CarouselController::class, 'destroy'])->name('destroy')->middleware('role:admin');
+        Route::post('/update-order', [CarouselController::class, 'updateOrder'])->name('update-order')->middleware('role:admin');
+        Route::patch('/{slide}/toggle-status', [CarouselController::class, 'toggleStatus'])->name('toggle-status')->middleware('role:admin');
+    });
+
+    // Contact Management Routes (Admin only)
+    Route::group(['prefix' => 'admin/contact', 'as' => 'admin.contact.'], function () {
+        Route::get('/', [ContactController::class, 'adminIndex'])->name('index')->middleware('role:admin');
+        Route::get('/{inquiry}', [ContactController::class, 'show'])->name('show')->middleware('role:admin');
+        Route::patch('/{inquiry}/toggle-read', [ContactController::class, 'toggleRead'])->name('toggle-read')->middleware('role:admin');
+        Route::delete('/{inquiry}', [ContactController::class, 'destroy'])->name('destroy')->middleware('role:admin');
+        Route::get('/stats', [ContactController::class, 'getStats'])->name('stats')->middleware('role:admin');
+        Route::get('/export', [ContactController::class, 'export'])->name('export')->middleware('role:admin');
     });
 });
 

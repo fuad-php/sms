@@ -100,11 +100,16 @@ Route::group(['prefix' => 'results', 'middleware' => 'auth:api'], function () {
     });
 });
 
-// Announcements Routes (Basic structure for future implementation)
+// Announcements Routes
 Route::group(['prefix' => 'announcements', 'middleware' => 'auth:api'], function () {
-    Route::get('/', function () {
-        return response()->json(['message' => 'Announcement management routes - to be implemented']);
-    });
+    Route::get('/', [App\Http\Controllers\AnnouncementController::class, 'index']);
+    Route::get('/dashboard', [App\Http\Controllers\AnnouncementController::class, 'dashboard']);
+    Route::post('/', [App\Http\Controllers\AnnouncementController::class, 'store'])->middleware('role:admin,teacher');
+    Route::get('/{announcement}', [App\Http\Controllers\AnnouncementController::class, 'show']);
+    Route::put('/{announcement}', [App\Http\Controllers\AnnouncementController::class, 'update'])->middleware('role:admin,teacher');
+    Route::delete('/{announcement}', [App\Http\Controllers\AnnouncementController::class, 'destroy'])->middleware('role:admin,teacher');
+    Route::patch('/{announcement}/toggle-publish', [App\Http\Controllers\AnnouncementController::class, 'togglePublish'])->middleware('role:admin,teacher');
+    Route::get('/{announcement}/download', [App\Http\Controllers\AnnouncementController::class, 'downloadAttachment']);
 });
 
 // Parent Management Routes (Basic structure for future implementation)
