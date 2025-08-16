@@ -5,7 +5,8 @@ A comprehensive web-based school management system built with Laravel and modern
 ## 🚀 Features
 
 ### Core Functionality
-- **Authentication & Authorization**: JWT-based authentication with role-based access control
+- **Authentication & Authorization**: Session-based authentication with role-based access control
+- **Web-based Interface**: Traditional web application with server-side rendering
 - **User Management**: CRUD operations for students, teachers, parents, and administrators
 - **Class & Subject Management**: Organize classes, sections, and subject assignments
 - **Timetable Management**: Schedule and manage class timetables
@@ -26,8 +27,8 @@ A comprehensive web-based school management system built with Laravel and modern
 - **Backend**: Laravel 10.x (PHP 8.1+)
 - **Frontend**: HTML/CSS with Tailwind CSS
 - **Database**: MySQL
-- **Authentication**: JWT (JSON Web Tokens)
-- **API**: RESTful API architecture
+- **Authentication**: Laravel Breeze with session-based authentication
+- **Architecture**: Traditional web application (MVC pattern)
 
 ## 📋 Prerequisites
 
@@ -35,6 +36,16 @@ A comprehensive web-based school management system built with Laravel and modern
 - Composer
 - MySQL 5.7 or higher
 - Node.js & NPM (for frontend assets)
+
+## 🔄 Project Update
+
+This project has been converted from an API-based architecture to a traditional web application architecture. The system now provides:
+
+- **Direct web routes** instead of API endpoints
+- **Server-side rendering** with Blade templates
+- **Session-based authentication** using Laravel Breeze
+- **Integrated frontend and backend** in a single project
+- **Traditional MVC pattern** for better development experience
 
 ## ⚡ Quick Start
 
@@ -69,8 +80,6 @@ DB_PORT=3306
 DB_DATABASE=school_management
 DB_USERNAME=your_username
 DB_PASSWORD=your_password
-
-JWT_SECRET=your_jwt_secret_key
 ```
 
 ### 3. Database Setup
@@ -78,9 +87,6 @@ JWT_SECRET=your_jwt_secret_key
 ```bash
 # Generate application key
 php artisan key:generate
-
-# Generate JWT secret
-php artisan jwt:secret
 
 # Run database migrations
 php artisan migrate

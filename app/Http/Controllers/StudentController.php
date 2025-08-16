@@ -14,7 +14,7 @@ class StudentController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api');
+        $this->middleware('auth');
         $this->middleware('role:admin,teacher')->except(['show', 'profile']);
         $this->middleware('role:admin,teacher,student,parent')->only(['show', 'profile']);
     }

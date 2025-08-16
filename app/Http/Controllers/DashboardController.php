@@ -18,7 +18,7 @@ class DashboardController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api');
+        $this->middleware('auth');
     }
 
     /**
@@ -112,23 +112,18 @@ class DashboardController extends Controller
             ];
         }
 
-        return response()->json([
-            'success' => true,
-            'data' => [
-                'stats' => [
-                    'total_students' => $totalStudents,
-                    'total_teachers' => $totalTeachers,
-                    'total_classes' => $totalClasses,
-                    'total_subjects' => $totalSubjects,
-                    'today_attendance_rate' => $attendanceRate,
-                ],
-                'recent_students' => $recentStudents,
-                'upcoming_exams' => $upcomingExams,
-                'recent_announcements' => $recentAnnouncements,
-                'class_stats' => $classStats,
-                'attendance_trends' => $attendanceTrends,
-            ]
-        ]);
+        return view('dashboard.admin', compact(
+            'totalStudents',
+            'totalTeachers', 
+            'totalClasses',
+            'totalSubjects',
+            'attendanceRate',
+            'recentStudents',
+            'upcomingExams',
+            'recentAnnouncements',
+            'classStats',
+            'attendanceTrends'
+        ));
     }
 
     /**
@@ -180,23 +175,13 @@ class DashboardController extends Controller
             ->limit(5)
             ->get();
 
-        return response()->json([
-            'success' => true,
-            'data' => [
-                'today_schedule' => $todaySchedule,
-                'classes_as_teacher' => $classesAsTeacher,
-                'attendance_to_mark' => $attendanceToMark,
-                'upcoming_exams' => $upcomingExams,
-                'announcements' => $announcements,
-                'stats' => [
-                    'total_classes' => $todaySchedule->count(),
-                    'total_students' => $classesAsTeacher->sum(function ($class) {
-                        return $class->students->count();
-                    }),
-                    'pending_attendance' => collect($attendanceToMark)->where('pending', true)->count(),
-                ]
-            ]
-        ]);
+        return view('dashboard.teacher', compact(
+            'todaySchedule',
+            'classesAsTeacher',
+            'attendanceToMark',
+            'upcomingExams',
+            'announcements'
+        ));
     }
 
     /**
@@ -256,20 +241,16 @@ class DashboardController extends Controller
             ->limit(5)
             ->get();
 
-        return response()->json([
-            'success' => true,
-            'data' => [
-                'today_timetable' => $todayTimetable,
-                'current_period' => $currentPeriod,
-                'next_period' => $nextPeriod,
-                'attendance_stats' => $attendanceStats,
-                'recent_results' => $recentResults,
-                'upcoming_exams' => $upcomingExams,
-                'announcements' => $announcements,
-                'class_info' => $student->class,
-                'grade_average' => $student->getCurrentGradeAverage(),
-            ]
-        ]);
+        return view('dashboard.student', compact(
+            'todayTimetable',
+            'currentPeriod',
+            'nextPeriod',
+            'attendanceStats',
+            'recentResults',
+            'upcomingExams',
+            'announcements',
+            'student'
+        ));
     }
 
     /**
@@ -315,17 +296,12 @@ class DashboardController extends Controller
             ->limit(5)
             ->get();
 
-        return response()->json([
-            'success' => true,
-            'data' => [
-                'children' => $childrenData,
-                'family_stats' => [
-                    'total_children' => $totalChildren,
-                    'average_attendance' => round($averageAttendance, 2),
-                    'average_grades' => round($averageGrades, 2),
-                ],
-                'announcements' => $announcements,
-            ]
-        ]);
+        return view('dashboard.parent', compact(
+            'childrenData',
+            'totalChildren',
+            'averageAttendance',
+            'averageGrades',
+            'announcements'
+        ));
     }
 }
