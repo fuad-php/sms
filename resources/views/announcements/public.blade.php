@@ -7,12 +7,12 @@
             <div class="mb-8">
                 <div class="flex justify-between items-center">
                     <div>
-                        <h1 class="text-3xl font-bold text-gray-900 mb-2">School Announcements</h1>
+                        <h1 class="text-3xl font-bold text-gray-900 mb-2">{{ __('app.school_announcements') }}</h1>
                         <p class="text-gray-600">Stay updated with the latest news and important information from our school.</p>
                     </div>
                     <div class="text-right">
                         <div class="text-2xl font-bold text-blue-600">{{ $announcements->total() }}</div>
-                        <div class="text-sm text-gray-500">Total Announcements</div>
+                        <div class="text-sm text-gray-500">{{ __('app.announcements_no') }}</div>
                     </div>
                 </div>
             </div>

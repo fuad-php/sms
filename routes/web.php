@@ -23,6 +23,13 @@ use Illuminate\Support\Facades\Route;
 
 // Public routes
 Route::get('/', [WebController::class, 'welcome'])->name('welcome')->middleware('maintenance');
+// Public Announcements Route (accessible to everyone)
+Route::get('/announcement', [AnnouncementController::class, 'publicAnnouncements'])->name('announcements.public');
+Route::get('/home',function(){
+    return view('home');
+})->name('home');
+
+
 
 // Contact form routes (public)
 Route::group(['prefix' => 'contact', 'as' => 'contact.'], function () {
@@ -106,10 +113,7 @@ Route::middleware(['auth', 'maintenance'])->group(function () {
         Route::get('/', function () {
             return view('results.index', ['message' => 'Results management - to be implemented']);
         })->name('index');
-    });
-    
-    // Public Announcements Route (accessible to everyone)
-    Route::get('/announcement', [AnnouncementController::class, 'publicAnnouncements'])->name('announcements.public');
+    });        
 
     // Announcements Routes
     Route::group(['prefix' => 'announcements', 'as' => 'announcements.'], function () {

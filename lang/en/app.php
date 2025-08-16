@@ -22,6 +22,8 @@ return [
     'exams' => 'Exams',
     'results' => 'Results',
     'announcements' => 'Announcements',
+    'announcements_no' => 'Number of Announcements',
+    'school_announcements' => 'School Announcements',
     'settings' => 'Settings',
     'profile' => 'Profile',
     'logout' => 'Logout',

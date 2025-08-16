@@ -22,6 +22,8 @@ return [
     'exams' => 'পরীক্ষা',
     'results' => 'ফলাফল',
     'announcements' => 'ঘোষণা',
+    'announcements_no' => 'টি ঘোষণা',
+    'school_announcements' => 'বিদ্যালয়ের ঘোষণা',
     'settings' => 'সেটিংস',
     'profile' => 'প্রোফাইল',
     'logout' => 'লগআউট',

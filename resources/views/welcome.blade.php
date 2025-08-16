@@ -276,7 +276,7 @@
 
                 @if($announcements->count() > 0)
                 <div class="text-center mt-8">
-                    <a href="{{ route('announcements.index') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition duration-300">
+                    <a href="{{ route('announcements.public') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition duration-300">
                         {{ __('app.view_all_announcements') }}
                     </a>
                 </div>

@@ -29,7 +29,7 @@
                             </div>
                             <div class="ml-3">
                                 <h1 class="text-xl font-bold text-gray-900">
-                                    {{ config('app.name', 'School Management System') }}
+                                    @schoolName
                                 </h1>
                             </div>
                         </a>
@@ -39,33 +39,34 @@
                     <nav class="hidden md:flex space-x-8">
                         <a href="{{ route('home') }}" 
                            class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('home') ? 'text-blue-600' : '' }}">
-                            Home
+                            {{ __('app.home') }}
                         </a>
                         <a href="{{ route('announcements.public') }}" 
                            class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('announcements.public') ? 'text-blue-600' : '' }}">
-                            Announcements
+                            {{ __('app.announcements') }}
                         </a>
                         <a href="{{ route('contact.index') }}" 
                            class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('contact.*') ? 'text-blue-600' : '' }}">
-                            Contact
+                            {{ __('app.contact') }}
                         </a>
                     </nav>
 
                     <!-- Auth Buttons -->
                     <div class="flex items-center space-x-4">
+                        <x-language-switcher />
                         @auth
                             <a href="{{ route('dashboard') }}" 
                                class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                                Dashboard
+                                {{ __('app.dashboard') }}
                             </a>
                         @else
                             <a href="{{ route('login') }}" 
                                class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
-                                Login
+                                {{ __('app.login') }}
                             </a>
                             <a href="{{ route('register') }}" 
                                class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                                Register
+                                {{ __('app.register') }}
                             </a>
                         @endauth
                     </div>
@@ -87,15 +88,15 @@
                     <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-gray-200">
                         <a href="{{ route('home') }}" 
                            class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 {{ request()->routeIs('home') ? 'text-blue-600 bg-blue-50' : '' }}">
-                            Home
+                            {{ __('app.home') }}
                         </a>
                         <a href="{{ route('announcements.public') }}" 
                            class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 {{ request()->routeIs('announcements.public') ? 'text-blue-600 bg-blue-50' : '' }}">
-                            Announcements
+                            {{ __('app.announcements') }}
                         </a>
                         <a href="{{ route('contact.index') }}" 
                            class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 {{ request()->routeIs('contact.*') ? 'text-blue-600 bg-blue-50' : '' }}">
-                            Contact
+                            {{ __('app.contact') }}
                         </a>
                     </div>
                     <div class="pt-4 pb-3 border-t border-gray-200">
@@ -103,18 +104,18 @@
                             <div class="px-4 py-2">
                                 <a href="{{ route('dashboard') }}" 
                                    class="block w-full text-center bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700">
-                                    Dashboard
+                                    {{ __('app.dashboard') }}
                                 </a>
                             </div>
                         @else
                             <div class="px-4 space-y-2">
                                 <a href="{{ route('login') }}" 
                                    class="block text-center text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-base font-medium">
-                                    Login
+                                    {{ __('app.login') }}
                                 </a>
                                 <a href="{{ route('register') }}" 
                                    class="block w-full text-center bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700">
-                                    Register
+                                    {{ __('app.register') }}
                                 </a>
                             </div>
                         @endauth
