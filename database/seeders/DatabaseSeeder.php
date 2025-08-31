@@ -23,6 +23,10 @@ class DatabaseSeeder extends Seeder
             AnnouncementSeeder::class,
             SettingsSeeder::class,
             ParentSeeder::class,
-        ]);
+                    ExamSeeder::class,
+        ExamResultSeeder::class,
+        ContactInquirySeeder::class,
+        CarouselSlideSeeder::class,
+    ]);
     }
 }

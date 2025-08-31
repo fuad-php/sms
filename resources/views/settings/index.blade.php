@@ -1,29 +1,29 @@
 @extends('layouts.app')
 
-@section('title', 'School Settings')
+@section('title', __('app.school_settings'))
 
 @section('content')
 <div class="container mx-auto px-4 py-8">
     <div class="mb-8">
         <div class="flex justify-between items-center">
             <div>
-                <h1 class="text-3xl font-bold text-gray-900">School Settings</h1>
-                <p class="text-gray-600">Manage school configuration and system settings</p>
+                <h1 class="text-3xl font-bold text-gray-900">{{ __('app.school_settings') }}</h1>
+                <p class="text-gray-600">{{ __('app.manage_school_configuration') }}</p>
             </div>
             <div class="flex space-x-3">
                 <a href="{{ route('settings.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">
-                    <i class="fas fa-plus mr-2"></i>Add Setting
+                    <i class="fas fa-plus mr-2"></i>{{ __('app.create_new_setting') }}
                 </a>
                 <form method="POST" action="{{ route('settings.clear-cache') }}" class="inline">
                     @csrf
                     <button type="submit" class="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded-md text-sm font-medium">
-                        <i class="fas fa-sync mr-2"></i>Clear Cache
+                        <i class="fas fa-sync mr-2"></i>{{ __('app.clear_cache') }}
                     </button>
                 </form>
                 <form method="POST" action="{{ route('settings.reset-defaults') }}" class="inline" onsubmit="return confirm('Are you sure you want to reset all settings to defaults? This action cannot be undone.')">
                     @csrf
                     <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-medium">
-                        <i class="fas fa-undo mr-2"></i>Reset to Defaults
+                        <i class="fas fa-undo mr-2"></i>{{ __('app.reset_defaults') }}
                     </button>
                 </form>
             </div>
@@ -35,10 +35,10 @@
             <div class="text-gray-400 mb-4">
                 <i class="fas fa-cog text-6xl"></i>
             </div>
-            <h3 class="text-lg font-medium text-gray-900 mb-2">No Settings Found</h3>
-            <p class="text-gray-600 mb-4">No settings have been configured yet.</p>
+            <h3 class="text-lg font-medium text-gray-900 mb-2">{{ __('app.no_settings_found') }}</h3>
+            <p class="text-gray-600 mb-4">{{ __('app.no_settings_configured') }}</p>
             <a href="{{ route('settings.reset-defaults') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">
-                <i class="fas fa-magic mr-2"></i>Load Default Settings
+                <i class="fas fa-magic mr-2"></i>{{ __('app.load_default_settings') }}
             </a>
         </div>
     @else

@@ -4,249 +4,119 @@
 
 @section('content')
 <div class="container mx-auto px-4 py-8">
-    <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold text-gray-900">Parent Management</h1>
-        <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200">
-            <i class="fas fa-plus mr-2"></i>Add New Parent
-        </button>
-    </div>
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">{{ __('app.parents') }} {{ __('app.manage') }}</h1>
+            <p class="text-gray-600">Manage parent accounts, student relationships, and communication</p>
+        </div>
 
-    <!-- Statistics Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        <div class="bg-white rounded-lg shadow p-6">
+        <!-- Placeholder Message -->
+        <div class="bg-pink-50 border border-pink-200 rounded-lg p-6 mb-8">
             <div class="flex items-center">
-                <div class="p-3 rounded-full bg-blue-100 text-blue-600">
-                    <i class="fas fa-users text-2xl"></i>
+                <div class="flex-shrink-0">
+                    <svg class="h-8 w-8 text-pink-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
                 </div>
-                <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-600">Total Parents</p>
-                    <p class="text-2xl font-semibold text-gray-900">180</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="bg-white rounded-lg shadow p-6">
-            <div class="flex items-center">
-                <div class="p-3 rounded-full bg-green-100 text-green-600">
-                    <i class="fas fa-child text-2xl"></i>
-                </div>
-                <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-600">Total Students</p>
-                    <p class="text-2xl font-semibold text-gray-900">450</p>
+                <div class="ml-3">
+                    <h3 class="text-lg font-medium text-pink-800">Feature Coming Soon</h3>
+                    <div class="mt-2 text-pink-700">
+                        <p>{{ $message ?? 'Parent management functionality is currently under development.' }}</p>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="bg-white rounded-lg shadow p-6">
-            <div class="flex items-center">
-                <div class="p-3 rounded-full bg-purple-100 text-purple-600">
-                    <i class="fas fa-user-check text-2xl"></i>
+        <!-- Future Features Preview -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Parent List -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center mb-4">
+                    <div class="p-2 bg-blue-100 rounded-lg">
+                        <svg class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="ml-3 text-lg font-medium text-gray-900">Parent List</h3>
                 </div>
-                <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-600">Active Parents</p>
-                    <p class="text-2xl font-semibold text-gray-900">175</p>
+                <p class="text-gray-600 text-sm">View and manage all parent accounts</p>
+            </div>
+
+            <!-- Add Parent -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center mb-4">
+                    <div class="p-2 bg-green-100 rounded-lg">
+                        <svg class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                        </svg>
+                    </div>
+                    <h3 class="ml-3 text-lg font-medium text-gray-900">Add Parent</h3>
                 </div>
+                <p class="text-gray-600 text-sm">Register new parent accounts</p>
+            </div>
+
+            <!-- Parent Profile -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center mb-4">
+                    <div class="p-2 bg-purple-100 rounded-lg">
+                        <svg class="h-6 w-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                    </div>
+                    <h3 class="ml-3 text-lg font-medium text-gray-900">Parent Profile</h3>
+                </div>
+                <p class="text-gray-600 text-sm">Manage parent information and details</p>
+            </div>
+
+            <!-- Student Assignment -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center mb-4">
+                    <div class="p-2 bg-yellow-100 rounded-lg">
+                        <svg class="h-6 w-6 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="ml-3 text-lg font-medium text-gray-900">Student Assignment</h3>
+                </div>
+                <p class="text-gray-600 text-sm">Link parents to their children</p>
+            </div>
+
+            <!-- Communication -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center mb-4">
+                    <div class="p-2 bg-indigo-100 rounded-lg">
+                        <svg class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                        </svg>
+                    </div>
+                    <h3 class="ml-3 text-lg font-medium text-gray-900">Communication</h3>
+                </div>
+                <p class="text-gray-600 text-sm">Manage parent communication tools</p>
+            </div>
+
+            <!-- Parent Portal -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center mb-4">
+                    <div class="p-2 bg-red-100 rounded-lg">
+                        <svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg>
+                    </div>
+                    <h3 class="ml-3 text-lg font-medium text-gray-900">Parent Portal</h3>
+                </div>
+                <p class="text-gray-600 text-sm">Access parent portal features</p>
             </div>
         </div>
 
-        <div class="bg-white rounded-lg shadow p-6">
-            <div class="flex items-center">
-                <div class="p-3 rounded-full bg-yellow-100 text-yellow-600">
-                    <i class="fas fa-envelope text-2xl"></i>
-                </div>
-                <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-600">Notifications</p>
-                    <p class="text-2xl font-semibold text-gray-900">25</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Filters -->
-    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-        <form class="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div>
-                <label for="search" class="block text-sm font-medium text-gray-700 mb-1">Search</label>
-                <input type="text" name="search" id="search" 
-                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                       placeholder="Search parents...">
-            </div>
-            
-            <div>
-                <label for="class" class="block text-sm font-medium text-gray-700 mb-1">Student Class</label>
-                <select name="class" id="class" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option value="">All Classes</option>
-                    <option value="1a">Class 1A</option>
-                    <option value="1b">Class 1B</option>
-                    <option value="2a">Class 2A</option>
-                    <option value="2b">Class 2B</option>
-                </select>
-            </div>
-            
-            <div>
-                <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
-                <select name="status" id="status" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option value="">All Status</option>
-                    <option value="active">Active</option>
-                    <option value="inactive">Inactive</option>
-                </select>
-            </div>
-            
-            <div>
-                <label for="children" class="block text-sm font-medium text-gray-700 mb-1">Children Count</label>
-                <select name="children" id="children" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option value="">All</option>
-                    <option value="1">1 Child</option>
-                    <option value="2">2 Children</option>
-                    <option value="3">3+ Children</option>
-                </select>
-            </div>
-        </form>
-    </div>
-
-    <!-- Parents Table -->
-    <div class="bg-white rounded-lg shadow-md overflow-hidden">
-        <div class="px-6 py-4 border-b border-gray-200">
-            <h3 class="text-lg font-semibold text-gray-900">All Parents</h3>
-        </div>
-        
-        <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Parent</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Children</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Address</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="flex items-center">
-                                <div class="flex-shrink-0 h-10 w-10">
-                                    <div class="h-10 w-10 rounded-full bg-gray-300 flex items-center justify-center">
-                                        <span class="text-sm font-medium text-gray-700">JS</span>
-                                    </div>
-                                </div>
-                                <div class="ml-4">
-                                    <div class="text-sm font-medium text-gray-900">John Smith</div>
-                                    <div class="text-sm text-gray-500">Father</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-900">Sarah Smith (Class 1A)</div>
-                            <div class="text-sm text-gray-500">Michael Smith (Class 3B)</div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-900">jsmith@email.com</div>
-                            <div class="text-sm text-gray-500">+1 (555) 123-4567</div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">123 Main St, City</td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                Active
-                            </span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                            <div class="flex space-x-2">
-                                <a href="#" class="text-blue-600 hover:text-blue-900">View</a>
-                                <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                                <a href="#" class="text-green-600 hover:text-green-900">Message</a>
-                            </div>
-                        </td>
-                    </tr>
-                    
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="flex items-center">
-                                <div class="flex-shrink-0 h-10 w-10">
-                                    <div class="h-10 w-10 rounded-full bg-gray-300 flex items-center justify-center">
-                                        <span class="text-sm font-medium text-gray-700">MJ</span>
-                                    </div>
-                                </div>
-                                <div class="ml-4">
-                                    <div class="text-sm font-medium text-gray-900">Mary Johnson</div>
-                                    <div class="text-sm text-gray-500">Mother</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-900">David Johnson (Class 2A)</div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-900">mjohnson@email.com</div>
-                            <div class="text-sm text-gray-500">+1 (555) 234-5678</div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">456 Oak Ave, Town</td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                Active
-                            </span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                            <div class="flex space-x-2">
-                                <a href="#" class="text-blue-600 hover:text-blue-900">View</a>
-                                <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                                <a href="#" class="text-green-600 hover:text-green-900">Message</a>
-                            </div>
-                        </td>
-                    </tr>
-                    
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="flex items-center">
-                                <div class="flex-shrink-0 h-10 w-10">
-                                    <div class="h-10 w-10 rounded-full bg-gray-300 flex items-center justify-center">
-                                        <span class="text-sm font-medium text-gray-700">RW</span>
-                                    </div>
-                                </div>
-                                <div class="ml-4">
-                                    <div class="text-sm font-medium text-gray-900">Robert Wilson</div>
-                                    <div class="text-sm text-gray-500">Father</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-900">Emma Wilson (Class 1B)</div>
-                            <div class="text-sm text-gray-500">James Wilson (Class 4A)</div>
-                            <div class="text-sm text-gray-500">Lisa Wilson (Class 6B)</div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-900">rwilson@email.com</div>
-                            <div class="text-sm text-gray-500">+1 (555) 345-6789</div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">789 Pine Rd, Village</td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                Active
-                            </span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                            <div class="flex space-x-2">
-                                <a href="#" class="text-blue-600 hover:text-blue-900">View</a>
-                                <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                                <a href="#" class="text-green-600 hover:text-green-900">Message</a>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        
-        <div class="px-6 py-4 border-t border-gray-200">
-            <div class="flex items-center justify-between">
-                <div class="text-sm text-gray-700">
-                    Showing <span class="font-medium">1</span> to <span class="font-medium">10</span> of <span class="font-medium">180</span> results
-                </div>
-                <div class="flex space-x-2">
-                    <button class="px-3 py-1 border border-gray-300 rounded-md text-sm text-gray-700 hover:bg-gray-50">Previous</button>
-                    <button class="px-3 py-1 border border-gray-300 rounded-md text-sm text-gray-700 hover:bg-gray-50">Next</button>
-                </div>
-            </div>
+        <!-- Back Button -->
+        <div class="mt-8 text-center">
+            <a href="{{ route('school.dashboard') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500">
+                <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                Back to Dashboard
+            </a>
         </div>
     </div>
 </div>

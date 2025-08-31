@@ -4,219 +4,119 @@
 
 @section('content')
 <div class="container mx-auto px-4 py-8">
-    <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold text-gray-900">Exam Management</h1>
-        <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200">
-            <i class="fas fa-plus mr-2"></i>Create Exam
-        </button>
-    </div>
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">{{ __('app.exams') }} {{ __('app.manage') }}</h1>
+            <p class="text-gray-600">{{ __('app.manage_school_examinations') }}</p>
+        </div>
 
-    <!-- Statistics Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        <div class="bg-white rounded-lg shadow p-6">
+        <!-- Placeholder Message -->
+        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6 mb-8">
             <div class="flex items-center">
-                <div class="p-3 rounded-full bg-blue-100 text-blue-600">
-                    <i class="fas fa-file-alt text-2xl"></i>
+                <div class="flex-shrink-0">
+                    <svg class="h-8 w-8 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
                 </div>
-                <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-600">Total Exams</p>
-                    <p class="text-2xl font-semibold text-gray-900">24</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="bg-white rounded-lg shadow p-6">
-            <div class="flex items-center">
-                <div class="p-3 rounded-full bg-green-100 text-green-600">
-                    <i class="fas fa-calendar-check text-2xl"></i>
-                </div>
-                <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-600">Upcoming</p>
-                    <p class="text-2xl font-semibold text-gray-900">8</p>
+                <div class="ml-3">
+                    <h3 class="text-lg font-medium text-yellow-800">Feature Coming Soon</h3>
+                    <div class="mt-2 text-yellow-700">
+                        <p>{{ $message ?? 'Exam management functionality is currently under development.' }}</p>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="bg-white rounded-lg shadow p-6">
-            <div class="flex items-center">
-                <div class="p-3 rounded-full bg-purple-100 text-purple-600">
-                    <i class="fas fa-check-circle text-2xl"></i>
+        <!-- Future Features Preview -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Exam List -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center mb-4">
+                    <div class="p-2 bg-blue-100 rounded-lg">
+                        <svg class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                    </div>
+                    <h3 class="ml-3 text-lg font-medium text-gray-900">Exam List</h3>
                 </div>
-                <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-600">Completed</p>
-                    <p class="text-2xl font-semibold text-gray-900">16</p>
+                <p class="text-gray-600 text-sm">View and manage all school examinations</p>
+            </div>
+
+            <!-- Create Exam -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center mb-4">
+                    <div class="p-2 bg-green-100 rounded-lg">
+                        <svg class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                        </svg>
+                    </div>
+                    <h3 class="ml-3 text-lg font-medium text-gray-900">Create Exam</h3>
                 </div>
+                <p class="text-gray-600 text-sm">Schedule new examinations with details</p>
+            </div>
+
+            <!-- Exam Schedule -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center mb-4">
+                    <div class="p-2 bg-purple-100 rounded-lg">
+                        <svg class="h-6 w-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                    <h3 class="ml-3 text-lg font-medium text-gray-900">Exam Schedule</h3>
+                </div>
+                <p class="text-gray-600 text-sm">Manage exam dates and time slots</p>
+            </div>
+
+            <!-- Subject Assignment -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center mb-4">
+                    <div class="p-2 bg-yellow-100 rounded-lg">
+                        <svg class="h-6 w-6 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                        </svg>
+                    </div>
+                    <h3 class="ml-3 text-lg font-medium text-gray-900">Subject Assignment</h3>
+                </div>
+                <p class="text-gray-600 text-sm">Assign subjects to examinations</p>
+            </div>
+
+            <!-- Room Allocation -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center mb-4">
+                    <div class="p-2 bg-indigo-100 rounded-lg">
+                        <svg class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                        </svg>
+                    </div>
+                    <h3 class="ml-3 text-lg font-medium text-gray-900">Room Allocation</h3>
+                </div>
+                <p class="text-gray-600 text-sm">Assign exam rooms and seating</p>
+            </div>
+
+            <!-- Results Management -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center mb-4">
+                    <div class="p-2 bg-red-100 rounded-lg">
+                        <svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg>
+                    </div>
+                    <h3 class="ml-3 text-lg font-medium text-gray-900">Results</h3>
+                </div>
+                <p class="text-gray-600 text-sm">Manage exam results and grades</p>
             </div>
         </div>
 
-        <div class="bg-white rounded-lg shadow p-6">
-            <div class="flex items-center">
-                <div class="p-3 rounded-full bg-yellow-100 text-yellow-600">
-                    <i class="fas fa-users text-2xl"></i>
-                </div>
-                <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-600">Students</p>
-                    <p class="text-2xl font-semibold text-gray-900">450</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Filters -->
-    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-        <form class="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div>
-                <label for="search" class="block text-sm font-medium text-gray-700 mb-1">Search</label>
-                <input type="text" name="search" id="search" 
-                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                       placeholder="Search exams...">
-            </div>
-            
-            <div>
-                <label for="subject" class="block text-sm font-medium text-gray-700 mb-1">Subject</label>
-                <select name="subject" id="subject" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option value="">All Subjects</option>
-                    <option value="mathematics">Mathematics</option>
-                    <option value="english">English</option>
-                    <option value="physics">Physics</option>
-                    <option value="chemistry">Chemistry</option>
-                </select>
-            </div>
-            
-            <div>
-                <label for="class" class="block text-sm font-medium text-gray-700 mb-1">Class</label>
-                <select name="class" id="class" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option value="">All Classes</option>
-                    <option value="1a">Class 1A</option>
-                    <option value="1b">Class 1B</option>
-                    <option value="2a">Class 2A</option>
-                    <option value="2b">Class 2B</option>
-                </select>
-            </div>
-            
-            <div>
-                <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
-                <select name="status" id="status" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option value="">All Status</option>
-                    <option value="upcoming">Upcoming</option>
-                    <option value="ongoing">Ongoing</option>
-                    <option value="completed">Completed</option>
-                </select>
-            </div>
-        </form>
-    </div>
-
-    <!-- Exams Table -->
-    <div class="bg-white rounded-lg shadow-md overflow-hidden">
-        <div class="px-6 py-4 border-b border-gray-200">
-            <h3 class="text-lg font-semibold text-gray-900">All Exams</h3>
-        </div>
-        
-        <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Exam Name</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subject</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Class</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date & Time</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Duration</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm font-medium text-gray-900">Mid-Term Mathematics</div>
-                            <div class="text-sm text-gray-500">Chapter 1-5</div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Mathematics</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Class 1A</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                            <div>Dec 15, 2024</div>
-                            <div class="text-gray-500">9:00 AM</div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">2 hours</td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
-                                Upcoming
-                            </span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                            <div class="flex space-x-2">
-                                <a href="#" class="text-blue-600 hover:text-blue-900">View</a>
-                                <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                                <a href="#" class="text-green-600 hover:text-green-900">Results</a>
-                            </div>
-                        </td>
-                    </tr>
-                    
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm font-medium text-gray-900">English Literature Final</div>
-                            <div class="text-sm text-gray-500">All Chapters</div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">English</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Class 2A</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                            <div>Dec 10, 2024</div>
-                            <div class="text-gray-500">10:00 AM</div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">3 hours</td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                Completed
-                            </span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                            <div class="flex space-x-2">
-                                <a href="#" class="text-blue-600 hover:text-blue-900">View</a>
-                                <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                                <a href="#" class="text-green-600 hover:text-green-900">Results</a>
-                            </div>
-                        </td>
-                    </tr>
-                    
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm font-medium text-gray-900">Physics Lab Test</div>
-                            <div class="text-sm text-gray-500">Practical</div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Physics</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Class 1B</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                            <div>Dec 20, 2024</div>
-                            <div class="text-gray-500">2:00 PM</div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">1 hour</td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
-                                Upcoming
-                            </span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                            <div class="flex space-x-2">
-                                <a href="#" class="text-blue-600 hover:text-blue-900">View</a>
-                                <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                                <a href="#" class="text-green-600 hover:text-green-900">Results</a>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        
-        <div class="px-6 py-4 border-t border-gray-200">
-            <div class="flex items-center justify-between">
-                <div class="text-sm text-gray-700">
-                    Showing <span class="font-medium">1</span> to <span class="font-medium">10</span> of <span class="font-medium">24</span> results
-                </div>
-                <div class="flex space-x-2">
-                    <button class="px-3 py-1 border border-gray-300 rounded-md text-sm text-gray-700 hover:bg-gray-50">Previous</button>
-                    <button class="px-3 py-1 border border-gray-300 rounded-md text-sm text-gray-700 hover:bg-gray-50">Next</button>
-                </div>
-            </div>
+        <!-- Back Button -->
+        <div class="mt-8 text-center">
+            <a href="{{ route('school.dashboard') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
+                <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                Back to Dashboard
+            </a>
         </div>
     </div>
 </div>

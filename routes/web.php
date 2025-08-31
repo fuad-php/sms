@@ -22,12 +22,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Public routes
-Route::get('/', [WebController::class, 'welcome'])->name('welcome')->middleware('maintenance');
-// Public Announcements Route (accessible to everyone)
+Route::get('/', [WebController::class, 'welcome'])->name('home')->middleware('maintenance');
+// Public Announcements Routes (accessible to everyone)
 Route::get('/announcement', [AnnouncementController::class, 'publicAnnouncements'])->name('announcements.public');
-Route::get('/home',function(){
-    return view('home');
-})->name('home');
+Route::get('/announcement/{announcement}', [AnnouncementController::class, 'publicShow'])->name('announcements.public.show');
+Route::get('/announcement/{announcement}/download', [AnnouncementController::class, 'publicDownloadAttachment'])->name('announcements.public.download');
 
 
 
@@ -96,9 +95,14 @@ Route::middleware(['auth', 'maintenance'])->group(function () {
     
     // Timetable Management Routes
     Route::group(['prefix' => 'timetable', 'as' => 'timetable.'], function () {
-        Route::get('/', function () {
-            return view('timetable.index', ['message' => 'Timetable management - to be implemented']);
-        })->name('index');
+        Route::get('/', [App\Http\Controllers\TimetableController::class, 'index'])->name('index');
+        Route::get('/weekly', [App\Http\Controllers\TimetableController::class, 'weeklyOverview'])->name('weekly');
+        Route::get('/create', [App\Http\Controllers\TimetableController::class, 'create'])->name('create')->middleware('role:admin,teacher');
+        Route::post('/', [App\Http\Controllers\TimetableController::class, 'store'])->name('store')->middleware('role:admin,teacher');
+        Route::get('/{timetable}', [App\Http\Controllers\TimetableController::class, 'show'])->name('show');
+        Route::get('/{timetable}/edit', [App\Http\Controllers\TimetableController::class, 'edit'])->name('edit')->middleware('role:admin,teacher');
+        Route::put('/{timetable}', [App\Http\Controllers\TimetableController::class, 'update'])->name('update')->middleware('role:admin,teacher');
+        Route::delete('/{timetable}', [App\Http\Controllers\TimetableController::class, 'destroy'])->name('destroy')->middleware('role:admin,teacher');
     });
     
     // Exam Management Routes
@@ -110,9 +114,17 @@ Route::middleware(['auth', 'maintenance'])->group(function () {
     
     // Results Management Routes
     Route::group(['prefix' => 'results', 'as' => 'results.'], function () {
-        Route::get('/', function () {
-            return view('results.index', ['message' => 'Results management - to be implemented']);
-        })->name('index');
+        Route::get('/', [App\Http\Controllers\ExamResultController::class, 'index'])->name('index');
+        Route::get('/create', [App\Http\Controllers\ExamResultController::class, 'create'])->name('create')->middleware('role:admin,teacher');
+        Route::post('/', [App\Http\Controllers\ExamResultController::class, 'store'])->name('store')->middleware('role:admin,teacher');
+        Route::get('/bulk-import', [App\Http\Controllers\ExamResultController::class, 'showBulkImport'])->name('bulk-import')->middleware('role:admin,teacher');
+        Route::post('/bulk-import', [App\Http\Controllers\ExamResultController::class, 'bulkImport'])->name('bulk-import.store')->middleware('role:admin,teacher');
+        Route::get('/export', [App\Http\Controllers\ExamResultController::class, 'export'])->name('export')->middleware('role:admin,teacher');
+        Route::get('/statistics', [App\Http\Controllers\ExamResultController::class, 'statistics'])->name('statistics');
+        Route::get('/{result}', [App\Http\Controllers\ExamResultController::class, 'show'])->name('show');
+        Route::get('/{result}/edit', [App\Http\Controllers\ExamResultController::class, 'edit'])->name('edit')->middleware('role:admin,teacher');
+        Route::put('/{result}', [App\Http\Controllers\ExamResultController::class, 'update'])->name('update')->middleware('role:admin,teacher');
+        Route::delete('/{result}', [App\Http\Controllers\ExamResultController::class, 'destroy'])->name('destroy')->middleware('role:admin,teacher');
     });        
 
     // Announcements Routes
@@ -156,6 +168,9 @@ Route::middleware(['auth', 'maintenance'])->group(function () {
         Route::post('/clear-cache', [App\Http\Controllers\SettingsController::class, 'clearCache'])->name('clear-cache')->middleware('role:admin');
         Route::post('/reset-defaults', [App\Http\Controllers\SettingsController::class, 'resetToDefaults'])->name('reset-defaults')->middleware('role:admin');
     });
+
+    // Public Carousel Route (for homepage)
+    Route::get('/carousel/active', [CarouselController::class, 'getActiveSlides'])->name('carousel.active');
 
     // Carousel Management Routes (Admin only)
     Route::group(['prefix' => 'admin/carousel', 'as' => 'admin.carousel.'], function () {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\ContactInquiry;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 use App\Mail\ContactFormSubmission;
 use App\Mail\ContactFormConfirmation;
 
@@ -51,7 +52,7 @@ class ContactController extends Controller
                 ->send(new ContactFormSubmission($inquiry));
         } catch (\Exception $e) {
             // Log the error but don't fail the form submission
-            \Log::error('Failed to send contact form notification: ' . $e->getMessage());
+            Log::error('Failed to send contact form notification: ' . $e->getMessage());
         }
 
         // Send confirmation email to user
@@ -60,7 +61,7 @@ class ContactController extends Controller
                 ->send(new ContactFormConfirmation($inquiry));
         } catch (\Exception $e) {
             // Log the error but don't fail the form submission
-            \Log::error('Failed to send contact form confirmation: ' . $e->getMessage());
+            Log::error('Failed to send contact form confirmation: ' . $e->getMessage());
         }
 
         return redirect()->route('contact.index')
@@ -70,10 +71,37 @@ class ContactController extends Controller
     /**
      * Display contact inquiries (admin only)
      */
-    public function adminIndex()
+    public function adminIndex(Request $request)
     {
-        $inquiries = ContactInquiry::orderBy('created_at', 'desc')
-            ->paginate(20);
+        $query = ContactInquiry::query();
+
+        // Filter by status
+        if ($request->filled('status')) {
+            if ($request->status === 'unread') {
+                $query->unread();
+            } elseif ($request->status === 'read') {
+                $query->read();
+            }
+        }
+
+        // Filter by department
+        if ($request->filled('department')) {
+            $query->where('department', $request->department);
+        }
+
+        // Search functionality
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%")
+                  ->orWhere('subject', 'like', "%{$search}%")
+                  ->orWhere('message', 'like', "%{$search}%")
+                  ->orWhere('phone', 'like', "%{$search}%");
+            });
+        }
+
+        $inquiries = $query->orderBy('created_at', 'desc')->paginate(20);
 
         return view('admin.contact.index', compact('inquiries'));
     }

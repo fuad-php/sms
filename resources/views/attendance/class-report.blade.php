@@ -97,7 +97,7 @@
         @if(isset($studentAttendance) && count($studentAttendance) > 0)
         <div class="bg-white rounded-lg shadow mb-6">
             <div class="px-6 py-4 border-b border-gray-200">
-                <h3 class="text-lg font-medium text-gray-900">Student Attendance Summary</h3>
+                <h3 class="text-lg font-medium text-gray-900">{{ __('app.student_attendance_summary') }}</h3>
             </div>
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200">

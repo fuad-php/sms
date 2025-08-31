@@ -116,7 +116,7 @@
         @if(isset($classStats) && count($classStats) > 0)
         <div class="bg-white rounded-lg shadow mb-6">
             <div class="px-6 py-4 border-b border-gray-200">
-                <h3 class="text-lg font-medium text-gray-900">Class-wise Attendance</h3>
+                <h3 class="text-lg font-medium text-gray-900">{{ __('app.class_wise_attendance') }}</h3>
             </div>
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200">

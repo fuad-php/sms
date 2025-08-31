@@ -4,248 +4,119 @@
 
 @section('content')
 <div class="container mx-auto px-4 py-8">
-    <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold text-gray-900">Subject Management</h1>
-        <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200">
-            <i class="fas fa-plus mr-2"></i>Add New Subject
-        </button>
-    </div>
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Subject Management</h1>
+            <p class="text-gray-600">Manage school subjects, curriculum, and teacher assignments</p>
+        </div>
 
-    <!-- Statistics Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        <div class="bg-white rounded-lg shadow p-6">
+        <!-- Placeholder Message -->
+        <div class="bg-green-50 border border-green-200 rounded-lg p-6 mb-8">
             <div class="flex items-center">
-                <div class="p-3 rounded-full bg-blue-100 text-blue-600">
-                    <i class="fas fa-book text-2xl"></i>
+                <div class="flex-shrink-0">
+                    <svg class="h-8 w-8 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
                 </div>
-                <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-600">Total Subjects</p>
-                    <p class="text-2xl font-semibold text-gray-900">15</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="bg-white rounded-lg shadow p-6">
-            <div class="flex items-center">
-                <div class="p-3 rounded-full bg-green-100 text-green-600">
-                    <i class="fas fa-user-tie text-2xl"></i>
-                </div>
-                <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-600">Subject Teachers</p>
-                    <p class="text-2xl font-semibold text-gray-900">25</p>
+                <div class="ml-3">
+                    <h3 class="text-lg font-medium text-green-800">Feature Coming Soon</h3>
+                    <div class="mt-2 text-green-700">
+                        <p>{{ $message ?? 'Subject management functionality is currently under development.' }}</p>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="bg-white rounded-lg shadow p-6">
-            <div class="flex items-center">
-                <div class="p-3 rounded-full bg-purple-100 text-purple-600">
-                    <i class="fas fa-chalkboard text-2xl"></i>
+        <!-- Future Features Preview -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Subject List -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center mb-4">
+                    <div class="p-2 bg-blue-100 rounded-lg">
+                        <svg class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                        </svg>
+                    </div>
+                    <h3 class="ml-3 text-lg font-medium text-gray-900">Subject List</h3>
                 </div>
-                <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-600">Active Classes</p>
-                    <p class="text-2xl font-semibold text-gray-900">12</p>
+                <p class="text-gray-600 text-sm">View and manage all school subjects and courses</p>
+            </div>
+
+            <!-- Add Subject -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center mb-4">
+                    <div class="p-2 bg-green-100 rounded-lg">
+                        <svg class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                        </svg>
+                    </div>
+                    <h3 class="ml-3 text-lg font-medium text-gray-900">Add Subject</h3>
                 </div>
+                <p class="text-gray-600 text-sm">Create new subjects with curriculum details</p>
+            </div>
+
+            <!-- Subject Details -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center mb-4">
+                    <div class="p-2 bg-purple-100 rounded-lg">
+                        <svg class="h-6 w-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                    </div>
+                    <h3 class="ml-3 text-lg font-medium text-gray-900">Subject Details</h3>
+                </div>
+                <p class="text-gray-600 text-sm">Manage subject information and curriculum</p>
+            </div>
+
+            <!-- Teacher Assignment -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center mb-4">
+                    <div class="p-2 bg-yellow-100 rounded-lg">
+                        <svg class="h-6 w-6 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                    </div>
+                    <h3 class="ml-3 text-lg font-medium text-gray-900">Teacher Assignment</h3>
+                </div>
+                <p class="text-gray-600 text-sm">Assign teachers to subjects and classes</p>
+            </div>
+
+            <!-- Curriculum Management -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center mb-4">
+                    <div class="p-2 bg-indigo-100 rounded-lg">
+                        <svg class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                        </svg>
+                    </div>
+                    <h3 class="ml-3 text-lg font-medium text-gray-900">Curriculum</h3>
+                </div>
+                <p class="text-gray-600 text-sm">Manage subject curriculum and learning objectives</p>
+            </div>
+
+            <!-- Subject Reports -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center mb-4">
+                    <div class="p-2 bg-red-100 rounded-lg">
+                        <svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg>
+                    </div>
+                    <h3 class="ml-3 text-lg font-medium text-gray-900">Reports</h3>
+                </div>
+                <p class="text-gray-600 text-sm">Generate subject-wise reports and analytics</p>
             </div>
         </div>
 
-        <div class="bg-white rounded-lg shadow p-6">
-            <div class="flex items-center">
-                <div class="p-3 rounded-full bg-yellow-100 text-yellow-600">
-                    <i class="fas fa-clock text-2xl"></i>
-                </div>
-                <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-600">Weekly Hours</p>
-                    <p class="text-2xl font-semibold text-gray-900">180</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Filters -->
-    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-        <form class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div>
-                <label for="search" class="block text-sm font-medium text-gray-700 mb-1">Search</label>
-                <input type="text" name="search" id="search" 
-                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                       placeholder="Search subjects...">
-            </div>
-            
-            <div>
-                <label for="category" class="block text-sm font-medium text-gray-700 mb-1">Category</label>
-                <select name="category" id="category" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option value="">All Categories</option>
-                    <option value="core">Core Subjects</option>
-                    <option value="elective">Elective Subjects</option>
-                    <option value="language">Languages</option>
-                    <option value="science">Sciences</option>
-                    <option value="arts">Arts & Humanities</option>
-                </select>
-            </div>
-            
-            <div>
-                <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
-                <select name="status" id="status" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option value="">All Status</option>
-                    <option value="active">Active</option>
-                    <option value="inactive">Inactive</option>
-                </select>
-            </div>
-        </form>
-    </div>
-
-    <!-- Subjects Table -->
-    <div class="bg-white rounded-lg shadow-md overflow-hidden">
-        <div class="px-6 py-4 border-b border-gray-200">
-            <h3 class="text-lg font-semibold text-gray-900">All Subjects</h3>
-        </div>
-        
-        <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subject Name</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Code</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Teacher</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Classes</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hours/Week</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm font-medium text-gray-900">Mathematics</div>
-                            <div class="text-sm text-gray-500">Advanced level</div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">MATH101</td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
-                                Core
-                            </span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="flex items-center">
-                                <div class="flex-shrink-0 h-8 w-8">
-                                    <div class="h-8 w-8 rounded-full bg-gray-300 flex items-center justify-center">
-                                        <span class="text-sm font-medium text-gray-700">DW</span>
-                                    </div>
-                                </div>
-                                <div class="ml-3">
-                                    <div class="text-sm font-medium text-gray-900">Dr. Wilson</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">8</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">5</td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                Active
-                            </span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                            <div class="flex space-x-2">
-                                <a href="#" class="text-blue-600 hover:text-blue-900">View</a>
-                                <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                                <a href="#" class="text-red-600 hover:text-red-900">Delete</a>
-                            </div>
-                        </td>
-                    </tr>
-                    
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm font-medium text-gray-900">English Literature</div>
-                            <div class="text-sm text-gray-500">Standard level</div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">ENG201</td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                Language
-                            </span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="flex items-center">
-                                <div class="flex-shrink-0 h-8 w-8">
-                                    <div class="h-8 w-8 rounded-full bg-gray-300 flex items-center justify-center">
-                                        <span class="text-sm font-medium text-gray-700">SB</span>
-                                    </div>
-                                </div>
-                                <div class="ml-3">
-                                    <div class="text-sm font-medium text-gray-900">Ms. Brown</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">6</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">4</td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                Active
-                            </span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                            <div class="flex space-x-2">
-                                <a href="#" class="text-blue-600 hover:text-blue-900">View</a>
-                                <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                                <a href="#" class="text-red-600 hover:text-red-900">Delete</a>
-                            </div>
-                        </td>
-                    </tr>
-                    
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm font-medium text-gray-900">Physics</div>
-                            <div class="text-sm text-gray-500">Advanced level</div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">PHY301</td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-100 text-purple-800">
-                                Science
-                            </span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="flex items-center">
-                                <div class="flex-shrink-0 h-8 w-8">
-                                    <div class="h-8 w-8 rounded-full bg-gray-300 flex items-center justify-center">
-                                        <span class="text-sm font-medium text-gray-700">MC</span>
-                                    </div>
-                                </div>
-                                <div class="ml-3">
-                                    <div class="text-sm font-medium text-gray-900">Mr. Chen</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">4</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">6</td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                Active
-                            </span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                            <div class="flex space-x-2">
-                                <a href="#" class="text-blue-600 hover:text-blue-900">View</a>
-                                <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                                <a href="#" class="text-red-600 hover:text-red-900">Delete</a>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        
-        <div class="px-6 py-4 border-t border-gray-200">
-            <div class="flex items-center justify-between">
-                <div class="text-sm text-gray-700">
-                    Showing <span class="font-medium">1</span> to <span class="font-medium">10</span> of <span class="font-medium">15</span> results
-                </div>
-                <div class="flex space-x-2">
-                    <button class="px-3 py-1 border border-gray-300 rounded-md text-sm text-gray-700 hover:bg-gray-50">Previous</button>
-                    <button class="px-3 py-1 border border-gray-300 rounded-md text-sm text-gray-700 hover:bg-gray-50">Next</button>
-                </div>
-            </div>
+        <!-- Back Button -->
+        <div class="mt-8 text-center">
+            <a href="{{ route('school.dashboard') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                Back to Dashboard
+            </a>
         </div>
     </div>
 </div>

@@ -97,17 +97,17 @@
         @if(isset($attendanceRecords) && count($attendanceRecords) > 0)
         <div class="bg-white rounded-lg shadow">
             <div class="px-6 py-4 border-b border-gray-200">
-                <h3 class="text-lg font-medium text-gray-900">Attendance Records</h3>
+                <h3 class="text-lg font-medium text-gray-900">{{ __('app.attendance_records') }}</h3>
             </div>
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subject</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Remarks</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Marked By</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('app.date') }}</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('app.subject') }}</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('app.status') }}</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('app.remarks') }}</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('app.marked_by') }}</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
@@ -117,7 +117,7 @@
                                 {{ $record->date->format('M j, Y') }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                {{ $record->subject ? $record->subject->name : 'All Subjects' }}
+                                {{ $record->subject ? $record->subject->name : __('app.all_subjects') }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 @php
@@ -148,7 +148,7 @@
         @else
         <div class="bg-white rounded-lg shadow p-6">
             <div class="text-center py-8">
-                <p class="text-gray-500">No attendance records found for the selected period.</p>
+                <p class="text-gray-500">{{ __('app.no_attendance_records_found') }}</p>
             </div>
         </div>
         @endif
@@ -156,7 +156,7 @@
         <!-- Monthly Chart -->
         @if(isset($monthlyData) && count($monthlyData) > 0)
         <div class="bg-white rounded-lg shadow p-6 mt-6">
-            <h3 class="text-lg font-medium text-gray-900 mb-4">Monthly Attendance Trend</h3>
+            <h3 class="text-lg font-medium text-gray-900 mb-4">{{ __('app.monthly_attendance_trend') }}</h3>
             <div class="h-64 flex items-end space-x-2">
                 @foreach($monthlyData as $month)
                 <div class="flex-1 flex flex-col items-center">
@@ -178,9 +178,9 @@
                     </svg>
                 </div>
                 <div class="ml-3">
-                    <h3 class="text-sm font-medium text-blue-800">Generate Report</h3>
+                    <h3 class="text-sm font-medium text-blue-800">{{ __('app.generate_report') }}</h3>
                     <div class="mt-2 text-sm text-blue-700">
-                        <p>Please select a date range and optionally a subject to generate the attendance report.</p>
+                        <p>{{ __('app.generate_attendance_report_instructions') }}</p>
                     </div>
                 </div>
             </div>
@@ -191,7 +191,7 @@
     <div class="mt-6">
         <a href="{{ route('students.show', $student->id) }}" 
            class="text-blue-600 hover:text-blue-800 font-medium">
-            ← Back to Student Profile
+            ← {{ __('app.back_to_student_profile') }}
         </a>
     </div>
 </div>

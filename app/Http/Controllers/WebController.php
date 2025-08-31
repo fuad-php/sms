@@ -17,11 +17,11 @@ use Carbon\Carbon;
 class WebController extends Controller
 {
     /**
-     * Show the welcome page
+     * Show the home page
      */
     public function welcome()
     {
-        // Get some basic statistics for the welcome page
+        // Get some basic statistics for the home page
         $stats = [
             'total_students' => Student::active()->count(),
             'total_teachers' => Teacher::active()->count(),
@@ -36,7 +36,7 @@ class WebController extends Controller
             ->limit(3)
             ->get();
 
-        return view('welcome', compact('stats', 'announcements'));
+        return view('home', compact('stats', 'announcements'));
     }
 
     /**

@@ -199,7 +199,20 @@ class AnnouncementController extends Controller
     }
 
     /**
-     * Display the specified announcement
+     * Display the specified announcement (public access)
+     */
+    public function publicShow(Announcement $announcement)
+    {
+        // Check if announcement is public and published
+        if ($announcement->target_audience !== 'all' || !$announcement->is_published) {
+            abort(404, 'Announcement not found or not accessible.');
+        }
+
+        return view('announcements.show', compact('announcement'));
+    }
+
+    /**
+     * Display the specified announcement (authenticated access)
      */
     public function show(Announcement $announcement)
     {
@@ -304,7 +317,30 @@ class AnnouncementController extends Controller
     }
 
     /**
-     * Download attachment
+     * Download attachment (public access)
+     */
+    public function publicDownloadAttachment(Announcement $announcement)
+    {
+        // Check if announcement is public and published
+        if ($announcement->target_audience !== 'all' || !$announcement->is_published) {
+            abort(404, 'Announcement not found or not accessible.');
+        }
+
+        if (!$announcement->hasAttachment()) {
+            abort(404);
+        }
+
+        $path = storage_path('app/public/announcements/' . $announcement->attachment);
+        
+        if (!file_exists($path)) {
+            abort(404);
+        }
+
+        return response()->download($path);
+    }
+
+    /**
+     * Download attachment (authenticated access)
      */
     public function downloadAttachment(Announcement $announcement)
     {

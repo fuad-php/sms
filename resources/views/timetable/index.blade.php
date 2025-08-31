@@ -1,237 +1,162 @@
 @extends('layouts.app')
 
-@section('title', 'Timetable Management')
+@section('title', __('app.timetable_management'))
 
 @section('content')
 <div class="container mx-auto px-4 py-8">
-    <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold text-gray-900">Timetable Management</h1>
-        <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200">
-            <i class="fas fa-plus mr-2"></i>Create Timetable
-        </button>
-    </div>
-
-    <!-- Filters -->
-    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-        <form class="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div>
-                <label for="class" class="block text-sm font-medium text-gray-700 mb-1">Class</label>
-                <select name="class" id="class" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option value="">Select Class</option>
-                    <option value="1">Class 1A</option>
-                    <option value="2">Class 1B</option>
-                    <option value="3">Class 2A</option>
-                    <option value="4">Class 2B</option>
-                </select>
-            </div>
-            
-            <div>
-                <label for="teacher" class="block text-sm font-medium text-gray-700 mb-1">Teacher</label>
-                <select name="teacher" id="teacher" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option value="">Select Teacher</option>
-                    <option value="1">Dr. David Wilson</option>
-                    <option value="2">Ms. Sarah Brown</option>
-                    <option value="3">Mr. Michael Chen</option>
-                </select>
-            </div>
-            
-            <div>
-                <label for="subject" class="block text-sm font-medium text-gray-700 mb-1">Subject</label>
-                <select name="subject" id="subject" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option value="">Select Subject</option>
-                    <option value="1">Mathematics</option>
-                    <option value="2">English Literature</option>
-                    <option value="3">Physics</option>
-                    <option value="4">Chemistry</option>
-                </select>
-            </div>
-            
-            <div>
-                <label for="day" class="block text-sm font-medium text-gray-700 mb-1">Day</label>
-                <select name="day" id="day" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option value="">All Days</option>
-                    <option value="monday">Monday</option>
-                    <option value="tuesday">Tuesday</option>
-                    <option value="wednesday">Wednesday</option>
-                    <option value="thursday">Thursday</option>
-                    <option value="friday">Friday</option>
-                </select>
-            </div>
-        </form>
-    </div>
-
-    <!-- Timetable Display -->
-    <div class="bg-white rounded-lg shadow-md overflow-hidden">
-        <div class="px-6 py-4 border-b border-gray-200">
-            <h3 class="text-lg font-semibold text-gray-900">Class 1A Timetable</h3>
-        </div>
-        
-        <div class="overflow-x-auto">
-            <table class="min-w-full">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Monday</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tuesday</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Wednesday</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Thursday</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Friday</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">8:00 - 9:00</td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="bg-blue-100 p-2 rounded">
-                                <div class="text-sm font-medium text-blue-900">Mathematics</div>
-                                <div class="text-xs text-blue-700">Dr. Wilson</div>
-                                <div class="text-xs text-blue-600">Room 101</div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="bg-green-100 p-2 rounded">
-                                <div class="text-sm font-medium text-green-900">English</div>
-                                <div class="text-xs text-green-700">Ms. Brown</div>
-                                <div class="text-xs text-green-600">Room 102</div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="bg-purple-100 p-2 rounded">
-                                <div class="text-sm font-medium text-purple-900">Physics</div>
-                                <div class="text-xs text-purple-700">Mr. Chen</div>
-                                <div class="text-xs text-purple-600">Lab 1</div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="bg-yellow-100 p-2 rounded">
-                                <div class="text-sm font-medium text-yellow-900">History</div>
-                                <div class="text-xs text-yellow-700">Mrs. Davis</div>
-                                <div class="text-xs text-yellow-600">Room 103</div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="bg-red-100 p-2 rounded">
-                                <div class="text-sm font-medium text-red-900">Art</div>
-                                <div class="text-xs text-red-700">Mr. Johnson</div>
-                                <div class="text-xs text-red-600">Art Room</div>
-                            </div>
-                        </td>
-                    </tr>
-                    
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">9:00 - 10:00</td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="bg-green-100 p-2 rounded">
-                                <div class="text-sm font-medium text-green-900">English</div>
-                                <div class="text-xs text-green-700">Ms. Brown</div>
-                                <div class="text-xs text-green-600">Room 102</div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="bg-blue-100 p-2 rounded">
-                                <div class="text-sm font-medium text-blue-900">Mathematics</div>
-                                <div class="text-xs text-blue-700">Dr. Wilson</div>
-                                <div class="text-xs text-blue-600">Room 101</div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="bg-yellow-100 p-2 rounded">
-                                <div class="text-sm font-medium text-yellow-900">History</div>
-                                <div class="text-xs text-yellow-700">Mrs. Davis</div>
-                                <div class="text-xs text-yellow-600">Room 103</div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="bg-purple-100 p-2 rounded">
-                                <div class="text-sm font-medium text-purple-900">Physics</div>
-                                <div class="text-xs text-purple-700">Mr. Chen</div>
-                                <div class="text-xs text-purple-600">Lab 1</div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="bg-blue-100 p-2 rounded">
-                                <div class="text-sm font-medium text-blue-900">Mathematics</div>
-                                <div class="text-xs text-blue-700">Dr. Wilson</div>
-                                <div class="text-xs text-blue-600">Room 101</div>
-                            </div>
-                        </td>
-                    </tr>
-                    
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">10:00 - 10:15</td>
-                        <td colspan="5" class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500 bg-gray-50">
-                            Break
-                        </td>
-                    </tr>
-                    
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">10:15 - 11:15</td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="bg-purple-100 p-2 rounded">
-                                <div class="text-sm font-medium text-purple-900">Physics</div>
-                                <div class="text-xs text-purple-700">Mr. Chen</div>
-                                <div class="text-xs text-purple-600">Lab 1</div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="bg-yellow-100 p-2 rounded">
-                                <div class="text-sm font-medium text-yellow-900">History</div>
-                                <div class="text-xs text-yellow-700">Mrs. Davis</div>
-                                <div class="text-xs text-yellow-600">Room 103</div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="bg-green-100 p-2 rounded">
-                                <div class="text-sm font-medium text-green-900">English</div>
-                                <div class="text-xs text-green-700">Ms. Brown</div>
-                                <div class="text-xs text-green-600">Room 102</div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="bg-blue-100 p-2 rounded">
-                                <div class="text-sm font-medium text-blue-900">Mathematics</div>
-                                <div class="text-xs text-blue-700">Dr. Wilson</div>
-                                <div class="text-xs text-blue-600">Room 101</div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="bg-red-100 p-2 rounded">
-                                <div class="text-sm font-medium text-red-900">Art</div>
-                                <div class="text-xs text-red-700">Mr. Johnson</div>
-                                <div class="text-xs text-red-600">Art Room</div>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <!-- Legend -->
-    <div class="mt-6 bg-white rounded-lg shadow-md p-6">
-        <h4 class="text-lg font-semibold text-gray-900 mb-4">Legend</h4>
-        <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
-            <div class="flex items-center">
-                <div class="w-4 h-4 bg-blue-100 rounded mr-2"></div>
-                <span class="text-sm text-gray-700">Mathematics</span>
-            </div>
-            <div class="flex items-center">
-                <div class="w-4 h-4 bg-green-100 rounded mr-2"></div>
-                <span class="text-sm text-gray-700">English</span>
-            </div>
-            <div class="flex items-center">
-                <div class="w-4 h-4 bg-purple-100 rounded mr-2"></div>
-                <span class="text-sm text-gray-700">Physics</span>
-            </div>
-            <div class="flex items-center">
-                <div class="w-4 h-4 bg-yellow-100 rounded mr-2"></div>
-                <span class="text-sm text-gray-700">History</span>
-            </div>
-            <div class="flex items-center">
-                <div class="w-4 h-4 bg-red-100 rounded mr-2"></div>
-                <span class="text-sm text-gray-700">Art</span>
+    <div class="max-w-7xl mx-auto">
+        <!-- Header -->
+        <div class="mb-8">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-3xl font-bold text-gray-900 mb-2">{{ __('app.timetable_management') }}</h1>
+                    <p class="text-gray-600">{{ __('app.manage_class_schedules') }}</p>
+                </div>
+                <div class="flex space-x-3">
+                    <a href="{{ route('timetable.weekly') }}" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                        <svg class="h-4 w-4 inline mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        {{ __('app.weekly_view') }}
+                    </a>
+                    <a href="{{ route('timetable.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                        <svg class="h-4 w-4 inline mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                        </svg>
+                        {{ __('app.add_timetable') }}
+                    </a>
+                </div>
             </div>
         </div>
+
+        <!-- Filters -->
+        <div class="bg-white rounded-lg shadow p-6 mb-6">
+            <form method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div>
+                    <label for="class_id" class="block text-sm font-medium text-gray-700">{{ __('app.class') }}</label>
+                    <select name="class_id" id="class_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        <option value="">{{ __('app.all_classes') }}</option>
+                        @foreach($classes as $class)
+                            <option value="{{ $class->id }}" {{ request('class_id') == $class->id ? 'selected' : '' }}>
+                                {{ $class->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div>
+                    <label for="teacher_id" class="block text-sm font-medium text-gray-700">{{ __('app.teacher') }}</label>
+                    <select name="teacher_id" id="teacher_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        <option value="">{{ __('app.all_teachers') }}</option>
+                        @foreach($teachers as $teacher)
+                            <option value="{{ $teacher->id }}" {{ request('teacher_id') == $teacher->id ? 'selected' : '' }}>
+                                {{ $teacher->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div>
+                    <label for="day_of_week" class="block text-sm font-medium text-gray-700">{{ __('app.day') }}</label>
+                    <select name="day_of_week" id="day_of_week" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        <option value="">{{ __('app.all_days') }}</option>
+                        @foreach($days as $day)
+                            <option value="{{ $day }}" {{ request('day_of_week') == $day ? 'selected' : '' }}>
+                                {{ ucfirst($day) }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="flex items-end">
+                    <button type="submit" class="w-full bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                        {{ __('app.filter') }}
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Timetable List -->
+        @if($timetables->count() > 0)
+            <div class="bg-white rounded-lg shadow overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h3 class="text-lg font-medium text-gray-900">{{ __('app.timetable_entries') }}</h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('app.class') }}</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('app.subject') }}</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('app.teacher') }}</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('app.day') }}</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('app.time') }}</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('app.room') }}</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('app.status') }}</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('app.actions') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            @foreach($timetables as $timetable)
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                    {{ $timetable->class->name ?? 'N/A' }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                    {{ $timetable->subject->name ?? 'N/A' }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                    {{ $timetable->teacher->name ?? 'N/A' }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                    <span class="capitalize">{{ $timetable->day_of_week }}</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                    {{ $timetable->getTimeRange() }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                    {{ $timetable->room ?? 'N/A' }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $timetable->is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                                        {{ $timetable->is_active ? __('app.active') : __('app.inactive') }}
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <div class="flex space-x-2">
+                                        <a href="{{ route('timetable.show', $timetable) }}" class="text-blue-600 hover:text-blue-900">{{ __('app.view') }}</a>
+                                        @can('update', $timetable)
+                                        <a href="{{ route('timetable.edit', $timetable) }}" class="text-indigo-600 hover:text-indigo-900">{{ __('app.edit') }}</a>
+                                        @endcan
+                                        @can('delete', $timetable)
+                                        <form method="POST" action="{{ route('timetable.destroy', $timetable) }}" class="inline" onsubmit="return confirm('{{ __('app.confirm_delete_timetable') }}')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="text-red-600 hover:text-red-900">{{ __('app.delete') }}</button>
+                                        </form>
+                                        @endcan
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <div class="px-6 py-4 border-t border-gray-200">
+                    {{ $timetables->links() }}
+                </div>
+            </div>
+        @else
+            <div class="bg-white rounded-lg shadow p-8 text-center">
+                <div class="text-gray-400 mb-4">
+                    <svg class="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                </div>
+                <h3 class="text-lg font-medium text-gray-900 mb-2">{{ __('app.no_timetables_found') }}</h3>
+                <p class="text-gray-600 mb-4">{{ __('app.no_timetables_configured') }}</p>
+                <a href="{{ route('timetable.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                    {{ __('app.add_timetable') }}
+                </a>
+            </div>
+        @endif
     </div>
 </div>
 @endsection

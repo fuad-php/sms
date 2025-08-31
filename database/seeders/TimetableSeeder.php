@@ -7,7 +7,6 @@ use App\Models\Timetable;
 use App\Models\SchoolClass;
 use App\Models\Subject;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
 
 class TimetableSeeder extends Seeder
 {
@@ -16,49 +15,62 @@ class TimetableSeeder extends Seeder
      */
     public function run(): void
     {
-        // Get first class for demo
-        $class = SchoolClass::first();
-        if (!$class) return;
+        // Get some sample data
+        $classes = SchoolClass::take(3)->get();
+        $subjects = Subject::take(5)->get();
+        $teachers = User::where('role', 'teacher')->take(3)->get();
 
-        // Get assigned subjects for this class
-        $classSubjects = DB::table('class_subject')
-            ->where('class_id', $class->id)
-            ->where('is_active', true)
-            ->limit(5) // Just first 5 for demo
-            ->get();
+        if ($classes->isEmpty() || $subjects->isEmpty() || $teachers->isEmpty()) {
+            $this->command->info('Skipping timetable seeding - need classes, subjects, and teachers first.');
+            return;
+        }
 
         $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
         $timeSlots = [
-            ['start' => '08:00', 'end' => '08:45'],
-            ['start' => '08:45', 'end' => '09:30'],
-            ['start' => '09:45', 'end' => '10:30'],
-            ['start' => '10:30', 'end' => '11:15'],
-            ['start' => '11:30', 'end' => '12:15'],
+            ['08:00', '08:45'],
+            ['08:45', '09:30'],
+            ['09:30', '10:15'],
+            ['10:15', '11:00'],
+            ['11:00', '11:45'],
+            ['11:45', '12:30'],
+            ['13:15', '14:00'],
+            ['14:00', '14:45'],
+            ['14:45', '15:30'],
+            ['15:30', '16:15'],
         ];
 
-        $slotIndex = 0;
-        foreach ($days as $day) {
-            foreach ($timeSlots as $slot) {
-                if ($slotIndex < $classSubjects->count()) {
-                    $subject = $classSubjects[$slotIndex];
+        $timetables = [];
+
+        foreach ($classes as $class) {
+            foreach ($days as $day) {
+                foreach ($timeSlots as $index => $timeSlot) {
+                    // Skip some time slots to create breaks
+                    if (in_array($index, [5, 6])) continue; // Lunch break
                     
-                    Timetable::create([
+                    $subject = $subjects->random();
+                    $teacher = $teachers->random();
+                    
+                    $timetables[] = [
                         'class_id' => $class->id,
-                        'subject_id' => $subject->subject_id,
-                        'teacher_id' => $subject->teacher_id,
+                        'subject_id' => $subject->id,
+                        'teacher_id' => $teacher->id,
                         'day_of_week' => $day,
-                        'start_time' => $slot['start'],
-                        'end_time' => $slot['end'],
-                        'room' => 'Room ' . (($slotIndex % 10) + 1),
+                        'start_time' => $timeSlot[0],
+                        'end_time' => $timeSlot[1],
+                        'room' => 'Room ' . rand(1, 10),
                         'is_active' => true,
-                    ]);
-                    
-                    $slotIndex++;
-                    if ($slotIndex >= $classSubjects->count()) {
-                        $slotIndex = 0; // Reset to cycle through subjects
-                    }
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ];
                 }
             }
         }
+
+        // Insert in chunks to avoid memory issues
+        foreach (array_chunk($timetables, 100) as $chunk) {
+            Timetable::insert($chunk);
+        }
+
+        $this->command->info('Timetable data seeded successfully!');
     }
 }

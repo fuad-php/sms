@@ -7,9 +7,15 @@
     <div class="max-w-4xl mx-auto">
         <!-- Back Button -->
         <div class="mb-6">
-            <a href="{{ route('announcements.index') }}" class="text-blue-600 hover:text-blue-800 font-medium">
-                <i class="fas fa-arrow-left mr-2"></i>Back to Announcements
-            </a>
+            @auth
+                <a href="{{ route('announcements.index') }}" class="text-blue-600 hover:text-blue-800 font-medium">
+                    <i class="fas fa-arrow-left mr-2"></i>Back to Announcements
+                </a>
+            @else
+                <a href="{{ route('announcements.public') }}" class="text-blue-600 hover:text-blue-800 font-medium">
+                    <i class="fas fa-arrow-left mr-2"></i>Back to Public Announcements
+                </a>
+            @endauth
         </div>
 
         <!-- Announcement Header -->
@@ -33,11 +39,19 @@
                 
                 <div class="flex items-center space-x-2">
                     @if($announcement->hasAttachment())
-                        <a href="{{ route('announcements.download', $announcement) }}" 
-                           class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg transition duration-200" 
-                           title="Download Attachment">
-                            <i class="fas fa-download mr-2"></i>Download
-                        </a>
+                        @auth
+                            <a href="{{ route('announcements.download', $announcement) }}" 
+                               class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg transition duration-200" 
+                               title="Download Attachment">
+                                <i class="fas fa-download mr-2"></i>Download
+                            </a>
+                        @else
+                            <a href="{{ route('announcements.public.download', $announcement) }}" 
+                               class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg transition duration-200" 
+                               title="Download Attachment">
+                                <i class="fas fa-download mr-2"></i>Download
+                            </a>
+                        @endauth
                     @endif
                     
                     @can('update', $announcement)
@@ -117,10 +131,17 @@
                         <p class="text-sm text-gray-600">Click to download</p>
                     </div>
                 </div>
-                <a href="{{ route('announcements.download', $announcement) }}" 
-                   class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-200">
-                    <i class="fas fa-download mr-2"></i>Download
-                </a>
+                @auth
+                    <a href="{{ route('announcements.download', $announcement) }}" 
+                       class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-200">
+                        <i class="fas fa-download mr-2"></i>Download
+                    </a>
+                @else
+                    <a href="{{ route('announcements.public.download', $announcement) }}" 
+                       class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-200">
+                        <i class="fas fa-download mr-2"></i>Download
+                    </a>
+                @endauth
             </div>
         </div>
         @endif

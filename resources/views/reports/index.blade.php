@@ -1,201 +1,122 @@
 @extends('layouts.app')
 
-@section('title', 'Reports')
+@section('title', 'Reports & Analytics')
 
 @section('content')
 <div class="container mx-auto px-4 py-8">
-    <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold text-gray-900">Reports</h1>
-        <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200">
-            <i class="fas fa-download mr-2"></i>Generate Report
-        </button>
-    </div>
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Reports & Analytics</h1>
+            <p class="text-gray-600">Generate comprehensive reports and analyze school performance data</p>
+        </div>
 
-    <!-- Report Categories -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-        <!-- Academic Reports -->
-        <div class="bg-white rounded-lg shadow-md p-6">
-            <div class="flex items-center mb-4">
-                <div class="p-3 rounded-full bg-blue-100 text-blue-600">
-                    <i class="fas fa-graduation-cap text-2xl"></i>
+        <!-- Placeholder Message -->
+        <div class="bg-gray-50 border border-gray-200 rounded-lg p-6 mb-8">
+            <div class="flex items-center">
+                <div class="flex-shrink-0">
+                    <svg class="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
                 </div>
-                <h3 class="text-lg font-semibold text-gray-900 ml-3">Academic Reports</h3>
-            </div>
-            <ul class="space-y-2">
-                <li><a href="#" class="text-blue-600 hover:text-blue-800">Class Performance Report</a></li>
-                <li><a href="#" class="text-blue-600 hover:text-blue-800">Student Progress Report</a></li>
-                <li><a href="#" class="text-blue-600 hover:text-blue-800">Subject-wise Analysis</a></li>
-                <li><a href="#" class="text-blue-600 hover:text-blue-800">Exam Results Summary</a></li>
-            </ul>
-        </div>
-
-        <!-- Attendance Reports -->
-        <div class="bg-white rounded-lg shadow-md p-6">
-            <div class="flex items-center mb-4">
-                <div class="p-3 rounded-full bg-green-100 text-green-600">
-                    <i class="fas fa-calendar-check text-2xl"></i>
+                <div class="ml-3">
+                    <h3 class="text-lg font-medium text-gray-800">Feature Coming Soon</h3>
+                    <div class="mt-2 text-gray-700">
+                        <p>{{ $message ?? 'Reporting functionality is currently under development.' }}</p>
+                    </div>
                 </div>
-                <h3 class="text-lg font-semibold text-gray-900 ml-3">Attendance Reports</h3>
             </div>
-            <ul class="space-y-2">
-                <li><a href="#" class="text-blue-600 hover:text-blue-800">Daily Attendance Report</a></li>
-                <li><a href="#" class="text-blue-600 hover:text-blue-800">Monthly Attendance Summary</a></li>
-                <li><a href="#" class="text-blue-600 hover:text-blue-800">Class-wise Attendance</a></li>
-                <li><a href="#" class="text-blue-600 hover:text-blue-800">Absentee Analysis</a></li>
-            </ul>
         </div>
 
-        <!-- Financial Reports -->
-        <div class="bg-white rounded-lg shadow-md p-6">
-            <div class="flex items-center mb-4">
-                <div class="p-3 rounded-full bg-purple-100 text-purple-600">
-                    <i class="fas fa-dollar-sign text-2xl"></i>
+        <!-- Future Features Preview -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Academic Reports -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center mb-4">
+                    <div class="p-2 bg-blue-100 rounded-lg">
+                        <svg class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                    </div>
+                    <h3 class="ml-3 text-lg font-medium text-gray-900">Academic Reports</h3>
                 </div>
-                <h3 class="text-lg font-semibold text-gray-900 ml-3">Financial Reports</h3>
+                <p class="text-gray-600 text-sm">Generate academic performance reports</p>
             </div>
-            <ul class="space-y-2">
-                <li><a href="#" class="text-blue-600 hover:text-blue-800">Fee Collection Report</a></li>
-                <li><a href="#" class="text-blue-600 hover:text-blue-800">Outstanding Fees Report</a></li>
-                <li><a href="#" class="text-blue-600 hover:text-blue-800">Revenue Analysis</a></li>
-                <li><a href="#" class="text-blue-600 hover:text-blue-800">Budget vs Actual</a></li>
-            </ul>
-        </div>
 
-        <!-- Administrative Reports -->
-        <div class="bg-white rounded-lg shadow-md p-6">
-            <div class="flex items-center mb-4">
-                <div class="p-3 rounded-full bg-yellow-100 text-yellow-600">
-                    <i class="fas fa-users-cog text-2xl"></i>
+            <!-- Attendance Reports -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center mb-4">
+                    <div class="p-2 bg-green-100 rounded-lg">
+                        <svg class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="ml-3 text-lg font-medium text-gray-900">Attendance Reports</h3>
                 </div>
-                <h3 class="text-lg font-semibold text-gray-900 ml-3">Administrative Reports</h3>
+                <p class="text-gray-600 text-sm">Track student attendance patterns</p>
             </div>
-            <ul class="space-y-2">
-                <li><a href="#" class="text-blue-600 hover:text-blue-800">Staff Directory</a></li>
-                <li><a href="#" class="text-blue-600 hover:text-blue-800">Student Directory</a></li>
-                <li><a href="#" class="text-blue-600 hover:text-blue-800">Class Allocation Report</a></li>
-                <li><a href="#" class="text-blue-600 hover:text-blue-800">Timetable Report</a></li>
-            </ul>
-        </div>
 
-        <!-- Statistical Reports -->
-        <div class="bg-white rounded-lg shadow-md p-6">
-            <div class="flex items-center mb-4">
-                <div class="p-3 rounded-full bg-red-100 text-red-600">
-                    <i class="fas fa-chart-bar text-2xl"></i>
+            <!-- Financial Reports -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center mb-4">
+                    <div class="p-2 bg-purple-100 rounded-lg">
+                        <svg class="h-6 w-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+                        </svg>
+                    </div>
+                    <h3 class="ml-3 text-lg font-medium text-gray-900">Financial Reports</h3>
                 </div>
-                <h3 class="text-lg font-semibold text-gray-900 ml-3">Statistical Reports</h3>
+                <p class="text-gray-600 text-sm">Generate financial statements and reports</p>
             </div>
-            <ul class="space-y-2">
-                <li><a href="#" class="text-blue-600 hover:text-blue-800">Enrollment Statistics</a></li>
-                <li><a href="#" class="text-blue-600 hover:text-blue-800">Performance Trends</a></li>
-                <li><a href="#" class="text-blue-600 hover:text-blue-800">Demographic Analysis</a></li>
-                <li><a href="#" class="text-blue-600 hover:text-blue-800">Comparative Analysis</a></li>
-            </ul>
-        </div>
 
-        <!-- Custom Reports -->
-        <div class="bg-white rounded-lg shadow-md p-6">
-            <div class="flex items-center mb-4">
-                <div class="p-3 rounded-full bg-indigo-100 text-indigo-600">
-                    <i class="fas fa-cogs text-2xl"></i>
+            <!-- Student Analytics -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center mb-4">
+                    <div class="p-2 bg-yellow-100 rounded-lg">
+                        <svg class="h-6 w-6 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="ml-3 text-lg font-medium text-gray-900">Student Analytics</h3>
                 </div>
-                <h3 class="text-lg font-semibold text-gray-900 ml-3">Custom Reports</h3>
+                <p class="text-gray-600 text-sm">Analyze student performance trends</p>
             </div>
-            <ul class="space-y-2">
-                <li><a href="#" class="text-blue-600 hover:text-blue-800">Create Custom Report</a></li>
-                <li><a href="#" class="text-blue-600 hover:text-blue-800">Saved Reports</a></li>
-                <li><a href="#" class="text-blue-600 hover:text-blue-800">Report Templates</a></li>
-                <li><a href="#" class="text-blue-600 hover:text-blue-800">Export Options</a></li>
-            </ul>
-        </div>
-    </div>
 
-    <!-- Recent Reports -->
-    <div class="bg-white rounded-lg shadow-md overflow-hidden">
-        <div class="px-6 py-4 border-b border-gray-200">
-            <h3 class="text-lg font-semibold text-gray-900">Recent Reports</h3>
+            <!-- Teacher Reports -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center mb-4">
+                    <div class="p-2 bg-indigo-100 rounded-lg">
+                        <svg class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                    </div>
+                    <h3 class="ml-3 text-lg font-medium text-gray-900">Teacher Reports</h3>
+                </div>
+                <p class="text-gray-600 text-sm">Generate teacher performance reports</p>
+            </div>
+
+            <!-- Export & Print -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center mb-4">
+                    <div class="p-2 bg-red-100 rounded-lg">
+                        <svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                    </div>
+                    <h3 class="ml-3 text-lg font-medium text-gray-900">Export & Print</h3>
+                </div>
+                <p class="text-gray-600 text-sm">Export reports in various formats</p>
+            </div>
         </div>
-        
-        <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Report Name</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Generated By</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm font-medium text-gray-900">Class 1A Performance Report</div>
-                            <div class="text-sm text-gray-500">December 2024</div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Academic</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Dr. Wilson</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Dec 15, 2024</td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                Completed
-                            </span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                            <div class="flex space-x-2">
-                                <a href="#" class="text-blue-600 hover:text-blue-900">View</a>
-                                <a href="#" class="text-green-600 hover:text-green-900">Download</a>
-                                <a href="#" class="text-indigo-600 hover:text-indigo-900">Share</a>
-                            </div>
-                        </td>
-                    </tr>
-                    
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm font-medium text-gray-900">Monthly Attendance Summary</div>
-                            <div class="text-sm text-gray-500">November 2024</div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Attendance</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Admin</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Dec 1, 2024</td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                Completed
-                            </span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                            <div class="flex space-x-2">
-                                <a href="#" class="text-blue-600 hover:text-blue-900">View</a>
-                                <a href="#" class="text-green-600 hover:text-green-900">Download</a>
-                                <a href="#" class="text-indigo-600 hover:text-indigo-900">Share</a>
-                            </div>
-                        </td>
-                    </tr>
-                    
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm font-medium text-gray-900">Fee Collection Report</div>
-                            <div class="text-sm text-gray-500">Q4 2024</div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Financial</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Finance Dept</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Nov 30, 2024</td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                Completed
-                            </span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                            <div class="flex space-x-2">
-                                <a href="#" class="text-blue-600 hover:text-blue-900">View</a>
-                                <a href="#" class="text-green-600 hover:text-green-900">Download</a>
-                                <a href="#" class="text-indigo-600 hover:text-indigo-900">Share</a>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+
+        <!-- Back Button -->
+        <div class="mt-8 text-center">
+            <a href="{{ route('school.dashboard') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                Back to Dashboard
+            </a>
         </div>
     </div>
 </div>
