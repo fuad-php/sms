@@ -24,10 +24,13 @@ class User extends Authenticatable implements JWTSubject
         'password',
         'role',
         'phone',
+        'contact_number',
         'address',
         'date_of_birth',
         'gender',
+        'blood_group',
         'avatar',
+        'profile_image',
         'is_active',
     ];
 
@@ -142,5 +145,16 @@ class User extends Authenticatable implements JWTSubject
     public function scopeByRole($query, $role)
     {
         return $query->where('role', $role);
+    }
+
+    /**
+     * Get the profile image URL
+     */
+    public function getProfileImageUrlAttribute()
+    {
+        if ($this->profile_image) {
+            return asset('storage/profiles/' . $this->profile_image);
+        }
+        return asset('images/default-avatar.png');
     }
 }

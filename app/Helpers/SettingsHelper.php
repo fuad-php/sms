@@ -115,6 +115,46 @@ class SettingsHelper
     }
 
     /**
+     * Get school logo
+     */
+    public static function getSchoolLogo()
+    {
+        return self::get('school_logo', '');
+    }
+
+    /**
+     * Get school logo URL (with proper asset path)
+     */
+    public static function getSchoolLogoUrl()
+    {
+        $logo = self::getSchoolLogo();
+        if (empty($logo)) {
+            return null;
+        }
+        
+        // If it's already a full URL, return as is
+        if (filter_var($logo, FILTER_VALIDATE_URL)) {
+            return $logo;
+        }
+        
+        // If it starts with storage/, it's a stored file
+        if (str_starts_with($logo, 'storage/')) {
+            return asset($logo);
+        }
+        
+        // Otherwise, treat it as a path from public directory
+        return asset($logo);
+    }
+
+    /**
+     * Check if school has a custom logo
+     */
+    public static function hasSchoolLogo()
+    {
+        return !empty(self::getSchoolLogo());
+    }
+
+    /**
      * Get current academic year
      */
     public static function getAcademicYear()

@@ -38,7 +38,7 @@ class DashboardController extends Controller
             case 'parent':
                 return $this->getParentDashboard($user);
             default:
-                return redirect()->route('dashboard')->with('error', 'Invalid user role');
+                return redirect()->route('school.dashboard')->with('error', 'Invalid user role');
         }
     }
 

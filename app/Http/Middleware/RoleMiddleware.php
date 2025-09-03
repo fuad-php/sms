@@ -16,26 +16,35 @@ class RoleMiddleware
     public function handle(Request $request, Closure $next, ...$roles): Response
     {
         if (!auth()->check()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorized'
-            ], 401);
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Unauthorized'
+                ], 401);
+            }
+            return redirect()->route('login');
         }
 
         $user = auth()->user();
         
         if (!$user->is_active) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Account is deactivated'
-            ], 403);
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Account is deactivated'
+                ], 403);
+            }
+            return redirect()->route('login')->with('error', 'Your account has been deactivated.');
         }
 
         if (!in_array($user->role, $roles)) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Access denied. Insufficient permissions.'
-            ], 403);
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Access denied. Insufficient permissions.'
+                ], 403);
+            }
+            return redirect()->route('dashboard')->with('error', 'Access denied. Insufficient permissions.');
         }
 
         return $next($request);

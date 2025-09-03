@@ -18,6 +18,19 @@
         </div>
     </div>
 
+    <!-- Success/Error Messages -->
+    @if(session('success'))
+        <div class="mb-6 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+            <span class="block sm:inline">{{ session('success') }}</span>
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div class="mb-6 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+            <span class="block sm:inline">{{ session('error') }}</span>
+        </div>
+    @endif
+
     @if($slides->isEmpty())
         <div class="bg-white rounded-lg shadow p-8 text-center">
             <div class="text-gray-400 mb-4">
@@ -83,21 +96,28 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                 <div class="flex space-x-2">
-                                    <a href="{{ route('admin.carousel.edit', $slide) }}" class="text-blue-600 hover:text-blue-900">
-                                        <i class="fas fa-edit"></i>
+                                    <a href="{{ route('admin.carousel.edit', $slide) }}" 
+                                       class="inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                                       title="Edit slide">
+                                        <i class="fas fa-edit mr-1"></i>Edit
                                     </a>
                                     <form method="POST" action="{{ route('admin.carousel.toggle-status', $slide) }}" class="inline">
                                         @csrf
                                         @method('PATCH')
-                                        <button type="submit" class="text-yellow-600 hover:text-yellow-900">
-                                            <i class="fas fa-toggle-{{ $slide->is_active ? 'on' : 'off' }}"></i>
+                                        <button type="submit" 
+                                                class="inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded-md text-white {{ $slide->is_active ? 'bg-yellow-600 hover:bg-yellow-700' : 'bg-green-600 hover:bg-green-700' }} focus:outline-none focus:ring-2 focus:ring-offset-2 {{ $slide->is_active ? 'focus:ring-yellow-500' : 'focus:ring-green-500' }}"
+                                                title="{{ $slide->is_active ? 'Deactivate slide' : 'Activate slide' }}">
+                                            <i class="fas fa-toggle-{{ $slide->is_active ? 'on' : 'off' }} mr-1"></i>
+                                            {{ $slide->is_active ? 'Deactivate' : 'Activate' }}
                                         </button>
                                     </form>
-                                    <form method="POST" action="{{ route('admin.carousel.destroy', $slide) }}" class="inline" onsubmit="return confirm('Are you sure you want to delete this slide?')">
+                                    <form method="POST" action="{{ route('admin.carousel.destroy', $slide) }}" class="inline" onsubmit="return confirm('Are you sure you want to delete this slide? This action cannot be undone.')">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="text-red-600 hover:text-red-900">
-                                            <i class="fas fa-trash"></i>
+                                        <button type="submit" 
+                                                class="inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                                                title="Delete slide">
+                                            <i class="fas fa-trash mr-1"></i>Delete
                                         </button>
                                     </form>
                                 </div>

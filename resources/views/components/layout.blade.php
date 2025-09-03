@@ -27,8 +27,12 @@
 				<div class="primary-header">
 					<div class="container">
 						<a href="/" id="branding">
-							<img src="images/logo.png" alt="Chaparhat Girl's high School">
-							<h1 class="site-title">Chaparhat Girl's High School</h1>
+							@if(\App\Helpers\SettingsHelper::hasSchoolLogo())
+								<img src="{{ \App\Helpers\SettingsHelper::getSchoolLogoUrl() }}" alt="{{ \App\Helpers\SettingsHelper::getSchoolName() }} Logo">
+							@else
+								<img src="{{ asset('images/logo.png') }}" alt="{{ \App\Helpers\SettingsHelper::getSchoolName() }} Logo">
+							@endif
+							<h1 class="site-title">{{ \App\Helpers\SettingsHelper::getSchoolName() }}</h1>
 						</a> <!-- #branding -->
 						
 						<div class="main-navigation">
@@ -89,10 +93,14 @@
                     <div class="col-md-3">
                         <div class="widget">
                             <h3 class="widget-title">Contact us</h3>
-                            <address>Chaparhat Girl's High School <br>Chaparhat <br>Kaliganj, Lalmonirhat, 5520</address>
+                            <address>{{ \App\Helpers\SettingsHelper::getSchoolName() }}<br>{{ \App\Helpers\SettingsHelper::getSchoolAddress() }}</address>
 
-                            <a href="mailto:info@chaparhatgirlshighschool.com">info@chaparhatgirlshighschool.com</a> <br>
-                            <a href="tel:+8801716-729038">01716-729038</a>
+                            @if(\App\Helpers\SettingsHelper::getSchoolEmail())
+                                <a href="mailto:{{ \App\Helpers\SettingsHelper::getSchoolEmail() }}">{{ \App\Helpers\SettingsHelper::getSchoolEmail() }}</a> <br>
+                            @endif
+                            @if(\App\Helpers\SettingsHelper::getSchoolPhone())
+                                <a href="tel:{{ \App\Helpers\SettingsHelper::getSchoolPhone() }}">{{ \App\Helpers\SettingsHelper::getSchoolPhone() }}</a>
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -136,7 +144,7 @@
                     </div>
                 </div>
 
-                <div class="copy">Copyright {{ date('Y') }} Chaparhat Girl's High School. All rights reserved.</div>
+                <div class="copy">Copyright {{ date('Y') }} {{ \App\Helpers\SettingsHelper::getSchoolName() }}. All rights reserved.</div>
             </div>
 
         </footer>

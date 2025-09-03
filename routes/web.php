@@ -38,7 +38,7 @@ Route::group(['prefix' => 'contact', 'as' => 'contact.'], function () {
 
 // Authentication Routes (using Laravel Breeze)
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return redirect()->route('school.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth', 'maintenance'])->group(function () {
@@ -74,23 +74,47 @@ Route::middleware(['auth', 'maintenance'])->group(function () {
     
     // Class Management Routes
     Route::group(['prefix' => 'classes', 'as' => 'classes.'], function () {
-        Route::get('/', function () {
-            return view('classes.index', ['message' => 'Class management - to be implemented']);
-        })->name('index');
+        Route::get('/', [App\Http\Controllers\ClassController::class, 'index'])->name('index');
+        Route::get('/create', [App\Http\Controllers\ClassController::class, 'create'])->name('create');
+        Route::post('/', [App\Http\Controllers\ClassController::class, 'store'])->name('store');
+        Route::get('/{class}', [App\Http\Controllers\ClassController::class, 'show'])->name('show');
+        Route::get('/{class}/edit', [App\Http\Controllers\ClassController::class, 'edit'])->name('edit');
+        Route::put('/{class}', [App\Http\Controllers\ClassController::class, 'update'])->name('update');
+        Route::delete('/{class}', [App\Http\Controllers\ClassController::class, 'destroy'])->name('destroy');
+        Route::post('/{class}/toggle-status', [App\Http\Controllers\ClassController::class, 'toggleStatus'])->name('toggle-status');
+        Route::post('/{class}/assign-subjects', [App\Http\Controllers\ClassController::class, 'assignSubjects'])->name('assign-subjects');
+        Route::get('/statistics/data', [App\Http\Controllers\ClassController::class, 'statistics'])->name('statistics');
+        Route::get('/{class}/students', [App\Http\Controllers\ClassController::class, 'getStudents'])->name('students');
     });
     
     // Subject Management Routes
     Route::group(['prefix' => 'subjects', 'as' => 'subjects.'], function () {
-        Route::get('/', function () {
-            return view('subjects.index', ['message' => 'Subject management - to be implemented']);
-        })->name('index');
+        Route::get('/', [App\Http\Controllers\SubjectController::class, 'index'])->name('index');
+        Route::get('/create', [App\Http\Controllers\SubjectController::class, 'create'])->name('create');
+        Route::post('/', [App\Http\Controllers\SubjectController::class, 'store'])->name('store');
+        Route::get('/{subject}', [App\Http\Controllers\SubjectController::class, 'show'])->name('show');
+        Route::get('/{subject}/edit', [App\Http\Controllers\SubjectController::class, 'edit'])->name('edit');
+        Route::put('/{subject}', [App\Http\Controllers\SubjectController::class, 'update'])->name('update');
+        Route::delete('/{subject}', [App\Http\Controllers\SubjectController::class, 'destroy'])->name('destroy');
+        Route::post('/{subject}/toggle-status', [App\Http\Controllers\SubjectController::class, 'toggleStatus'])->name('toggle-status');
+        Route::post('/{subject}/assign-classes', [App\Http\Controllers\SubjectController::class, 'assignToClasses'])->name('assign-classes');
+        Route::get('/statistics/data', [App\Http\Controllers\SubjectController::class, 'statistics'])->name('statistics');
+        Route::get('/{subject}/classes', [App\Http\Controllers\SubjectController::class, 'getClasses'])->name('classes');
     });
     
     // Teacher Management Routes
     Route::group(['prefix' => 'teachers', 'as' => 'teachers.'], function () {
-        Route::get('/', function () {
-            return view('teachers.index', ['message' => 'Teacher management - to be implemented']);
-        })->name('index');
+        Route::get('/', [App\Http\Controllers\TeacherController::class, 'index'])->name('index');
+        Route::get('/create', [App\Http\Controllers\TeacherController::class, 'create'])->name('create');
+        Route::post('/', [App\Http\Controllers\TeacherController::class, 'store'])->name('store');
+        Route::get('/{teacher}', [App\Http\Controllers\TeacherController::class, 'show'])->name('show');
+        Route::get('/{teacher}/edit', [App\Http\Controllers\TeacherController::class, 'edit'])->name('edit');
+        Route::put('/{teacher}', [App\Http\Controllers\TeacherController::class, 'update'])->name('update');
+        Route::delete('/{teacher}', [App\Http\Controllers\TeacherController::class, 'destroy'])->name('destroy');
+        Route::post('/{teacher}/toggle-status', [App\Http\Controllers\TeacherController::class, 'toggleStatus'])->name('toggle-status');
+        Route::post('/{teacher}/assign-subjects', [App\Http\Controllers\TeacherController::class, 'assignSubjects'])->name('assign-subjects');
+        Route::get('/statistics/data', [App\Http\Controllers\TeacherController::class, 'statistics'])->name('statistics');
+        Route::get('/profile/view', [App\Http\Controllers\TeacherController::class, 'profile'])->name('profile');
     });
     
     // Timetable Management Routes
@@ -107,9 +131,18 @@ Route::middleware(['auth', 'maintenance'])->group(function () {
     
     // Exam Management Routes
     Route::group(['prefix' => 'exams', 'as' => 'exams.'], function () {
-        Route::get('/', function () {
-            return view('exams.index', ['message' => 'Exam management - to be implemented']);
-        })->name('index');
+        Route::get('/', [App\Http\Controllers\ExamController::class, 'index'])->name('index');
+        Route::get('/create', [App\Http\Controllers\ExamController::class, 'create'])->name('create');
+        Route::post('/', [App\Http\Controllers\ExamController::class, 'store'])->name('store');
+        Route::get('/{exam}', [App\Http\Controllers\ExamController::class, 'show'])->name('show');
+        Route::get('/{exam}/edit', [App\Http\Controllers\ExamController::class, 'edit'])->name('edit');
+        Route::put('/{exam}', [App\Http\Controllers\ExamController::class, 'update'])->name('update');
+        Route::delete('/{exam}', [App\Http\Controllers\ExamController::class, 'destroy'])->name('destroy');
+        Route::post('/{exam}/toggle-publish', [App\Http\Controllers\ExamController::class, 'togglePublish'])->name('toggle-publish');
+        Route::get('/statistics/data', [App\Http\Controllers\ExamController::class, 'statistics'])->name('statistics');
+        Route::get('/upcoming/data', [App\Http\Controllers\ExamController::class, 'getUpcomingExams'])->name('upcoming');
+        Route::get('/class/{class}/data', [App\Http\Controllers\ExamController::class, 'getByClass'])->name('by-class');
+        Route::get('/subject/{subject}/data', [App\Http\Controllers\ExamController::class, 'getBySubject'])->name('by-subject');
     });
     
     // Results Management Routes
@@ -143,16 +176,29 @@ Route::middleware(['auth', 'maintenance'])->group(function () {
     
     // Parent Management Routes
     Route::group(['prefix' => 'parents', 'as' => 'parents.'], function () {
-        Route::get('/', function () {
-            return view('parents.index', ['message' => 'Parent management - to be implemented']);
-        })->name('index');
+        Route::get('/', [App\Http\Controllers\ParentController::class, 'index'])->name('index');
+        Route::get('/create', [App\Http\Controllers\ParentController::class, 'create'])->name('create');
+        Route::post('/', [App\Http\Controllers\ParentController::class, 'store'])->name('store');
+        Route::get('/{parent}', [App\Http\Controllers\ParentController::class, 'show'])->name('show');
+        Route::get('/{parent}/edit', [App\Http\Controllers\ParentController::class, 'edit'])->name('edit');
+        Route::put('/{parent}', [App\Http\Controllers\ParentController::class, 'update'])->name('update');
+        Route::delete('/{parent}', [App\Http\Controllers\ParentController::class, 'destroy'])->name('destroy');
+        Route::post('/{parent}/toggle-status', [App\Http\Controllers\ParentController::class, 'toggleStatus'])->name('toggle-status');
+        Route::post('/{parent}/assign-students', [App\Http\Controllers\ParentController::class, 'assignStudents'])->name('assign-students');
+        Route::get('/statistics/data', [App\Http\Controllers\ParentController::class, 'statistics'])->name('statistics');
+        Route::get('/{parent}/children', [App\Http\Controllers\ParentController::class, 'getChildren'])->name('children');
     });
     
     // Reports Routes
     Route::group(['prefix' => 'reports', 'as' => 'reports.'], function () {
-        Route::get('/', function () {
-            return view('reports.index', ['message' => 'Reporting - to be implemented']);
-        })->name('index');
+        Route::get('/', [App\Http\Controllers\ReportController::class, 'index'])->name('index');
+        Route::get('/academic-performance', [App\Http\Controllers\ReportController::class, 'academicPerformance'])->name('academic-performance');
+        Route::get('/attendance', [App\Http\Controllers\ReportController::class, 'attendance'])->name('attendance');
+        Route::get('/student-analytics', [App\Http\Controllers\ReportController::class, 'studentAnalytics'])->name('student-analytics');
+        Route::get('/teacher-performance', [App\Http\Controllers\ReportController::class, 'teacherPerformance'])->name('teacher-performance');
+        Route::get('/class-performance', [App\Http\Controllers\ReportController::class, 'classPerformance'])->name('class-performance');
+        Route::post('/export', [App\Http\Controllers\ReportController::class, 'export'])->name('export');
+        Route::get('/dashboard/data', [App\Http\Controllers\ReportController::class, 'dashboard'])->name('dashboard');
     });
     
     // Settings/Configuration Routes
@@ -169,8 +215,7 @@ Route::middleware(['auth', 'maintenance'])->group(function () {
         Route::post('/reset-defaults', [App\Http\Controllers\SettingsController::class, 'resetToDefaults'])->name('reset-defaults')->middleware('role:admin');
     });
 
-    // Public Carousel Route (for homepage)
-    Route::get('/carousel/active', [CarouselController::class, 'getActiveSlides'])->name('carousel.active');
+    // Public Carousel Route (for homepage) - moved to API routes to avoid CSRF issues
 
     // Carousel Management Routes (Admin only)
     Route::group(['prefix' => 'admin/carousel', 'as' => 'admin.carousel.'], function () {

@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\JWTAuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\CarouselController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,9 @@ use App\Http\Controllers\AttendanceController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
+// Public Carousel Route (for homepage)
+Route::get('/carousel/active', [CarouselController::class, 'getActiveSlides'])->name('carousel.active');
 
 // Authentication Routes
 Route::group(['prefix' => 'auth'], function () {
@@ -58,25 +62,39 @@ Route::group(['prefix' => 'attendance', 'middleware' => 'auth:api'], function ()
     Route::get('/class/{classId}/report', [AttendanceController::class, 'classReport'])->middleware('role:admin,teacher');
 });
 
-// Class Management Routes (Basic structure for future implementation)
+// Class Management Routes
 Route::group(['prefix' => 'classes', 'middleware' => 'auth:api'], function () {
-    Route::get('/', function () {
-        return response()->json(['message' => 'Class management routes - to be implemented']);
-    });
+    Route::get('/', [App\Http\Controllers\ClassController::class, 'index'])->middleware('role:admin,teacher');
+    Route::post('/', [App\Http\Controllers\ClassController::class, 'store'])->middleware('role:admin');
+    Route::get('/{class}', [App\Http\Controllers\ClassController::class, 'show'])->middleware('role:admin,teacher');
+    Route::put('/{class}', [App\Http\Controllers\ClassController::class, 'update'])->middleware('role:admin');
+    Route::delete('/{class}', [App\Http\Controllers\ClassController::class, 'destroy'])->middleware('role:admin');
+    Route::get('/{class}/students', [App\Http\Controllers\ClassController::class, 'getStudents'])->middleware('role:admin,teacher');
+    Route::get('/{class}/subjects', [App\Http\Controllers\ClassController::class, 'getSubjects'])->middleware('role:admin,teacher');
+    Route::get('/{class}/statistics', [App\Http\Controllers\ClassController::class, 'getStatistics'])->middleware('role:admin,teacher');
 });
 
-// Subject Management Routes (Basic structure for future implementation)
+// Subject Management Routes
 Route::group(['prefix' => 'subjects', 'middleware' => 'auth:api'], function () {
-    Route::get('/', function () {
-        return response()->json(['message' => 'Subject management routes - to be implemented']);
-    });
+    Route::get('/', [App\Http\Controllers\SubjectController::class, 'index'])->middleware('role:admin,teacher');
+    Route::post('/', [App\Http\Controllers\SubjectController::class, 'store'])->middleware('role:admin');
+    Route::get('/{subject}', [App\Http\Controllers\SubjectController::class, 'show'])->middleware('role:admin,teacher');
+    Route::put('/{subject}', [App\Http\Controllers\SubjectController::class, 'update'])->middleware('role:admin');
+    Route::delete('/{subject}', [App\Http\Controllers\SubjectController::class, 'destroy'])->middleware('role:admin');
+    Route::get('/{subject}/classes', [App\Http\Controllers\SubjectController::class, 'getClasses'])->middleware('role:admin,teacher');
+    Route::get('/{subject}/teachers', [App\Http\Controllers\SubjectController::class, 'getTeachers'])->middleware('role:admin,teacher');
 });
 
-// Teacher Management Routes (Basic structure for future implementation)
+// Teacher Management Routes
 Route::group(['prefix' => 'teachers', 'middleware' => 'auth:api'], function () {
-    Route::get('/', function () {
-        return response()->json(['message' => 'Teacher management routes - to be implemented']);
-    });
+    Route::get('/', [App\Http\Controllers\TeacherController::class, 'index'])->middleware('role:admin');
+    Route::post('/', [App\Http\Controllers\TeacherController::class, 'store'])->middleware('role:admin');
+    Route::get('/{teacher}', [App\Http\Controllers\TeacherController::class, 'show'])->middleware('role:admin,teacher');
+    Route::put('/{teacher}', [App\Http\Controllers\TeacherController::class, 'update'])->middleware('role:admin');
+    Route::delete('/{teacher}', [App\Http\Controllers\TeacherController::class, 'destroy'])->middleware('role:admin');
+    Route::get('/{teacher}/classes', [App\Http\Controllers\TeacherController::class, 'getClasses'])->middleware('role:admin,teacher');
+    Route::get('/{teacher}/subjects', [App\Http\Controllers\TeacherController::class, 'getSubjects'])->middleware('role:admin,teacher');
+    Route::get('/{teacher}/performance', [App\Http\Controllers\TeacherController::class, 'getPerformance'])->middleware('role:admin,teacher');
 });
 
 // Timetable Management Routes (Basic structure for future implementation)
@@ -86,11 +104,16 @@ Route::group(['prefix' => 'timetable', 'middleware' => 'auth:api'], function () 
     });
 });
 
-// Exam Management Routes (Basic structure for future implementation)
+// Exam Management Routes
 Route::group(['prefix' => 'exams', 'middleware' => 'auth:api'], function () {
-    Route::get('/', function () {
-        return response()->json(['message' => 'Exam management routes - to be implemented']);
-    });
+    Route::get('/', [App\Http\Controllers\ExamController::class, 'index'])->middleware('role:admin,teacher');
+    Route::post('/', [App\Http\Controllers\ExamController::class, 'store'])->middleware('role:admin,teacher');
+    Route::get('/{exam}', [App\Http\Controllers\ExamController::class, 'show'])->middleware('role:admin,teacher');
+    Route::put('/{exam}', [App\Http\Controllers\ExamController::class, 'update'])->middleware('role:admin,teacher');
+    Route::delete('/{exam}', [App\Http\Controllers\ExamController::class, 'destroy'])->middleware('role:admin');
+    Route::get('/{exam}/results', [App\Http\Controllers\ExamController::class, 'getResults'])->middleware('role:admin,teacher');
+    Route::post('/{exam}/results', [App\Http\Controllers\ExamController::class, 'storeResults'])->middleware('role:admin,teacher');
+    Route::get('/{exam}/statistics', [App\Http\Controllers\ExamController::class, 'getStatistics'])->middleware('role:admin,teacher');
 });
 
 // Results Management Routes (Basic structure for future implementation)
@@ -112,18 +135,28 @@ Route::group(['prefix' => 'announcements', 'middleware' => 'auth:api'], function
     Route::get('/{announcement}/download', [App\Http\Controllers\AnnouncementController::class, 'downloadAttachment']);
 });
 
-// Parent Management Routes (Basic structure for future implementation)
+// Parent Management Routes
 Route::group(['prefix' => 'parents', 'middleware' => 'auth:api'], function () {
-    Route::get('/', function () {
-        return response()->json(['message' => 'Parent management routes - to be implemented']);
-    });
+    Route::get('/', [App\Http\Controllers\ParentController::class, 'index'])->middleware('role:admin');
+    Route::post('/', [App\Http\Controllers\ParentController::class, 'store'])->middleware('role:admin');
+    Route::get('/{parent}', [App\Http\Controllers\ParentController::class, 'show'])->middleware('role:admin,parent');
+    Route::put('/{parent}', [App\Http\Controllers\ParentController::class, 'update'])->middleware('role:admin');
+    Route::delete('/{parent}', [App\Http\Controllers\ParentController::class, 'destroy'])->middleware('role:admin');
+    Route::get('/{parent}/children', [App\Http\Controllers\ParentController::class, 'getChildren'])->middleware('role:admin,parent');
+    Route::post('/{parent}/assign-students', [App\Http\Controllers\ParentController::class, 'assignStudents'])->middleware('role:admin');
+    Route::get('/{parent}/children/{student}/performance', [App\Http\Controllers\ParentController::class, 'getChildPerformance'])->middleware('role:admin,parent');
 });
 
-// Reports Routes (Basic structure for future implementation)
+// Reports Routes
 Route::group(['prefix' => 'reports', 'middleware' => 'auth:api'], function () {
-    Route::get('/', function () {
-        return response()->json(['message' => 'Reporting routes - to be implemented']);
-    });
+    Route::get('/', [App\Http\Controllers\ReportController::class, 'index'])->middleware('role:admin,teacher');
+    Route::get('/academic-performance', [App\Http\Controllers\ReportController::class, 'academicPerformance'])->middleware('role:admin,teacher');
+    Route::get('/attendance', [App\Http\Controllers\ReportController::class, 'attendance'])->middleware('role:admin,teacher');
+    Route::get('/student-analytics', [App\Http\Controllers\ReportController::class, 'studentAnalytics'])->middleware('role:admin,teacher');
+    Route::get('/teacher-performance', [App\Http\Controllers\ReportController::class, 'teacherPerformance'])->middleware('role:admin');
+    Route::get('/class-performance', [App\Http\Controllers\ReportController::class, 'classPerformance'])->middleware('role:admin,teacher');
+    Route::post('/export', [App\Http\Controllers\ReportController::class, 'export'])->middleware('role:admin,teacher');
+    Route::get('/dashboard/data', [App\Http\Controllers\ReportController::class, 'dashboard'])->middleware('role:admin,teacher');
 });
 
 // Settings/Configuration Routes (Basic structure for future implementation)

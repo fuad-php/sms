@@ -22,11 +22,11 @@
         <div class="mb-8">
             <a href="{{ route('home') }}" class="flex items-center">
                 <div class="flex-shrink-0">
-                    <x-application-logo class="w-20 h-20 fill-current text-gray-800" />
+                    <x-school-logo class="w-20 h-20" />
                 </div>
                 <div class="ml-4">
                     <h1 class="text-2xl font-bold text-gray-900">
-                        @schoolName
+                        {{ \App\Helpers\SettingsHelper::getSchoolName() }}
                     </h1>
                     <p class="text-sm text-gray-600">School Management System</p>
                 </div>

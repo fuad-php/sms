@@ -25,6 +25,10 @@ class CarouselSlide extends Model
         'order' => 'integer',
     ];
 
+    protected $appends = [
+        'image_url',
+    ];
+
     /**
      * Get the image URL
      */

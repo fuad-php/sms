@@ -89,12 +89,12 @@
                         <label for="department" class="block text-sm font-medium text-gray-700 mb-2">{{ __('app.department') }}</label>
                         <select id="department" name="department" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
                             <option value="">{{ __('app.all_departments') }}</option>
-                            <option value="Admissions" {{ request('department') === 'Admissions' ? 'selected' : '' }}>Admissions</option>
-                            <option value="Academic" {{ request('department') === 'Academic' ? 'selected' : '' }}>Academic</option>
-                            <option value="Administration" {{ request('department') === 'Administration' ? 'selected' : '' }}>Administration</option>
-                            <option value="Student Services" {{ request('department') === 'Student Services' ? 'selected' : '' }}>Student Services</option>
-                            <option value="IT Support" {{ request('department') === 'IT Support' ? 'selected' : '' }}>IT Support</option>
-                            <option value="General Inquiry" {{ request('department') === 'General Inquiry' ? 'selected' : '' }}>General Inquiry</option>
+                            <option value="admissions" {{ request('department') === 'admissions' ? 'selected' : '' }}>{{ __('app.admissions') }}</option>
+                            <option value="academic_affairs" {{ request('department') === 'academic_affairs' ? 'selected' : '' }}>{{ __('app.academic_affairs') }}</option>
+                            <option value="administration" {{ request('department') === 'administration' ? 'selected' : '' }}>{{ __('app.administration') }}</option>
+                            <option value="student_services" {{ request('department') === 'student_services' ? 'selected' : '' }}>{{ __('app.student_services') }}</option>
+                            <option value="technical_support" {{ request('department') === 'technical_support' ? 'selected' : '' }}>{{ __('app.technical_support') }}</option>
+                            <option value="general_inquiry" {{ request('department') === 'general_inquiry' ? 'selected' : '' }}>{{ __('app.general_inquiry') }}</option>
                         </select>
                     </div>
                     

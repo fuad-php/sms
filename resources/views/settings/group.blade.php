@@ -21,6 +21,29 @@
         </div>
     </div>
 
+    <!-- Success/Error Messages -->
+    @if(session('success'))
+        <div class="mb-6 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+            <span class="block sm:inline">{{ session('success') }}</span>
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div class="mb-6 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+            <span class="block sm:inline">{{ session('error') }}</span>
+        </div>
+    @endif
+
+    @if($errors->any())
+        <div class="mb-6 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+            <ul class="list-disc list-inside">
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     @if($settings->isEmpty())
         <div class="bg-white rounded-lg shadow p-8 text-center">
             <div class="text-gray-400 mb-4">
@@ -33,7 +56,7 @@
             </a>
         </div>
     @else
-        <form method="POST" action="{{ route('settings.update-group', $group) }}">
+        <form method="POST" action="{{ route('settings.update-group', $group) }}" id="settings-update-form">
             @csrf
             @method('PUT')
             
@@ -67,16 +90,15 @@
                                         @endif
                                     </div>
                                     <div class="ml-4 flex space-x-2">
-                                        <a href="{{ route('settings.edit', $setting) }}" class="text-blue-600 hover:text-blue-800 text-sm">
+                                        <a href="{{ route('settings.edit', $setting) }}" class="text-blue-600 hover:text-blue-800 text-sm" title="Edit setting">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <form method="POST" action="{{ route('settings.destroy', $setting) }}" class="inline" onsubmit="return confirm('Are you sure you want to delete this setting?')">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="text-red-600 hover:text-red-800 text-sm">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </form>
+                                        <button type="button" 
+                                                class="text-red-600 hover:text-red-800 text-sm" 
+                                                title="Delete setting"
+                                                onclick="deleteSetting({{ $setting->id }}, '{{ $setting->label }}')">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
                                     </div>
                                 </div>
                                 
@@ -156,4 +178,62 @@
         </form>
     @endif
 </div>
+
+@push('scripts')
+<script>
+// Delete setting function
+function deleteSetting(settingId, settingLabel) {
+    if (confirm(`Are you sure you want to delete the setting "${settingLabel}"? This action cannot be undone.`)) {
+        // Create a temporary form for deletion
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = `/settings/${settingId}`;
+        form.style.display = 'none';
+        
+        // Add CSRF token
+        const csrfToken = document.querySelector('meta[name="csrf-token"]');
+        if (csrfToken) {
+            const csrfInput = document.createElement('input');
+            csrfInput.type = 'hidden';
+            csrfInput.name = '_token';
+            csrfInput.value = csrfToken.getAttribute('content');
+            form.appendChild(csrfInput);
+        }
+        
+        // Add method override
+        const methodInput = document.createElement('input');
+        methodInput.type = 'hidden';
+        methodInput.name = '_method';
+        methodInput.value = 'DELETE';
+        form.appendChild(methodInput);
+        
+        // Submit the form
+        document.body.appendChild(form);
+        form.submit();
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Ensure the main form uses PUT method
+    const mainForm = document.getElementById('settings-update-form');
+    if (mainForm) {
+        // Double-check the method is set correctly
+        const methodInput = mainForm.querySelector('input[name="_method"]');
+        if (methodInput) {
+            methodInput.value = 'PUT';
+        }
+        
+        // Prevent any accidental method changes
+        mainForm.addEventListener('submit', function(e) {
+            const methodInput = this.querySelector('input[name="_method"]');
+            if (methodInput && methodInput.value !== 'PUT') {
+                console.log('Form method was changed from', methodInput.value, 'to PUT');
+                methodInput.value = 'PUT';
+            }
+            console.log('Submitting form with method:', methodInput ? methodInput.value : 'not found');
+        });
+    }
+});
+</script>
+@endpush
 @endsection

@@ -112,6 +112,23 @@ class AuthController extends Controller
     {
         $request->session()->regenerate();
 
+        // Get the intended URL
+        $intended = $request->session()->get('url.intended');
+        
+        // If the intended URL is for API routes or specific routes we don't want to redirect to,
+        // ignore it and use the default redirect
+        if ($intended && (
+            str_contains($intended, '/api/') ||
+            str_contains($intended, '/carousel/active') ||
+            str_contains($intended, '.json') ||
+            str_contains($intended, '/admin/') ||
+            str_contains($intended, '/download')
+        )) {
+            // Clear the intended URL and use default redirect
+            $request->session()->forget('url.intended');
+            return redirect($this->redirectTo);
+        }
+
         return redirect()->intended($this->redirectTo);
     }
 
