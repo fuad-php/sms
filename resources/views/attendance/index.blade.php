@@ -1,28 +1,28 @@
 @extends('layouts.app')
 
-@section('title', 'Attendance Management')
+@section('title', __('app.attendance_management'))
 
 @section('content')
 <div class="container mx-auto px-4 py-8">
     <div class="mb-8">
-        <h1 class="text-3xl font-bold text-gray-900">Attendance Management</h1>
-        <p class="text-gray-600">View and manage student attendance</p>
+        <h1 class="text-3xl font-bold text-gray-900">{{ __('app.attendance_management') }}</h1>
+        <p class="text-gray-600">{{ __('app.view_and_manage_student_attendance') }}</p>
     </div>
 
     <!-- Attendance Form -->
     <div class="bg-white rounded-lg shadow p-6 mb-6">
-        <h2 class="text-xl font-semibold text-gray-900 mb-4">Select Date and Class</h2>
+        <h2 class="text-xl font-semibold text-gray-900 mb-4">{{ __('app.select_date_and_class') }}</h2>
         <form action="{{ route('attendance.index') }}" method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
-                <label for="date" class="block text-sm font-medium text-gray-700">Date *</label>
+                <label for="date" class="block text-sm font-medium text-gray-700">{{ __('app.date') }} *</label>
                 <input type="date" name="date" id="date" value="{{ request('date', date('Y-m-d')) }}" required
                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
             </div>
             <div>
-                <label for="class_id" class="block text-sm font-medium text-gray-700">Class *</label>
+                <label for="class_id" class="block text-sm font-medium text-gray-700">{{ __('app.class') }} *</label>
                 <select name="class_id" id="class_id" required
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                    <option value="">Select Class</option>
+                    <option value="">{{ __('app.select_class') }}</option>
                     @foreach(\App\Models\SchoolClass::active()->get() as $class)
                         <option value="{{ $class->id }}" {{ request('class_id') == $class->id ? 'selected' : '' }}>
                             {{ $class->name }}
@@ -31,10 +31,10 @@
                 </select>
             </div>
             <div>
-                <label for="subject_id" class="block text-sm font-medium text-gray-700">Subject (Optional)</label>
+                <label for="subject_id" class="block text-sm font-medium text-gray-700">{{ __('app.subject') }} ({{ __('app.optional') }})</label>
                 <select name="subject_id" id="subject_id"
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                    <option value="">All Subjects</option>
+                    <option value="">{{ __('app.all_subjects') }}</option>
                     @foreach(\App\Models\Subject::active()->get() as $subject)
                         <option value="{{ $subject->id }}" {{ request('subject_id') == $subject->id ? 'selected' : '' }}>
                             {{ $subject->name }}
@@ -45,7 +45,7 @@
             <div class="flex items-end">
                 <button type="submit" 
                         class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                    View Attendance
+                    {{ __('app.view_attendance') }}
                 </button>
             </div>
         </form>
@@ -55,22 +55,22 @@
         <!-- Attendance Overview -->
         <div class="bg-white rounded-lg shadow p-6 mb-6">
             <div class="mb-6">
-                <h2 class="text-xl font-semibold text-gray-900 mb-4">Attendance Overview</h2>
+                <h2 class="text-xl font-semibold text-gray-900 mb-4">{{ __('app.attendance_overview') }}</h2>
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <div class="bg-blue-50 p-4 rounded-lg">
-                        <p class="text-sm font-medium text-blue-600">Total Students</p>
+                        <p class="text-sm font-medium text-blue-600">{{ __('app.total_students') }}</p>
                         <p class="text-2xl font-bold text-blue-900">{{ $statistics['total_students'] ?? 0 }}</p>
                     </div>
                     <div class="bg-green-50 p-4 rounded-lg">
-                        <p class="text-sm font-medium text-green-600">Present</p>
+                        <p class="text-sm font-medium text-green-600">{{ __('app.present') }}</p>
                         <p class="text-2xl font-bold text-green-900">{{ $statistics['present'] ?? 0 }}</p>
                     </div>
                     <div class="bg-red-50 p-4 rounded-lg">
-                        <p class="text-sm font-medium text-red-600">Absent</p>
+                        <p class="text-sm font-medium text-red-600">{{ __('app.absent') }}</p>
                         <p class="text-2xl font-bold text-red-900">{{ $statistics['absent'] ?? 0 }}</p>
                     </div>
                     <div class="bg-yellow-50 p-4 rounded-lg">
-                        <p class="text-sm font-medium text-yellow-600">Attendance Rate</p>
+                        <p class="text-sm font-medium text-yellow-600">{{ __('app.attendance_rate') }}</p>
                         <p class="text-2xl font-bold text-yellow-900">{{ $statistics['attendance_rate'] ?? 0 }}%</p>
                     </div>
                 </div>
@@ -80,7 +80,7 @@
                 @if(in_array(auth()->user()->role, ['admin', 'teacher']))
                     <!-- Mark Attendance Form -->
                     <div class="mb-6">
-                        <h3 class="text-lg font-medium text-gray-900 mb-4">Mark Attendance</h3>
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">{{ __('app.mark_attendance') }}</h3>
                         <form action="{{ route('attendance.mark') }}" method="POST">
                             @csrf
                             <input type="hidden" name="date" value="{{ request('date') }}">
@@ -93,10 +93,10 @@
                                 <table class="min-w-full divide-y divide-gray-200">
                                     <thead class="bg-gray-50">
                                         <tr>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Student</th>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Remarks</th>
-                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Marked By</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('app.student') }}</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('app.status') }}</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('app.remarks') }}</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('app.marked_by') }}</th>
                                         </tr>
                                     </thead>
                                     <tbody class="bg-white divide-y divide-gray-200">
@@ -118,20 +118,20 @@
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <select name="attendance[{{ $data['student']->id }}][status]" 
                                                         class="rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                                                    <option value="present" {{ $data['status'] == 'present' ? 'selected' : '' }}>Present</option>
-                                                    <option value="absent" {{ $data['status'] == 'absent' ? 'selected' : '' }}>Absent</option>
-                                                    <option value="late" {{ $data['status'] == 'late' ? 'selected' : '' }}>Late</option>
-                                                    <option value="excused" {{ $data['status'] == 'excused' ? 'selected' : '' }}>Excused</option>
+                                                    <option value="present" {{ $data['status'] == 'present' ? 'selected' : '' }}>{{ __('app.present') }}</option>
+                                                    <option value="absent" {{ $data['status'] == 'absent' ? 'selected' : '' }}>{{ __('app.absent') }}</option>
+                                                    <option value="late" {{ $data['status'] == 'late' ? 'selected' : '' }}>{{ __('app.late') }}</option>
+                                                    <option value="excused" {{ $data['status'] == 'excused' ? 'selected' : '' }}>{{ __('app.excused') }}</option>
                                                 </select>
                                                 <input type="hidden" name="attendance[{{ $data['student']->id }}][student_id]" value="{{ $data['student']->id }}">
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <input type="text" name="attendance[{{ $data['student']->id }}][remarks]" 
-                                                       value="{{ $data['remarks'] ?? '' }}" placeholder="Optional remarks"
+                                                       value="{{ $data['remarks'] ?? '' }}" placeholder="{{ __('app.optional_remarks') }}"
                                                        class="rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                {{ $data['marked_by'] ? $data['marked_by']->name : 'Not marked' }}
+                                                {{ $data['marked_by'] ? $data['marked_by']->name : __('app.not_marked') }}
                                             </td>
                                         </tr>
                                         @endforeach
@@ -142,7 +142,7 @@
                             <div class="mt-6 flex justify-end">
                                 <button type="submit" 
                                         class="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
-                                    Save Attendance
+                                    {{ __('app.save_attendance') }}
                                 </button>
                             </div>
                         </form>
@@ -150,15 +150,15 @@
                 @else
                     <!-- View Only for Parents and Students -->
                     <div class="mb-6">
-                        <h3 class="text-lg font-medium text-gray-900 mb-4">Attendance Records</h3>
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">{{ __('app.attendance_records') }}</h3>
                         <div class="overflow-x-auto">
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-gray-50">
                                     <tr>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Student</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Remarks</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Marked By</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('app.student') }}</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('app.status') }}</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('app.remarks') }}</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('app.marked_by') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
@@ -191,7 +191,7 @@
                                             {{ $data['remarks'] ?? '-' }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                            {{ $data['marked_by'] ? $data['marked_by']->name : 'Not marked' }}
+                                            {{ $data['marked_by'] ? $data['marked_by']->name : __('app.not_marked') }}
                                         </td>
                                     </tr>
                                     @endforeach
@@ -202,7 +202,7 @@
                 @endif
             @else
                 <div class="text-center py-8">
-                    <p class="text-gray-500">No students found in this class for the selected date.</p>
+                    <p class="text-gray-500">{{ __('app.no_students_found_for_date') }}</p>
                 </div>
             @endif
         </div>
@@ -216,9 +216,9 @@
                     </svg>
                 </div>
                 <div class="ml-3">
-                    <h3 class="text-sm font-medium text-blue-800">Getting Started</h3>
+                    <h3 class="text-sm font-medium text-blue-800">{{ __('app.getting_started') }}</h3>
                     <div class="mt-2 text-sm text-blue-700">
-                        <p>Please select a date and class above to view and mark attendance for students.</p>
+                        <p>{{ __('app.select_date_class_attendance_instructions') }}</p>
                     </div>
                 </div>
             </div>

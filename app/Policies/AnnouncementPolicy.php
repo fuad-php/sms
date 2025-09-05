@@ -28,7 +28,7 @@ class AnnouncementPolicy
         // Check if user has access to this announcement based on target audience and class
         if ($user->role === 'teacher') {
             // Teachers can view announcements for their classes and general announcements
-            $teacherClasses = $user->teacher->classes->pluck('id');
+            $teacherClasses = $user->teacher->classesAsTeacher->pluck('id');
             return is_null($announcement->class_id) || $teacherClasses->contains($announcement->class_id);
         }
 

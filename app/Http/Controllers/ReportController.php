@@ -68,24 +68,25 @@ class ReportController extends Controller
 
         if ($request->filled('date_from')) {
             $query->whereHas('exam', function ($q) use ($request) {
-                $q->where('date', '>=', $request->date_from);
+                $q->where('exam_date', '>=', $request->date_from);
             });
         }
 
         if ($request->filled('date_to')) {
             $query->whereHas('exam', function ($q) use ($request) {
-                $q->where('date', '<=', $request->date_to);
+                $q->where('exam_date', '<=', $request->date_to);
             });
         }
 
-        $results = $query->get();
+        $results = $query->paginate(15);
 
-        // Calculate statistics
+        // Calculate statistics using the underlying collection
+        $allResults = $query->get();
         $statistics = [
-            'total_results' => $results->count(),
-            'average_marks' => $results->avg('marks_obtained'),
-            'pass_rate' => $results->where('is_pass', true)->count() / max($results->count(), 1) * 100,
-            'grade_distribution' => $results->groupBy('grade')->map->count(),
+            'total_results' => $results->total(),
+            'average_marks' => $allResults->avg('marks_obtained'),
+            'pass_rate' => $allResults->where('is_pass', true)->count() / max($allResults->count(), 1) * 100,
+            'grade_distribution' => $allResults->groupBy('grade')->map->count(),
         ];
 
         // Get filter options
@@ -129,16 +130,17 @@ class ReportController extends Controller
             $query->where('date', '<=', $request->date_to);
         }
 
-        $attendances = $query->get();
+        $attendances = $query->paginate(15);
 
-        // Calculate statistics
+        // Calculate statistics using the underlying collection
+        $allAttendances = $query->get();
         $statistics = [
-            'total_records' => $attendances->count(),
-            'present_count' => $attendances->where('status', 'present')->count(),
-            'absent_count' => $attendances->where('status', 'absent')->count(),
-            'late_count' => $attendances->where('status', 'late')->count(),
-            'attendance_rate' => $attendances->count() > 0 ? 
-                ($attendances->where('status', 'present')->count() / $attendances->count()) * 100 : 0,
+            'total_records' => $attendances->total(),
+            'present_count' => $allAttendances->where('status', 'present')->count(),
+            'absent_count' => $allAttendances->where('status', 'absent')->count(),
+            'late_count' => $allAttendances->where('status', 'late')->count(),
+            'attendance_rate' => $allAttendances->count() > 0 ? 
+                ($allAttendances->where('status', 'present')->count() / $allAttendances->count()) * 100 : 0,
         ];
 
         // Get filter options
@@ -165,16 +167,17 @@ class ReportController extends Controller
             $query->where('class_id', $request->class_id);
         }
 
-        $students = $query->get();
+        $students = $query->paginate(15);
 
-        // Calculate analytics for each student
-        $analytics = $students->map(function ($student) use ($request) {
+        // Calculate analytics for each student using the underlying collection
+        $allStudents = $query->get();
+        $analytics = $allStudents->map(function ($student) use ($request) {
             $dateFrom = $request->date_from ? Carbon::parse($request->date_from) : now()->startOfMonth();
             $dateTo = $request->date_to ? Carbon::parse($request->date_to) : now()->endOfMonth();
 
             $recentResults = $student->examResults()
                 ->whereHas('exam', function ($q) use ($dateFrom, $dateTo) {
-                    $q->whereBetween('date', [$dateFrom, $dateTo]);
+                    $q->whereBetween('exam_date', [$dateFrom, $dateTo]);
                 })
                 ->get();
 
@@ -194,8 +197,9 @@ class ReportController extends Controller
 
         // Get filter options
         $classes = SchoolClass::all();
+        $allStudents = Student::with('class')->get(); // Collection for filter dropdown
 
-        return view('reports.student-analytics', compact('analytics', 'classes'));
+        return view('reports.student-analytics', compact('analytics', 'classes', 'students', 'allStudents'));
     }
 
     /**
@@ -210,41 +214,49 @@ class ReportController extends Controller
             'date_to' => 'nullable|date|after_or_equal:date_from',
         ]);
 
-        $query = Teacher::with(['user', 'subjects', 'classes']);
+        $query = Teacher::with(['user', 'subjects', 'classesAsTeacher']);
 
         if ($request->filled('teacher_id')) {
             $query->where('id', $request->teacher_id);
         }
 
-        $teachers = $query->get();
+        $teachers = $query->paginate(15);
 
-        // Calculate performance metrics for each teacher
-        $performance = $teachers->map(function ($teacher) use ($request) {
+        // Calculate performance metrics for each teacher using the underlying collection
+        $allTeachers = $query->get();
+        $performance = $allTeachers->map(function ($teacher) use ($request) {
             $dateFrom = $request->date_from ? Carbon::parse($request->date_from) : now()->startOfMonth();
             $dateTo = $request->date_to ? Carbon::parse($request->date_to) : now()->endOfMonth();
 
             // Get exams conducted by this teacher
             $exams = Exam::whereHas('subject', function ($q) use ($teacher) {
-                $q->where('teacher_id', $teacher->id);
-            })->whereBetween('date', [$dateFrom, $dateTo])->get();
+                $q->whereHas('classes', function ($classQuery) use ($teacher) {
+                    $classQuery->where('teacher_id', $teacher->user_id);
+                });
+            })->whereBetween('exam_date', [$dateFrom, $dateTo])->get();
 
             // Get results for these exams
             $results = ExamResult::whereIn('exam_id', $exams->pluck('id'))->get();
 
             return [
                 'teacher' => $teacher,
+                'name' => $teacher->user->name,
+                'email' => $teacher->user->email,
+                'subjects_count' => $teacher->subjects->count(),
+                'classes_count' => $teacher->classesAsTeacher->count(),
                 'total_exams' => $exams->count(),
-                'total_students' => $results->unique('student_id')->count(),
-                'average_marks' => $results->avg('marks_obtained'),
+                'students_count' => $results->unique('student_id')->count(),
+                'average_marks' => $results->avg('marks_obtained') ? round($results->avg('marks_obtained'), 2) : 'N/A',
+                'average_performance' => $results->avg('marks_obtained') ? round($results->avg('marks_obtained'), 2) : 0,
                 'pass_rate' => $results->count() > 0 ? 
-                    ($results->where('is_pass', true)->count() / $results->count()) * 100 : 0,
+                    round(($results->where('is_pass', true)->count() / $results->count()) * 100, 2) : 0,
             ];
         });
 
         // Get filter options
         $subjects = Subject::all();
 
-        return view('reports.teacher-performance', compact('performance', 'subjects'));
+        return view('reports.teacher-performance', compact('performance', 'subjects', 'teachers'));
     }
 
     /**
@@ -258,23 +270,24 @@ class ReportController extends Controller
             'date_to' => 'nullable|date|after_or_equal:date_from',
         ]);
 
-        $query = SchoolClass::with(['students', 'subjects', 'exams']);
+        $query = SchoolClass::with(['students', 'subjects', 'exams', 'classTeacher']);
 
         if ($request->filled('class_id')) {
             $query->where('id', $request->class_id);
         }
 
-        $classes = $query->get();
+        $classes = $query->paginate(15);
 
-        // Calculate performance metrics for each class
-        $classPerformance = $classes->map(function ($class) use ($request) {
+        // Calculate performance metrics for each class using the underlying collection
+        $allClasses = $query->get();
+        $classPerformance = $allClasses->map(function ($class) use ($request) {
             $dateFrom = $request->date_from ? Carbon::parse($request->date_from) : now()->startOfMonth();
             $dateTo = $request->date_to ? Carbon::parse($request->date_to) : now()->endOfMonth();
 
             // Get exam results for this class
             $results = ExamResult::whereHas('exam', function ($q) use ($class, $dateFrom, $dateTo) {
                 $q->where('class_id', $class->id)
-                  ->whereBetween('date', [$dateFrom, $dateTo]);
+                  ->whereBetween('exam_date', [$dateFrom, $dateTo]);
             })->get();
 
             // Get attendance for this class
@@ -283,18 +296,33 @@ class ReportController extends Controller
             })->whereBetween('date', [$dateFrom, $dateTo])->get();
 
             return [
-                'class' => $class,
-                'total_students' => $class->students->count(),
+                'name' => $class->name,
+                'teacher_name' => $class->class_teacher ? $class->class_teacher->name : 'N/A',
+                'section_name' => $class->section ?: 'N/A',
+                'students_count' => $class->students->count(),
+                'subjects_count' => $class->subjects->count(),
                 'total_exams' => $results->unique('exam_id')->count(),
-                'average_marks' => $results->avg('marks_obtained'),
+                'average_marks' => $results->avg('marks_obtained') ? round($results->avg('marks_obtained'), 2) : 'N/A',
                 'pass_rate' => $results->count() > 0 ? 
-                    ($results->where('is_pass', true)->count() / $results->count()) * 100 : 0,
+                    round(($results->where('is_pass', true)->count() / $results->count()) * 100, 2) : 0,
                 'attendance_rate' => $attendance->count() > 0 ? 
-                    ($attendance->where('status', 'present')->count() / $attendance->count()) * 100 : 0,
+                    round(($attendance->where('status', 'present')->count() / $attendance->count()) * 100, 2) : 0,
             ];
         });
 
-        return view('reports.class-performance', compact('classPerformance'));
+        // Calculate overall statistics
+        $statistics = [
+            'total_classes' => $allClasses->count(),
+            'total_students' => $allClasses->sum(function ($class) {
+                return $class->students->count();
+            }),
+            'average_performance' => $classPerformance->where('average_marks', '!=', 'N/A')->avg('average_marks') ? 
+                round($classPerformance->where('average_marks', '!=', 'N/A')->avg('average_marks'), 2) : 0,
+            'pass_rate' => $classPerformance->avg('pass_rate') ? 
+                round($classPerformance->avg('pass_rate'), 2) : 0,
+        ];
+
+        return view('reports.class-performance', compact('classPerformance', 'classes', 'statistics'));
     }
 
     /**
@@ -331,7 +359,7 @@ class ReportController extends Controller
             'active_students' => Student::where('is_active', true)->count(),
             'active_teachers' => Teacher::where('is_active', true)->count(),
             'published_exams' => Exam::where('is_published', true)->count(),
-            'upcoming_exams' => Exam::where('date', '>', now())->count(),
+            'upcoming_exams' => Exam::where('exam_date', '>', now())->count(),
         ];
 
         return response()->json($statistics);

@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Student Attendance Report')
+@section('title', __('app.student_attendance_report'))
 
 @section('content')
 <div class="container mx-auto px-4 py-8">
     <div class="mb-8">
-        <h1 class="text-3xl font-bold text-gray-900">Student Attendance Report</h1>
-        <p class="text-gray-600">View detailed attendance history for {{ $student->user->name }}</p>
+        <h1 class="text-3xl font-bold text-gray-900">{{ __('app.student_attendance_report') }}</h1>
+        <p class="text-gray-600">{{ __('app.view_detailed_attendance_history_for', ['name' => $student->user->name]) }}</p>
     </div>
 
     <!-- Student Information -->
@@ -14,7 +14,7 @@
         <div class="flex items-center">
             @if($student->user->avatar)
                 <img src="{{ asset('storage/' . $student->user->avatar) }}" 
-                     alt="Student Avatar" 
+                     alt="{{ __('app.student_avatar') }}" 
                      class="w-16 h-16 rounded-full object-cover">
             @else
                 <div class="w-16 h-16 rounded-full bg-gray-300 flex items-center justify-center">
@@ -23,31 +23,31 @@
             @endif
             <div class="ml-4">
                 <h2 class="text-xl font-semibold text-gray-900">{{ $student->user->name }}</h2>
-                <p class="text-gray-600">{{ $student->student_id }} • {{ $student->class->name ?? 'No Class' }}</p>
-                <p class="text-sm text-gray-500">Roll Number: {{ $student->roll_number ?? 'N/A' }}</p>
+                <p class="text-gray-600">{{ $student->student_id }} • {{ $student->class->name ?? __('app.no_class') }}</p>
+                <p class="text-sm text-gray-500">{{ __('app.roll_number') }}: {{ $student->roll_number ?? __('app.not_available') }}</p>
             </div>
         </div>
     </div>
 
     <!-- Filter Form -->
     <div class="bg-white rounded-lg shadow p-6 mb-6">
-        <h3 class="text-lg font-medium text-gray-900 mb-4">Filter Options</h3>
+        <h3 class="text-lg font-medium text-gray-900 mb-4">{{ __('app.filter_options') }}</h3>
         <form method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
-                <label for="start_date" class="block text-sm font-medium text-gray-700">Start Date</label>
+                <label for="start_date" class="block text-sm font-medium text-gray-700">{{ __('app.start_date') }}</label>
                 <input type="date" name="start_date" id="start_date" value="{{ request('start_date', date('Y-m-01')) }}"
                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
             </div>
             <div>
-                <label for="end_date" class="block text-sm font-medium text-gray-700">End Date</label>
+                <label for="end_date" class="block text-sm font-medium text-gray-700">{{ __('app.end_date') }}</label>
                 <input type="date" name="end_date" id="end_date" value="{{ request('end_date', date('Y-m-d')) }}"
                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
             </div>
             <div>
-                <label for="subject_id" class="block text-sm font-medium text-gray-700">Subject</label>
+                <label for="subject_id" class="block text-sm font-medium text-gray-700">{{ __('app.subject') }}</label>
                 <select name="subject_id" id="subject_id"
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                    <option value="">All Subjects</option>
+                    <option value="">{{ __('app.all_subjects') }}</option>
                     @foreach(\App\Models\Subject::active()->get() as $subject)
                         <option value="{{ $subject->id }}" {{ request('subject_id') == $subject->id ? 'selected' : '' }}>
                             {{ $subject->name }}
@@ -58,7 +58,7 @@
             <div class="flex items-end">
                 <button type="submit" 
                         class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                    Generate Report
+                    {{ __('app.generate_report') }}
                 </button>
             </div>
         </form>
@@ -70,25 +70,25 @@
             <div class="bg-white rounded-lg shadow p-6">
                 <div class="text-center">
                     <div class="text-2xl font-bold text-green-600">{{ $summary['present_count'] ?? 0 }}</div>
-                    <div class="text-sm text-gray-500">Present</div>
+                    <div class="text-sm text-gray-500">{{ __('app.present') }}</div>
                 </div>
             </div>
             <div class="bg-white rounded-lg shadow p-6">
                 <div class="text-center">
                     <div class="text-2xl font-bold text-red-600">{{ $summary['absent_count'] ?? 0 }}</div>
-                    <div class="text-sm text-gray-500">Absent</div>
+                    <div class="text-sm text-gray-500">{{ __('app.absent') }}</div>
                 </div>
             </div>
             <div class="bg-white rounded-lg shadow p-6">
                 <div class="text-center">
                     <div class="text-2xl font-bold text-yellow-600">{{ $summary['late_count'] ?? 0 }}</div>
-                    <div class="text-sm text-gray-500">Late</div>
+                    <div class="text-sm text-gray-500">{{ __('app.late') }}</div>
                 </div>
             </div>
             <div class="bg-white rounded-lg shadow p-6">
                 <div class="text-center">
                     <div class="text-2xl font-bold text-blue-600">{{ $summary['attendance_rate'] ?? 0 }}%</div>
-                    <div class="text-sm text-gray-500">Attendance Rate</div>
+                    <div class="text-sm text-gray-500">{{ __('app.attendance_rate') }}</div>
                 </div>
             </div>
         </div>
@@ -134,10 +134,10 @@
                                 </span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                {{ $record->remarks ?? 'N/A' }}
+                                {{ $record->remarks ?? __('app.not_available') }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                {{ $record->markedBy ? $record->markedBy->name : 'N/A' }}
+                                {{ $record->markedBy ? $record->markedBy->name : __('app.not_available') }}
                             </td>
                         </tr>
                         @endforeach

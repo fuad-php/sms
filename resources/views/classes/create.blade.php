@@ -27,14 +27,14 @@
 
                 <!-- Class Name -->
                 <div>
-                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Class Name *</label>
+                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">{{ __('app.class_name') }} *</label>
                     <input type="text" 
                            id="name" 
                            name="name" 
                            value="{{ old('name') }}"
                            required
                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('name') border-red-500 @enderror"
-                           placeholder="e.g., Grade 1, Class A, etc.">
+                           placeholder="{{ __('app.enter_class_name') }}">
                     @error('name')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
@@ -42,16 +42,38 @@
 
                 <!-- Section -->
                 <div>
-                    <label for="section" class="block text-sm font-medium text-gray-700 mb-1">Section</label>
-                    <input type="text" 
-                           id="section" 
-                           name="section" 
-                           value="{{ old('section') }}"
-                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('section') border-red-500 @enderror"
-                           placeholder="e.g., A, B, C, etc. (optional)">
+                    <label for="section" class="block text-sm font-medium text-gray-700 mb-1">{{ __('app.section') }}</label>
+                    <div class="flex space-x-2">
+                        <input type="text" 
+                               id="section" 
+                               name="section" 
+                               value="{{ old('section') }}"
+                               class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('section') border-red-500 @enderror"
+                               placeholder="{{ __('app.enter_section_name') }}">
+                        <button type="button" 
+                                id="suggest-sections" 
+                                class="px-3 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 text-sm">
+                            {{ __('app.suggest') }}
+                        </button>
+                    </div>
+                    <p class="mt-1 text-sm text-gray-500">{{ __('app.section_help_text') }}</p>
                     @error('section')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
+                    
+                    <!-- Section suggestions -->
+                    <div id="section-suggestions" class="mt-2 hidden">
+                        <div class="text-sm text-gray-600 mb-2">{{ __('app.common_sections') }}:</div>
+                        <div class="flex flex-wrap gap-2">
+                            <button type="button" class="section-suggestion px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs hover:bg-blue-200" data-section="A">A</button>
+                            <button type="button" class="section-suggestion px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs hover:bg-blue-200" data-section="B">B</button>
+                            <button type="button" class="section-suggestion px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs hover:bg-blue-200" data-section="C">C</button>
+                            <button type="button" class="section-suggestion px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs hover:bg-blue-200" data-section="D">D</button>
+                            <button type="button" class="section-suggestion px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs hover:bg-blue-200" data-section="Science">{{ __('app.science') }}</button>
+                            <button type="button" class="section-suggestion px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs hover:bg-blue-200" data-section="Commerce">{{ __('app.commerce') }}</button>
+                            <button type="button" class="section-suggestion px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs hover:bg-blue-200" data-section="Arts">{{ __('app.arts') }}</button>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Description -->
@@ -131,4 +153,34 @@
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const suggestButton = document.getElementById('suggest-sections');
+    const suggestionsDiv = document.getElementById('section-suggestions');
+    const sectionInput = document.getElementById('section');
+    const suggestionButtons = document.querySelectorAll('.section-suggestion');
+
+    // Toggle suggestions visibility
+    suggestButton.addEventListener('click', function() {
+        suggestionsDiv.classList.toggle('hidden');
+    });
+
+    // Handle suggestion button clicks
+    suggestionButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            sectionInput.value = this.dataset.section;
+            suggestionsDiv.classList.add('hidden');
+            sectionInput.focus();
+        });
+    });
+
+    // Hide suggestions when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!suggestButton.contains(e.target) && !suggestionsDiv.contains(e.target)) {
+            suggestionsDiv.classList.add('hidden');
+        }
+    });
+});
+</script>
 @endsection

@@ -67,6 +67,23 @@ class SchoolClass extends Model
         return $query->where('is_active', true);
     }
 
+    public function scopeWithSections($query)
+    {
+        return $query->whereNotNull('section')->where('section', '!=', '');
+    }
+
+    public function scopeWithoutSections($query)
+    {
+        return $query->where(function($q) {
+            $q->whereNull('section')->orWhere('section', '');
+        });
+    }
+
+    public function scopeBySection($query, $section)
+    {
+        return $query->where('section', $section);
+    }
+
     /**
      * Helper methods
      */
@@ -88,6 +105,62 @@ class SchoolClass extends Model
     public function isFull()
     {
         return $this->getStudentCount() >= $this->capacity;
+    }
+
+    /**
+     * Section-related helper methods
+     */
+    public function hasSection()
+    {
+        return !empty($this->section);
+    }
+
+    public function getSectionDisplayName()
+    {
+        return $this->hasSection() ? $this->section : __('app.no_section');
+    }
+
+    public function getClassWithSectionAttribute()
+    {
+        return $this->hasSection() ? "{$this->name} - {$this->section}" : $this->name;
+    }
+
+    /**
+     * Get all available sections for a given class name
+     */
+    public static function getAvailableSectionsForClass($className)
+    {
+        return static::where('name', $className)
+                    ->whereNotNull('section')
+                    ->where('section', '!=', '')
+                    ->pluck('section')
+                    ->sort()
+                    ->values();
+    }
+
+    /**
+     * Get all unique sections across all classes
+     */
+    public static function getAllSections()
+    {
+        return static::whereNotNull('section')
+                    ->where('section', '!=', '')
+                    ->distinct()
+                    ->pluck('section')
+                    ->sort()
+                    ->values();
+    }
+
+    /**
+     * Get classes grouped by name and section
+     */
+    public static function getGroupedClasses()
+    {
+        return static::with(['classTeacher', 'students'])
+                    ->orderBy('name')
+                    ->orderBy('section')
+                    ->get()
+                    ->groupBy('name');
     }
 
     public function getTodayTimetable()

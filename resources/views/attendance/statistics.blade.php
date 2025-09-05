@@ -1,33 +1,33 @@
 @extends('layouts.app')
 
-@section('title', 'Attendance Statistics')
+@section('title', __('app.attendance_statistics'))
 
 @section('content')
 <div class="container mx-auto px-4 py-8">
     <div class="mb-8">
-        <h1 class="text-3xl font-bold text-gray-900">Attendance Statistics</h1>
-        <p class="text-gray-600">View comprehensive attendance analytics and reports</p>
+        <h1 class="text-3xl font-bold text-gray-900">{{ __('app.attendance_statistics') }}</h1>
+        <p class="text-gray-600">{{ __('app.view_comprehensive_attendance_analytics') }}</p>
     </div>
 
     <!-- Filter Form -->
     <div class="bg-white rounded-lg shadow p-6 mb-6">
-        <h2 class="text-xl font-semibold text-gray-900 mb-4">Filter Options</h2>
+        <h2 class="text-xl font-semibold text-gray-900 mb-4">{{ __('app.filter_options') }}</h2>
         <form method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
-                <label for="start_date" class="block text-sm font-medium text-gray-700">Start Date</label>
+                <label for="start_date" class="block text-sm font-medium text-gray-700">{{ __('app.start_date') }}</label>
                 <input type="date" name="start_date" id="start_date" value="{{ request('start_date', date('Y-m-01')) }}"
                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
             </div>
             <div>
-                <label for="end_date" class="block text-sm font-medium text-gray-700">End Date</label>
+                <label for="end_date" class="block text-sm font-medium text-gray-700">{{ __('app.end_date') }}</label>
                 <input type="date" name="end_date" id="end_date" value="{{ request('end_date', date('Y-m-d')) }}"
                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
             </div>
             <div>
-                <label for="class_id" class="block text-sm font-medium text-gray-700">Class</label>
+                <label for="class_id" class="block text-sm font-medium text-gray-700">{{ __('app.class') }}</label>
                 <select name="class_id" id="class_id"
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                    <option value="">All Classes</option>
+                    <option value="">{{ __('app.all_classes') }}</option>
                     @foreach(\App\Models\SchoolClass::active()->get() as $class)
                         <option value="{{ $class->id }}" {{ request('class_id') == $class->id ? 'selected' : '' }}>
                             {{ $class->name }}
@@ -38,7 +38,7 @@
             <div class="flex items-end">
                 <button type="submit" 
                         class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                    Generate Report
+                    {{ __('app.generate_report') }}
                 </button>
             </div>
         </form>
@@ -57,7 +57,7 @@
                         </div>
                     </div>
                     <div class="ml-4">
-                        <p class="text-sm font-medium text-gray-500">Total Students</p>
+                        <p class="text-sm font-medium text-gray-500">{{ __('app.total_students') }}</p>
                         <p class="text-2xl font-bold text-gray-900">{{ $statistics['total_students'] ?? 0 }}</p>
                     </div>
                 </div>
@@ -73,7 +73,7 @@
                         </div>
                     </div>
                     <div class="ml-4">
-                        <p class="text-sm font-medium text-gray-500">Average Attendance</p>
+                        <p class="text-sm font-medium text-gray-500">{{ __('app.average_attendance') }}</p>
                         <p class="text-2xl font-bold text-gray-900">{{ $statistics['average_attendance'] ?? 0 }}%</p>
                     </div>
                 </div>
@@ -89,7 +89,7 @@
                         </div>
                     </div>
                     <div class="ml-4">
-                        <p class="text-sm font-medium text-gray-500">Total Days</p>
+                        <p class="text-sm font-medium text-gray-500">{{ __('app.total_days') }}</p>
                         <p class="text-2xl font-bold text-gray-900">{{ $statistics['total_days'] ?? 0 }}</p>
                     </div>
                 </div>
@@ -105,7 +105,7 @@
                         </div>
                     </div>
                     <div class="ml-4">
-                        <p class="text-sm font-medium text-gray-500">Absent Rate</p>
+                        <p class="text-sm font-medium text-gray-500">{{ __('app.absent_rate') }}</p>
                         <p class="text-2xl font-bold text-gray-900">{{ $statistics['absent_rate'] ?? 0 }}%</p>
                     </div>
                 </div>
@@ -122,11 +122,11 @@
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Class</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Students</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Average Attendance</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Best Day</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Worst Day</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('app.class') }}</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('app.total_students') }}</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('app.average_attendance') }}</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('app.best_day') }}</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('app.worst_day') }}</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
@@ -135,8 +135,8 @@
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $class['name'] }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $class['total_students'] }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $class['average_attendance'] }}%</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $class['best_day'] ?? 'N/A' }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $class['worst_day'] ?? 'N/A' }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $class['best_day'] ?? __('app.not_available') }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $class['worst_day'] ?? __('app.not_available') }}</td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -148,7 +148,7 @@
         <!-- Daily Trend Chart -->
         @if(isset($dailyTrends) && count($dailyTrends) > 0)
         <div class="bg-white rounded-lg shadow p-6">
-            <h3 class="text-lg font-medium text-gray-900 mb-4">Daily Attendance Trend</h3>
+            <h3 class="text-lg font-medium text-gray-900 mb-4">{{ __('app.daily_attendance_trend') }}</h3>
             <div class="h-64 flex items-end space-x-2">
                 @foreach($dailyTrends as $trend)
                 <div class="flex-1 flex flex-col items-center">
@@ -170,9 +170,9 @@
                     </svg>
                 </div>
                 <div class="ml-3">
-                    <h3 class="text-sm font-medium text-blue-800">Generate Statistics</h3>
+                    <h3 class="text-sm font-medium text-blue-800">{{ __('app.generate_statistics') }}</h3>
                     <div class="mt-2 text-sm text-blue-700">
-                        <p>Please select a date range and optionally a class to generate attendance statistics.</p>
+                        <p>{{ __('app.generate_attendance_statistics_instructions') }}</p>
                     </div>
                 </div>
             </div>

@@ -8,7 +8,7 @@
                 <div class="flex justify-between items-center">
                     <div>
                         <h1 class="text-3xl font-bold text-gray-900 mb-2">{{ __('app.school_announcements') }}</h1>
-                        <p class="text-gray-600">Stay updated with the latest news and important information from our school.</p>
+                        <p class="text-gray-600">{{ __('app.stay_updated') }}</p>
                     </div>
                     <div class="text-right">
                         <div class="text-2xl font-bold text-blue-600">{{ $announcements->total() }}</div>
@@ -21,34 +21,34 @@
             <div class="bg-white rounded-lg shadow-sm border p-6 mb-8">
                 <form method="GET" action="{{ route('announcements.public') }}" class="flex flex-wrap gap-4">
                     <div class="flex-1 min-w-64">
-                        <label for="search" class="block text-sm font-medium text-gray-700 mb-1">Search</label>
+                        <label for="search" class="block text-sm font-medium text-gray-700 mb-1">{{ __('app.search') }}</label>
                         <input type="text" 
                                name="search" 
                                id="search" 
                                value="{{ request('search') }}"
-                               placeholder="Search announcements..."
+                               placeholder="{{ __('app.search_announcements') }}"
                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                     </div>
                     <div class="min-w-48">
-                        <label for="priority" class="block text-sm font-medium text-gray-700 mb-1">Priority</label>
+                        <label for="priority" class="block text-sm font-medium text-gray-700 mb-1">{{ __('app.priority') }}</label>
                         <select name="priority" 
                                 id="priority"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                            <option value="">All Priorities</option>
+                            <option value="">{{ __('app.all_priorities') }}</option>
                             @foreach($priorities as $priority)
                                 <option value="{{ $priority }}" {{ request('priority') == $priority ? 'selected' : '' }}>
-                                    {{ ucfirst($priority) }}
+                                    {{ __('app.priority_' . $priority) }}
                                 </option>
                             @endforeach
                         </select>
                     </div>
                     <div class="flex items-end">
                         <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                            Filter
+                            {{ __('app.filter') }}
                         </button>
                         @if(request('search') || request('priority'))
                             <a href="{{ route('announcements.public') }}" class="ml-2 bg-gray-300 text-gray-700 px-6 py-2 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
-                                Clear
+                                {{ __('app.clear') }}
                             </a>
                         @endif
                     </div>
@@ -69,7 +69,7 @@
                                         </span>
                                         @if($announcement->created_at->diffInDays(now()) <= 7)
                                             <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                                🆕 New
+                                                🆕 {{ __('app.new') }}
                                             </span>
                                         @endif
                                     </div>
@@ -95,7 +95,7 @@
 
                                 <!-- Meta Information -->
                                 <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
-                                    <span>By {{ $announcement->createdBy->name }}</span>
+                                    <span>{{ __('app.by') }} {{ $announcement->createdBy->name }}</span>
                                     <div class="flex items-center space-x-2">
                                         @if($announcement->class)
                                             <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">
@@ -117,18 +117,18 @@
                                             <button onclick="toggleContent({{ $announcement->id }})" 
                                                     class="text-blue-600 hover:text-blue-800 font-medium text-sm toggle-content-btn" 
                                                     id="toggle-{{ $announcement->id }}">
-                                                Show More
+                                                {{ __('app.show_more') }}
                                             </button>
                                         @endif
-                                        <a href="{{ route('announcements.public.show', $announcement) }}" 
+                                        <a href="{{ route('announcements.public.show', $announcement->id) }}" 
                                            class="text-blue-600 hover:text-blue-800 font-medium text-sm">
-                                            View Details →
+                                            {{ __('app.view_details') }} →
                                         </a>
                                     </div>
                                     @if($announcement->hasAttachment())
                                         <a href="{{ route('announcements.public.download', $announcement) }}" 
                                            class="text-gray-500 hover:text-gray-700 text-sm">
-                                            📎 Attachment
+                                            📎 {{ __('app.attachment') }}
                                         </a>
                                     @endif
                                 </div>
@@ -151,12 +151,12 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                         </svg>
                     </div>
-                    <h3 class="mt-2 text-sm font-medium text-gray-900">No announcements found</h3>
+                    <h3 class="mt-2 text-sm font-medium text-gray-900">{{ __('app.no_announcements_found') }}</h3>
                     <p class="mt-1 text-sm text-gray-500">
                         @if(request('search') || request('priority'))
-                            Try adjusting your search criteria.
+                            {{ __('app.try_adjusting_search') }}
                         @else
-                            Check back later for new announcements.
+                            {{ __('app.check_back_later_announcements') }}
                         @endif
                     </p>
                 </div>

@@ -27,6 +27,10 @@ class CarouselSlide extends Model
 
     protected $appends = [
         'image_url',
+        'title_localized',
+        'subtitle_localized',
+        'description_localized',
+        'button_text_localized',
     ];
 
     /**
@@ -38,6 +42,39 @@ class CarouselSlide extends Model
             return asset('storage/' . $this->image);
         }
         return asset('images/default-carousel.jpg');
+    }
+
+    public function translations()
+    {
+        return $this->hasMany(CarouselSlideTranslation::class);
+    }
+
+    protected function resolveTranslationField(string $field)
+    {
+        $locale = app()->getLocale();
+        $translation = $this->translations->firstWhere('locale', $locale)
+            ?: $this->translations->firstWhere('locale', 'en');
+        return $translation?->$field ?: $this->$field;
+    }
+
+    public function getTitleLocalizedAttribute()
+    {
+        return $this->resolveTranslationField('title');
+    }
+
+    public function getSubtitleLocalizedAttribute()
+    {
+        return $this->resolveTranslationField('subtitle');
+    }
+
+    public function getDescriptionLocalizedAttribute()
+    {
+        return $this->resolveTranslationField('description');
+    }
+
+    public function getButtonTextLocalizedAttribute()
+    {
+        return $this->resolveTranslationField('button_text');
     }
 
     /**

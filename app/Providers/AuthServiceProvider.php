@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
-// use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use App\Models\Announcement;
 use App\Policies\AnnouncementPolicy;
+use App\Models\ManagingCommittee;
+use App\Policies\ManagingCommitteePolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -16,6 +18,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Announcement::class => AnnouncementPolicy::class,
+        ManagingCommittee::class => ManagingCommitteePolicy::class,
     ];
 
     /**
@@ -23,6 +26,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Define custom abilities
+        Gate::define('manage-committees', [ManagingCommitteePolicy::class, 'manageCommittees']);
     }
 }

@@ -8,6 +8,8 @@ use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\WebController;
 use App\Http\Controllers\CarouselController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ManagingCommitteeController;
+use App\Http\Controllers\EventController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,6 +37,22 @@ Route::group(['prefix' => 'contact', 'as' => 'contact.'], function () {
     Route::get('/', [ContactController::class, 'index'])->name('index');
     Route::post('/', [ContactController::class, 'store'])->name('store');
 });
+
+// Additional public routes
+Route::get('/about', [WebController::class, 'about'])->name('about');
+Route::get('/gallery', [WebController::class, 'gallery'])->name('gallery');
+Route::get('/programs', [WebController::class, 'programs'])->name('programs');
+Route::get('/admissions', [WebController::class, 'admissions'])->name('admissions');
+Route::get('/facilities', [WebController::class, 'facilities'])->name('facilities');
+Route::get('/news', [WebController::class, 'news'])->name('news');
+Route::get('/help', [WebController::class, 'help'])->name('help');
+// Route moved to avoid conflict with announcements.public.show
+
+// API routes for home page
+Route::get('/api/stats', [WebController::class, 'getStats'])->name('api.stats');
+Route::get('/api/carousel/active', [WebController::class, 'getCarouselSlides'])->name('api.carousel.active');
+Route::get('/api/events/upcoming', [EventController::class, 'upcoming'])->name('api.events.upcoming');
+
 
 // Authentication Routes (using Laravel Breeze)
 Route::get('/dashboard', function () {
@@ -172,6 +190,31 @@ Route::middleware(['auth', 'maintenance'])->group(function () {
         Route::patch('/{announcement}/toggle-publish', [AnnouncementController::class, 'togglePublish'])->name('toggle-publish')->middleware('role:admin,teacher');
         Route::get('/{announcement}/download', [AnnouncementController::class, 'downloadAttachment'])->name('download');
         Route::get('/dashboard/data', [AnnouncementController::class, 'dashboard'])->name('dashboard');
+    });
+
+    // Managing Committee Routes
+    Route::group(['prefix' => 'managing-committees', 'as' => 'managing-committees.'], function () {
+        Route::get('/', [ManagingCommitteeController::class, 'index'])->name('index');
+        Route::get('/create', [ManagingCommitteeController::class, 'create'])->name('create')->middleware('role:admin');
+        Route::post('/', [ManagingCommitteeController::class, 'store'])->name('store')->middleware('role:admin');
+        Route::get('/{managingCommittee}', [ManagingCommitteeController::class, 'show'])->name('show');
+        Route::get('/{managingCommittee}/edit', [ManagingCommitteeController::class, 'edit'])->name('edit')->middleware('role:admin');
+        Route::put('/{managingCommittee}', [ManagingCommitteeController::class, 'update'])->name('update')->middleware('role:admin');
+        Route::delete('/{managingCommittee}', [ManagingCommitteeController::class, 'destroy'])->name('destroy')->middleware('role:admin');
+        Route::patch('/{managingCommittee}/toggle-status', [ManagingCommitteeController::class, 'toggleStatus'])->name('toggle-status')->middleware('role:admin');
+        Route::patch('/{managingCommittee}/toggle-featured', [ManagingCommitteeController::class, 'toggleFeatured'])->name('toggle-featured')->middleware('role:admin');
+        Route::post('/bulk-action', [ManagingCommitteeController::class, 'bulkAction'])->name('bulk-action')->middleware('role:admin');
+    });
+
+    // Events Management Routes (Admin only)
+    Route::group(['prefix' => 'admin/events', 'as' => 'events.'], function () {
+        Route::get('/', [EventController::class, 'index'])->name('index')->middleware('role:admin');
+        Route::get('/create', [EventController::class, 'create'])->name('create')->middleware('role:admin');
+        Route::post('/', [EventController::class, 'store'])->name('store')->middleware('role:admin');
+        Route::get('/{event}/edit', [EventController::class, 'edit'])->name('edit')->middleware('role:admin');
+        Route::put('/{event}', [EventController::class, 'update'])->name('update')->middleware('role:admin');
+        Route::delete('/{event}', [EventController::class, 'destroy'])->name('destroy')->middleware('role:admin');
+        Route::patch('/{event}/toggle-publish', [EventController::class, 'togglePublish'])->name('toggle-publish')->middleware('role:admin');
     });
     
     // Parent Management Routes

@@ -239,9 +239,9 @@
                     </tbody>
                 </table>
             </div>
-            @if(isset($teacherPerformance) && $teacherPerformance->hasPages())
+            @if(isset($teachers) && $teachers->hasPages())
                 <div class="px-6 py-4 border-t border-gray-200">
-                    {{ $teacherPerformance->links() }}
+                    {{ $teachers->links() }}
                 </div>
             @endif
         </div>

@@ -30,6 +30,20 @@ class ClassController extends Controller
             $query->where('is_active', $request->status === 'active');
         }
 
+        // Filter by section
+        if ($request->has('section_filter') && $request->section_filter !== '') {
+            $sectionFilter = $request->section_filter;
+            if ($sectionFilter === 'with_sections') {
+                $query->whereNotNull('section')->where('section', '!=', '');
+            } elseif ($sectionFilter === 'without_sections') {
+                $query->where(function($q) {
+                    $q->whereNull('section')->orWhere('section', '');
+                });
+            } else {
+                $query->where('section', $sectionFilter);
+            }
+        }
+
         // Search functionality
         if ($request->has('search') && $request->search) {
             $search = $request->search;
@@ -40,9 +54,20 @@ class ClassController extends Controller
             });
         }
 
+        // Order by name and section for better grouping
+        $query->orderBy('name')->orderBy('section');
+
         // Pagination
         $perPage = $request->get('per_page', 15);
         $classes = $query->paginate($perPage);
+
+        // Get available sections for filter dropdown
+        $availableSections = SchoolClass::whereNotNull('section')
+            ->where('section', '!=', '')
+            ->distinct()
+            ->pluck('section')
+            ->sort()
+            ->values();
 
         // Get statistics
         $stats = [
@@ -50,9 +75,13 @@ class ClassController extends Controller
             'active_classes' => SchoolClass::where('is_active', true)->count(),
             'total_students' => Student::where('is_active', true)->count(),
             'total_capacity' => SchoolClass::sum('capacity'),
+            'classes_with_sections' => SchoolClass::whereNotNull('section')->where('section', '!=', '')->count(),
+            'classes_without_sections' => SchoolClass::where(function($q) {
+                $q->whereNull('section')->orWhere('section', '');
+            })->count(),
         ];
 
-        return view('classes.index', compact('classes', 'stats'));
+        return view('classes.index', compact('classes', 'stats', 'availableSections'));
     }
 
     /**
@@ -81,6 +110,19 @@ class ClassController extends Controller
             'capacity' => 'required|integer|min:1|max:100',
             'is_active' => 'boolean',
         ]);
+
+        // Custom validation for section uniqueness within the same class name
+        $validator->after(function ($validator) use ($request) {
+            if ($request->section) {
+                $existingClass = SchoolClass::where('name', $request->name)
+                    ->where('section', $request->section)
+                    ->first();
+                
+                if ($existingClass) {
+                    $validator->errors()->add('section', __('app.section_already_exists'));
+                }
+            }
+        });
 
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
@@ -155,6 +197,20 @@ class ClassController extends Controller
             'capacity' => 'required|integer|min:1|max:100',
             'is_active' => 'boolean',
         ]);
+
+        // Custom validation for section uniqueness within the same class name
+        $validator->after(function ($validator) use ($request, $class) {
+            if ($request->section) {
+                $existingClass = SchoolClass::where('name', $request->name)
+                    ->where('section', $request->section)
+                    ->where('id', '!=', $class->id)
+                    ->first();
+                
+                if ($existingClass) {
+                    $validator->errors()->add('section', __('app.section_already_exists'));
+                }
+            }
+        });
 
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
@@ -264,6 +320,8 @@ class ClassController extends Controller
             'inactive_classes' => SchoolClass::where('is_active', false)->count(),
             'total_capacity' => SchoolClass::sum('capacity'),
             'total_students' => Student::where('is_active', true)->count(),
+            'classes_with_sections' => SchoolClass::withSections()->count(),
+            'classes_without_sections' => SchoolClass::withoutSections()->count(),
             'utilization_rate' => 0,
         ];
 
@@ -276,16 +334,38 @@ class ClassController extends Controller
             $query->where('is_active', true);
         }])->get()->map(function ($class) {
             return [
-                'name' => $class->full_name,
+                'name' => $class->name,
+                'section' => $class->section,
+                'full_name' => $class->full_name,
                 'capacity' => $class->capacity,
                 'students' => $class->students_count,
                 'utilization' => $class->capacity > 0 ? round(($class->students_count / $class->capacity) * 100, 2) : 0,
             ];
         });
 
+        // Section-wise statistics
+        $sectionStats = SchoolClass::withSections()
+            ->withCount(['students' => function ($query) {
+                $query->where('is_active', true);
+            }])
+            ->get()
+            ->groupBy('section')
+            ->map(function ($classes, $section) {
+                $totalCapacity = $classes->sum('capacity');
+                $totalStudents = $classes->sum('students_count');
+                return [
+                    'section' => $section,
+                    'classes_count' => $classes->count(),
+                    'total_capacity' => $totalCapacity,
+                    'total_students' => $totalStudents,
+                    'utilization' => $totalCapacity > 0 ? round(($totalStudents / $totalCapacity) * 100, 2) : 0,
+                ];
+            });
+
         return response()->json([
             'stats' => $stats,
             'class_stats' => $classStats,
+            'section_stats' => $sectionStats,
         ]);
     }
 

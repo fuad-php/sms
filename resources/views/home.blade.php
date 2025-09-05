@@ -1,130 +1,195 @@
 <x-public-layout>
-    <main class="py-8">
-        <!-- Dynamic Carousel Section -->
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
-            <div id="home-carousel" class="relative h-96 md:h-[500px] overflow-hidden rounded-lg shadow-lg">
+    <main class="min-h-screen">
+        <!-- Hero Section with Dynamic Carousel -->
+        <section class="relative h-screen overflow-hidden">
+            <div id="home-carousel" class="relative h-full">
                 <!-- Carousel slides will be loaded here dynamically -->
                 <div id="carousel-slides" class="relative h-full">
                     <!-- Loading state -->
-                    <div class="absolute inset-0 bg-gray-200 flex items-center justify-center">
-                        <div class="text-center">
-                            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-                            <p class="text-gray-600">{{ __('app.loading_carousel') }}</p>
+                    <div class="absolute inset-0 bg-gradient-to-br from-blue-900 via-blue-800 to-purple-900 flex items-center justify-center">
+                        <div class="text-center text-white">
+                            <div class="animate-spin rounded-full h-16 w-16 border-4 border-white border-t-transparent mx-auto mb-6"></div>
+                            <h2 class="text-2xl font-bold mb-2">{{ __('app.loading_carousel') }}</h2>
+                            <p class="text-blue-200">{{ __('app.please_wait') }}</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Carousel Controls -->
-                <button id="carousel-prev" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 text-gray-800 p-2 rounded-full shadow-lg transition-all duration-200 z-10">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <button id="carousel-prev" class="absolute left-6 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-30 backdrop-blur-sm text-white p-3 rounded-full shadow-xl transition-all duration-300 z-20 group">
+                    <svg class="w-6 h-6 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                     </svg>
                 </button>
                 
-                <button id="carousel-next" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 text-gray-800 p-2 rounded-full shadow-lg transition-all duration-200 z-10">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <button id="carousel-next" class="absolute right-6 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-30 backdrop-blur-sm text-white p-3 rounded-full shadow-xl transition-all duration-300 z-20 group">
+                    <svg class="w-6 h-6 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                     </svg>
                 </button>
 
                 <!-- Carousel Indicators -->
-                <div id="carousel-indicators" class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-10">
+                <div id="carousel-indicators" class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-3 z-20">
                     <!-- Indicators will be generated dynamically -->
                 </div>
+
+            </div>
+        </section>
+
+        <!-- Dynamic Stats Section -->
+        <section class="py-20 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 relative overflow-hidden">
+            <!-- Background Pattern -->
+            <div class="absolute inset-0 opacity-10">
+                <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23ffffff" fill-opacity="0.1"><circle cx="30" cy="30" r="2"/></g></svg>');"></div>
+                    </div>
+            
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">{{ __('app.our_achievements') }}</h2>
+                    <p class="text-xl text-blue-100 max-w-3xl mx-auto">{{ __('app.excellence_in_numbers') }}</p>
+                    </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                    @php
+                        $stats = [
+                            'students' => \App\Models\Student::active()->count(),
+                            'teachers' => \App\Models\Teacher::active()->count(),
+                            'classes' => \App\Models\SchoolClass::active()->count(),
+                            'subjects' => \App\Models\Subject::active()->count(),
+                        ];
+                    @endphp
+                    
+                    <div class="text-center group">
+                        <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-2xl p-8 hover:bg-opacity-30 transition-all duration-300 group-hover:scale-105">
+                            <div class="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:rotate-12 transition-transform duration-300">
+                                <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
+                                </svg>
+                    </div>
+                            <div class="text-4xl md:text-5xl font-bold text-white mb-2 counter" data-target="{{ $stats['students'] }}">0</div>
+                            <div class="text-blue-100 text-lg font-medium">{{ __('app.students') }}</div>
+                    </div>
+                </div>
+                    
+                    <div class="text-center group">
+                        <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-2xl p-8 hover:bg-opacity-30 transition-all duration-300 group-hover:scale-105">
+                            <div class="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:rotate-12 transition-transform duration-300">
+                                <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                                </svg>
+                            </div>
+                            <div class="text-4xl md:text-5xl font-bold text-white mb-2 counter" data-target="{{ $stats['teachers'] }}">0</div>
+                            <div class="text-blue-100 text-lg font-medium">{{ __('app.teachers') }}</div>
             </div>
         </div>
-
-        <!-- Quick Stats -->
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
-            <div class="bg-blue-600 text-white py-12 rounded-lg">
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-                    <div>
-                        <div class="text-3xl md:text-4xl font-bold mb-2">500+</div>
-                        <div class="text-blue-100">{{ __('app.students') }}</div>
+                    
+                    <div class="text-center group">
+                        <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-2xl p-8 hover:bg-opacity-30 transition-all duration-300 group-hover:scale-105">
+                            <div class="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:rotate-12 transition-transform duration-300">
+                                <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                                </svg>
+                            </div>
+                            <div class="text-4xl md:text-5xl font-bold text-white mb-2 counter" data-target="{{ $stats['classes'] }}">0</div>
+                            <div class="text-blue-100 text-lg font-medium">{{ __('app.classes') }}</div>
+                        </div>
                     </div>
-                    <div>
-                        <div class="text-3xl md:text-4xl font-bold mb-2">50+</div>
-                        <div class="text-blue-100">{{ __('app.teachers') }}</div>
-                    </div>
-                    <div>
-                        <div class="text-3xl md:text-4xl font-bold mb-2">25+</div>
-                        <div class="text-blue-100">{{ __('app.years') }}</div>
-                    </div>
-                    <div>
-                        <div class="text-3xl md:text-4xl font-bold mb-2">95%</div>
-                        <div class="text-blue-100">{{ __('app.success_rate') }}</div>
+                    
+                    <div class="text-center group">
+                        <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-2xl p-8 hover:bg-opacity-30 transition-all duration-300 group-hover:scale-105">
+                            <div class="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:rotate-12 transition-transform duration-300">
+                                <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 5.477 5.754 5 7.5 5s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 19 16.5 19c-1.746 0-3.332-.523-4.5-1.253" />
+                                </svg>
+                            </div>
+                            <div class="text-4xl md:text-5xl font-bold text-white mb-2 counter" data-target="{{ $stats['subjects'] }}">0</div>
+                            <div class="text-blue-100 text-lg font-medium">{{ __('app.subjects') }}</div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
         <!-- About Section -->
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
-            <div class="bg-white rounded-lg shadow-sm border p-8">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{{ __('app.about_our_school') }}</h2>
-                    <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+        <section class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">{{ __('app.about_our_school') }}</h2>
+                    <p class="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
                         {{ __('app.about_school_description') }}
                     </p>
                 </div>
 
-                <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="grid lg:grid-cols-2 gap-16 items-center">
                     <!-- Head Teacher -->
-                    <div class="text-center">
-                        <div class="mb-6">
-                            <div class="w-48 h-48 mx-auto bg-gray-300 rounded-full flex items-center justify-center mb-4">
-                                <svg class="h-24 w-24 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <div class="group">
+                        <div class="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-3xl p-8 hover:shadow-2xl transition-all duration-500 group-hover:scale-105">
+                            <div class="text-center mb-8">
+                                <div class="w-32 h-32 mx-auto bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center mb-6 group-hover:rotate-12 transition-transform duration-500">
+                                    <svg class="h-16 w-16 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                 </svg>
                             </div>
-                            <h3 class="text-2xl font-bold text-gray-900 mb-2">Dr. Sarah Johnson</h3>
-                            <p class="text-blue-600 font-semibold mb-4">{{ __('app.head_teacher') }}</p>
+                                <h3 class="text-2xl font-bold text-gray-900 mb-2">{{ __('app.head_teacher_name') }}</h3>
+                                <p class="text-blue-600 font-semibold text-lg">{{ __('app.head_teacher') }}</p>
                         </div>
-                        <div class="text-gray-600 text-left">
-                            <p class="mb-4">
+                            <div class="text-gray-700 space-y-4">
+                                <blockquote class="text-lg italic leading-relaxed">
                                 "{{ __('app.head_teacher_quote_1') }}"
-                            </p>
-                            <p>
+                                </blockquote>
+                                <blockquote class="text-lg italic leading-relaxed">
                                 "{{ __('app.head_teacher_quote_2') }}"
-                            </p>
+                                </blockquote>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Chairman -->
-                    <div class="text-center">
-                        <div class="mb-6">
-                            <div class="w-48 h-48 mx-auto bg-gray-300 rounded-full flex items-center justify-center mb-4">
-                                <svg class="h-24 w-24 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <div class="group">
+                        <div class="bg-gradient-to-br from-green-50 to-emerald-100 rounded-3xl p-8 hover:shadow-2xl transition-all duration-500 group-hover:scale-105">
+                            <div class="text-center mb-8">
+                                <div class="w-32 h-32 mx-auto bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center mb-6 group-hover:rotate-12 transition-transform duration-500">
+                                    <svg class="h-16 w-16 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                 </svg>
                             </div>
-                            <h3 class="text-2xl font-bold text-gray-900 mb-2">Mr. Robert Chen</h3>
-                            <p class="text-blue-600 font-semibold mb-4">{{ __('app.school_chairman') }}</p>
+                                <h3 class="text-2xl font-bold text-gray-900 mb-2">{{ __('app.chairman_name') }}</h3>
+                                <p class="text-green-600 font-semibold text-lg">{{ __('app.school_chairman') }}</p>
                         </div>
-                        <div class="text-gray-600 text-left">
-                            <p class="mb-4">
+                            <div class="text-gray-700 space-y-4">
+                                <blockquote class="text-lg italic leading-relaxed">
                                 "{{ __('app.chairman_quote_1') }}"
-                            </p>
-                            <p>
+                                </blockquote>
+                                <blockquote class="text-lg italic leading-relaxed">
                                 "{{ __('app.chairman_quote_2') }}"
-                            </p>
+                                </blockquote>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        </section>
 
-        <!-- Latest Announcements Section -->
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Latest Announcements & Events Section -->
+        <section class="py-20 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">{{ __('app.latest_news_events') }}</h2>
+                    <p class="text-xl text-gray-600 max-w-3xl mx-auto">{{ __('app.stay_updated_with_latest') }}</p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
                 <!-- Latest Announcements -->
-                <div class="bg-white rounded-lg shadow-sm border p-6">
-                    <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
-                        <svg class="h-6 w-6 text-blue-600 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <div class="lg:col-span-2 flex flex-col">
+                        <div class="bg-white rounded-2xl shadow-xl p-8 hover:shadow-2xl transition-all duration-300 flex flex-col h-full">
+                            <div class="flex items-center mb-8">
+                                <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mr-4">
+                                    <svg class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
                         </svg>
-                        Latest Announcements
-                    </h2>
+                                </div>
+                                <h3 class="text-2xl font-bold text-gray-900">{{ __('app.latest_announcements') }}</h3>
+                            </div>
                     
                     @php
                         $latestAnnouncements = \App\Models\Announcement::with(['createdBy', 'class'])
@@ -140,221 +205,243 @@
                             })
                             ->orderBy('priority', 'asc')
                             ->orderBy('created_at', 'desc')
-                            ->limit(3)
+                                    ->limit(4)
                             ->get();
                     @endphp
                     
                     @if($latestAnnouncements->count() > 0)
-                        <div class="space-y-4">
+                                <div class="space-y-6">
                             @foreach($latestAnnouncements as $announcement)
-                                <div class="border-b border-gray-100 pb-4 last:border-b-0">
-                                    <h3 class="text-sm font-semibold text-gray-900 mb-2">
-                                        <a href="{{ route('announcements.public.show', $announcement) }}" 
-                                           class="hover:text-blue-600 transition-colors">
-                                            {{ Str::limit($announcement->title, 50) }}
-                                        </a>
-                                    </h3>
-                                    <div class="flex items-center text-xs text-gray-500 space-x-3 mb-2">
-                                        <span class="flex items-center">
-                                            <svg class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                            </svg>
-                                            {{ $announcement->created_at->format('d M Y') }}
-                                        </span>
-                                        <span class="flex items-center">
-                                            <svg class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                            </svg>
-                                            {{ $announcement->createdBy->name }}
-                                        </span>
-                                    </div>
-                                    <div class="flex flex-wrap gap-2">
+                                        <div class="group border-l-4 border-blue-200 pl-6 py-4 hover:border-blue-500 transition-all duration-300">
+                                            <div class="flex items-start justify-between mb-3">
+                                                <h4 class="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
+                                                    <a href="{{ route('announcements.public.show', $announcement->id) }}" class="hover:underline">
+                                                        {{ Str::limit($announcement->title, 60) }}
+                                                    </a>
+                                                </h4>
+                                                <div class="flex flex-wrap gap-2 ml-4">
                                         @if($announcement->priority === 'urgent')
-                                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 animate-pulse">
                                                 🚨 URGENT
                                             </span>
                                         @elseif($announcement->priority === 'high')
-                                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
+                                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
                                                 ⚠️ HIGH
                                             </span>
                                         @elseif($announcement->priority === 'medium')
-                                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
                                                 📢 MEDIUM
                                             </span>
                                         @endif
                                         @if($announcement->created_at->diffInDays(now()) <= 3)
-                                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
                                                 🆕 NEW
                                             </span>
                                         @endif
                                     </div>
                                 </div>
-                            @endforeach
+                                            
+                                            <div class="flex items-center text-sm text-gray-500 space-x-4 mb-3">
+                                                <span class="flex items-center">
+                                                    <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                                    </svg>
+                                                    {{ $announcement->created_at->format('d M Y') }}
+                                                </span>
+                                                <span class="flex items-center">
+                                                    <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                                    </svg>
+                                                    {{ $announcement->createdBy->name }}
+                                                </span>
                         </div>
-                    @else
-                        <p class="text-center text-gray-500 text-sm">No announcements available at the moment.</p>
+                                            
+                                            @if($announcement->description)
+                                                <p class="text-gray-600 text-sm leading-relaxed">
+                                                    {{ Str::limit($announcement->description, 120) }}
+                                                </p>
                     @endif
+                                        </div>
+                                    @endforeach
+                                </div>
                     
-                    <div class="mt-6 text-center">
+                                <div class="mt-auto pt-8 text-center">
                         <a href="{{ route('announcements.public') }}" 
-                           class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                            View All Announcements
-                        </a>
+                                       class="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition-colors duration-300 group">
+                                        {{ __('app.view_all_announcements') }}
+                                        <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                        </svg>
+                                    </a>
+                                </div>
+                            @else
+                                <div class="text-center py-12">
+                                    <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <svg class="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                                        </svg>
+                                    </div>
+                                    <p class="text-gray-500 text-lg">{{ __('app.no_announcements_available') }}</p>
+                                </div>
+                            @endif
                     </div>
                 </div>
 
                 <!-- Upcoming Events -->
-                <div class="bg-white rounded-lg shadow-sm border p-6">
-                    <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
-                        <svg class="h-6 w-6 text-green-600 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <div class="flex flex-col">
+                        <div class="bg-white rounded-2xl shadow-xl p-8 hover:shadow-2xl transition-all duration-300 flex flex-col h-full">
+                        <div class="flex items-center mb-8">
+                            <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mr-4">
+                                <svg class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
-                        Upcoming Events
-                    </h2>
-                    <div class="space-y-4">
-                        <div class="border-b border-gray-100 pb-4 last:border-b-0">
-                            <h3 class="text-sm font-semibold text-gray-900 mb-2">
-                                <a href="#" class="hover:text-blue-600 transition-colors">Annual Sports Day</a>
-                            </h3>
-                            <div class="flex items-center text-xs text-gray-500 space-x-3">
-                                <span class="flex items-center">
-                                    <svg class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                    </svg>
-                                    15 Dec 2024
-                                </span>
-                                <span class="flex items-center">
-                                    <svg class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    </svg>
-                                    School Ground
-                                </span>
                             </div>
+                            <h3 class="text-2xl font-bold text-gray-900">{{ __('app.upcoming_events') }}</h3>
                         </div>
-                        <div class="border-b border-gray-100 pb-4 last:border-b-0">
-                            <h3 class="text-sm font-semibold text-gray-900 mb-2">
-                                <a href="#" class="hover:text-blue-600 transition-colors">Science Fair Exhibition</a>
-                            </h3>
-                            <div class="flex items-center text-xs text-gray-500 space-x-3">
-                                <span class="flex items-center">
-                                    <svg class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                    </svg>
-                                    20 Dec 2024
-                                </span>
-                                <span class="flex items-center">
-                                    <svg class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    </svg>
-                                    Science Lab
-                                </span>
-                            </div>
+                        
+                        @php
+                            $colorMap = [
+                                'sports' => 'green',
+                                'academic' => 'blue',
+                                'meeting' => 'purple',
+                                'cultural' => 'orange',
+                            ];
+                        @endphp
+                        
+                        <div class="space-y-6">
+                            @forelse(($events ?? []) as $event)
+                                @php $color = $event->color ?: ($colorMap[$event->type] ?? 'green'); @endphp
+                                <div class="group border-l-4 border-{{ $color }}-200 pl-6 py-4 hover:border-{{ $color }}-500 transition-all duration-300">
+                                    <h4 class="text-lg font-semibold text-gray-900 group-hover:text-{{ $color }}-600 transition-colors mb-3">
+                                        {{ $event->title }}
+                                    </h4>
+                                    
+                                    <div class="flex items-center text-sm text-gray-500 space-x-4 mb-3">
+                                        <span class="flex items-center">
+                                            <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                            </svg>
+                                            {{ $event->start_at->format('d M Y') }}
+                                        </span>
+                                        @if($event->location)
+                                        <span class="flex items-center">
+                                            <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                            </svg>
+                                            {{ $event->location }}
+                                        </span>
+                                        @endif
+                                    </div>
+                                    
+                                    <div class="flex items-center">
+                                        @if($event->type)
+                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-{{ $color }}-100 text-{{ $color }}-800">
+                                            {{ ucfirst($event->type) }}
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            @empty
+                                <div class="text-center py-6 text-gray-500">{{ __('app.no_events_available') }}</div>
+                            @endforelse
                         </div>
-                        <div class="border-b border-gray-100 pb-4 last:border-b-0">
-                            <h3 class="text-sm font-semibold text-gray-900 mb-2">
-                                <a href="#" class="hover:text-blue-600 transition-colors">Parent-Teacher Meeting</a>
-                            </h3>
-                            <div class="flex items-center text-xs text-gray-500 space-x-3">
-                                <span class="flex items-center">
-                                    <svg class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        
+                            <div class="mt-auto pt-8 text-center">
+                                <a href="#" class="inline-flex items-center px-6 py-3 bg-green-600 text-white rounded-xl font-semibold hover:bg-green-700 transition-colors duration-300 group">
+                                    {{ __('app.see_more_events') }}
+                                    <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                                     </svg>
-                                    25 Dec 2024
-                                </span>
-                                <span class="flex items-center">
-                                    <svg class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    </svg>
-                                    Auditorium
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-6 text-center">
-                        <a href="#" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
-                            See More Events
                         </a>
                     </div>
                 </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-                <!-- Courses -->
-                <div class="bg-white rounded-lg shadow-sm border p-6">
-                    <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
-                        <svg class="h-6 w-6 text-purple-600 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <!-- Featured Courses -->
+                    <div class="bg-white rounded-2xl shadow-xl p-8 hover:shadow-2xl transition-all duration-300">
+                        <div class="flex items-center mb-8">
+                            <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mr-4">
+                                <svg class="h-6 w-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 5.477 5.754 5 7.5 5s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 19 16.5 19c-1.746 0-3.332-.523-4.5-1.253" />
                         </svg>
-                        Featured Courses
-                    </h2>
-                    <div class="space-y-4">
-                        <div class="border-b border-gray-100 pb-4 last:border-b-0">
-                            <h3 class="text-sm font-semibold text-gray-900 mb-2">
-                                <a href="#" class="hover:text-blue-600 transition-colors">Advanced Mathematics</a>
-                            </h3>
-                            <div class="flex items-center text-xs text-gray-500 space-x-3">
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-900">{{ __('app.featured_courses') }}</h3>
+                        </div>
+                        
+                        @php
+                            $featuredCourses = [
+                                [
+                                    'title' => __('app.advanced_mathematics'),
+                                    'time' => '2:00 PM - 3:30 PM',
+                                    'price' => __('app.free'),
+                                    'color' => 'blue',
+                                    'icon' => 'M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z'
+                                ],
+                                [
+                                    'title' => __('app.computer_science_basics'),
+                                    'time' => '4:00 PM - 5:30 PM',
+                                    'price' => __('app.free'),
+                                    'color' => 'green',
+                                    'icon' => 'M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'
+                                ],
+                                [
+                                    'title' => __('app.art_creativity'),
+                                    'time' => '10:00 AM - 11:30 AM',
+                                    'price' => __('app.free'),
+                                    'color' => 'purple',
+                                    'icon' => 'M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z'
+                                ]
+                            ];
+                        @endphp
+                        
+                        <div class="space-y-6">
+                            @foreach($featuredCourses as $course)
+                                <div class="group border-l-4 border-{{ $course['color'] }}-200 pl-6 py-4 hover:border-{{ $course['color'] }}-500 transition-all duration-300">
+                                    <div class="flex items-start justify-between mb-3">
+                                        <h4 class="text-lg font-semibold text-gray-900 group-hover:text-{{ $course['color'] }}-600 transition-colors">
+                                            <a href="#" class="hover:underline">
+                                                {{ $course['title'] }}
+                                            </a>
+                                        </h4>
+                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-{{ $course['color'] }}-100 text-{{ $course['color'] }}-800">
+                                            {{ $course['price'] }}
+                                </span>
+                            </div>
+                                    
+                                    <div class="flex items-center text-sm text-gray-500 space-x-4">
                                 <span class="flex items-center">
-                                    <svg class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
-                                    2:00 PM - 3:30 PM
+                                            {{ $course['time'] }}
                                 </span>
                                 <span class="flex items-center">
-                                    <svg class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+                                            <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $course['icon'] }}" />
                                     </svg>
-                                    Free
+                                            {{ ucfirst($course['color']) }} Course
                                 </span>
                             </div>
                         </div>
-                        <div class="border-b border-gray-100 pb-4 last:border-b-0">
-                            <h3 class="text-sm font-semibold text-gray-900 mb-2">
-                                <a href="#" class="hover:text-blue-600 transition-colors">Computer Science Basics</a>
-                            </h3>
-                            <div class="flex items-center text-xs text-gray-500 space-x-3">
-                                <span class="flex items-center">
-                                    <svg class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                    4:00 PM - 5:30 PM
-                                </span>
-                                <span class="flex items-center">
-                                    <svg class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
-                                    </svg>
-                                    Free
-                                </span>
-                            </div>
-                        </div>
-                        <div class="border-b border-gray-100 pb-4 last:border-b-0">
-                            <h3 class="text-sm font-semibold text-gray-900 mb-2">
-                                <a href="#" class="hover:text-blue-600 transition-colors">Art & Creativity</a>
-                            </h3>
-                            <div class="flex items-center text-xs text-gray-500 space-x-3">
-                                <span class="flex items-center">
-                                    <svg class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                    10:00 AM - 11:30 AM
-                                </span>
-                                <span class="flex items-center">
-                                    <svg class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
-                                    </svg>
-                                    Free
-                                </span>
-                            </div>
-                        </div>
+                            @endforeach
                     </div>
-                    <div class="mt-6 text-center">
-                        <a href="#" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
-                            See More Courses
+                        
+                        <div class="mt-8 text-center">
+                            <a href="#" class="inline-flex items-center px-6 py-3 bg-purple-600 text-white rounded-xl font-semibold hover:bg-purple-700 transition-colors duration-300 group">
+                                {{ __('app.see_more_courses') }}
+                                <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
                         </a>
                     </div>
                 </div>
             </div>
         </div>                
+        </section>
 
         <!-- Calendar Section -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
@@ -648,7 +735,7 @@
                                 </svg>
                                 <div>
                                     <h4 class="font-semibold text-gray-900">{{ __('app.office_hours') }}</h4>
-                                    <p class="text-gray-600">Monday - Friday: 8:00 AM - 4:00 PM</p>
+                                    <p class="text-gray-600">{{ __('app.office_hours_time') }}</p>
                                 </div>
                             </div>
                         </div>
@@ -770,12 +857,54 @@
             </div>
         </div>                
 
-        <!-- Carousel JavaScript -->
+        <!-- Enhanced JavaScript -->
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 let currentSlide = 0;
                 let slides = [];
                 let autoPlayInterval;
+
+                // Counter Animation
+                function animateCounters() {
+                    const counters = document.querySelectorAll('.counter');
+                    counters.forEach(counter => {
+                        const target = parseInt(counter.getAttribute('data-target'));
+                        const duration = 2000; // 2 seconds
+                        const increment = target / (duration / 16); // 60fps
+                        let current = 0;
+                        
+                        const timer = setInterval(() => {
+                            current += increment;
+                            if (current >= target) {
+                                current = target;
+                                clearInterval(timer);
+                            }
+                            counter.textContent = Math.floor(current);
+                        }, 16);
+                    });
+                }
+
+                // Intersection Observer for animations
+                const observerOptions = {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -50px 0px'
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('animate-fade-in-up');
+                            if (entry.target.classList.contains('counter')) {
+                                animateCounters();
+                            }
+                        }
+                    });
+                }, observerOptions);
+
+                // Observe all animated elements
+                document.querySelectorAll('.counter, .group').forEach(el => {
+                    observer.observe(el);
+                });
 
                 // Load carousel slides from the API
                 async function loadCarouselSlides() {
@@ -790,10 +919,15 @@
                         if (slides.length === 0) {
                             // No slides available, show default message
                             document.getElementById('carousel-slides').innerHTML = `
-                                <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
-                                    <div class="text-center text-white">
-                                        <h2 class="text-3xl font-bold mb-4">{{ __('app.welcome_to_school') }}</h2>
-                                        <p class="text-xl">{{ __('app.discover_excellence') }}</p>
+                                <div class="absolute inset-0 bg-gradient-to-br from-blue-900 via-purple-800 to-indigo-900 flex items-center justify-center">
+                                    <div class="text-center text-white max-w-4xl px-6">
+                                        <h2 class="text-5xl md:text-7xl font-bold mb-6 drop-shadow-2xl animate-fade-in-up">{{ __('app.welcome_to_school') }}</h2>
+                                        <p class="text-2xl md:text-3xl mb-8 drop-shadow-lg animate-fade-in-up delay-300">{{ __('app.discover_excellence') }}</p>
+                                        <div class="animate-bounce">
+                                            <svg class="w-12 h-12 mx-auto text-white opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                                            </svg>
+                                        </div>
                                     </div>
                                 </div>
                             `;
@@ -806,9 +940,14 @@
                         console.error('Error loading carousel slides:', error);
                         // Show error state
                         document.getElementById('carousel-slides').innerHTML = `
-                            <div class="absolute inset-0 bg-gray-200 flex items-center justify-center">
-                                <div class="text-center text-gray-600">
-                                    <p>{{ __('app.unable_to_load_carousel') }}</p>
+                            <div class="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
+                                <div class="text-center text-white">
+                                    <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <svg class="w-8 h-8 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                                        </svg>
+                                    </div>
+                                    <p class="text-xl">{{ __('app.unable_to_load_carousel') }}</p>
                                 </div>
                             </div>
                         `;
@@ -827,18 +966,22 @@
                     slides.forEach((slide, index) => {
                         // Create slide element
                         const slideElement = document.createElement('div');
-                        slideElement.className = `carousel-slide absolute inset-0 bg-cover bg-center transition-opacity duration-500 ${index === 0 ? 'opacity-100' : 'opacity-0'}`;
+                        slideElement.className = `carousel-slide absolute inset-0 bg-cover bg-center transition-all duration-1000 ${index === 0 ? 'opacity-100 scale-100' : 'opacity-0 scale-105'}`;
                         slideElement.style.backgroundImage = `url('${slide.image_url}')`;
                         
                         // Add slide content overlay
                         slideElement.innerHTML = `
-                            <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+                            <div class="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-black/60"></div>
                             <div class="absolute inset-0 flex items-center justify-center">
-                                <div class="text-center text-white max-w-4xl px-6">
-                                    ${slide.title ? `<h2 class="text-4xl md:text-6xl font-bold mb-4 drop-shadow-lg">${slide.title}</h2>` : ''}
-                                    ${slide.subtitle ? `<h3 class="text-xl md:text-2xl mb-4 drop-shadow-lg">${slide.subtitle}</h3>` : ''}
-                                    ${slide.description ? `<p class="text-lg md:text-xl mb-6 drop-shadow-lg">${slide.description}</p>` : ''}
-                                    ${slide.button_text && slide.button_url ? `<a href="${slide.button_url}" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg text-lg font-semibold transition-colors duration-200 drop-shadow-lg">${slide.button_text}</a>` : ''}
+                                <div class="text-center text-white max-w-5xl px-6 transform transition-all duration-1000 ${index === 0 ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}">
+                                    ${slide.title ? `<h2 class="text-5xl md:text-7xl font-bold mb-6 drop-shadow-2xl leading-tight">${slide.title}</h2>` : ''}
+                                    ${slide.subtitle ? `<h3 class="text-2xl md:text-3xl mb-6 drop-shadow-lg font-light">${slide.subtitle}</h3>` : ''}
+                                    ${slide.description ? `<p class="text-lg md:text-xl mb-8 drop-shadow-lg max-w-3xl mx-auto leading-relaxed">${slide.description}</p>` : ''}
+                                    ${slide.button_text && slide.button_url ? `
+                                        <a href="${slide.button_url}" class="inline-block bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-10 py-4 rounded-2xl text-lg font-semibold transition-all duration-300 drop-shadow-lg hover:scale-105 hover:shadow-2xl">
+                                            ${slide.button_text}
+                                        </a>
+                                    ` : ''}
                                 </div>
                             </div>
                         `;
@@ -847,7 +990,7 @@
 
                         // Create indicator
                         const indicator = document.createElement('button');
-                        indicator.className = `w-3 h-3 rounded-full transition-all duration-200 ${index === 0 ? 'bg-white' : 'bg-white bg-opacity-50'}`;
+                        indicator.className = `w-4 h-4 rounded-full transition-all duration-300 ${index === 0 ? 'bg-white scale-125' : 'bg-white bg-opacity-50 hover:bg-opacity-75'}`;
                         indicator.onclick = () => goToSlide(index);
                         indicatorsContainer.appendChild(indicator);
                     });
@@ -861,21 +1004,23 @@
                     const indicators = document.querySelectorAll('#carousel-indicators button');
                     
                     // Hide all slides
-                    slideElements.forEach(slide => slide.classList.add('opacity-0'));
-                    slideElements.forEach(slide => slide.classList.remove('opacity-100'));
+                    slideElements.forEach(slide => {
+                        slide.classList.add('opacity-0', 'scale-105');
+                        slide.classList.remove('opacity-100', 'scale-100');
+                    });
                     
                     // Show current slide
-                    slideElements[index].classList.remove('opacity-0');
-                    slideElements[index].classList.add('opacity-100');
+                    slideElements[index].classList.remove('opacity-0', 'scale-105');
+                    slideElements[index].classList.add('opacity-100', 'scale-100');
                     
                     // Update indicators
                     indicators.forEach((indicator, i) => {
                         if (i === index) {
                             indicator.classList.remove('bg-opacity-50');
-                            indicator.classList.add('bg-white');
+                            indicator.classList.add('bg-white', 'scale-125');
                         } else {
                             indicator.classList.add('bg-opacity-50');
-                            indicator.classList.remove('bg-white');
+                            indicator.classList.remove('bg-white', 'scale-125');
                         }
                     });
                     
@@ -900,7 +1045,7 @@
                     
                     autoPlayInterval = setInterval(() => {
                         nextSlide();
-                    }, 5000); // Change slide every 5 seconds
+                    }, 6000); // Change slide every 6 seconds
                 }
 
                 // Stop auto-play
@@ -914,22 +1059,187 @@
                 document.getElementById('carousel-next').addEventListener('click', () => {
                     nextSlide();
                     stopAutoPlay();
-                    startAutoPlay(); // Restart auto-play
+                    startAutoPlay();
                 });
 
                 document.getElementById('carousel-prev').addEventListener('click', () => {
                     prevSlide();
                     stopAutoPlay();
-                    startAutoPlay(); // Restart auto-play
+                    startAutoPlay();
                 });
 
                 // Pause auto-play on hover
                 document.getElementById('home-carousel').addEventListener('mouseenter', stopAutoPlay);
                 document.getElementById('home-carousel').addEventListener('mouseleave', startAutoPlay);
 
+                // Keyboard navigation
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'ArrowLeft') {
+                        prevSlide();
+                        stopAutoPlay();
+                        startAutoPlay();
+                    } else if (e.key === 'ArrowRight') {
+                        nextSlide();
+                        stopAutoPlay();
+                        startAutoPlay();
+                    } else if (e.key === 'Home' || (e.key === 'ArrowUp' && e.ctrlKey)) {
+                        // Home key or Ctrl+Up arrow to go to top
+                        e.preventDefault();
+                        scrollToTop();
+                    }
+                });
+
                 // Load carousel on page load
                 loadCarouselSlides();
+
+                // Smooth scrolling for anchor links
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        const target = document.querySelector(this.getAttribute('href'));
+                        if (target) {
+                            target.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        }
+                    });
+                });
+
+
+                // Back to top functionality
+                function scrollToTop() {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                }
+
+                // Show/hide back to top button based on scroll position
+                function handleBackToTopButton() {
+                    const backToTopButton = document.getElementById('back-to-top');
+                    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                    const windowHeight = window.innerHeight;
+                    
+                    if (scrollTop > windowHeight * 0.5) {
+                        backToTopButton.classList.remove('opacity-0', 'invisible');
+                        backToTopButton.classList.add('opacity-100', 'visible');
+                    } else {
+                        backToTopButton.classList.add('opacity-0', 'invisible');
+                        backToTopButton.classList.remove('opacity-100', 'visible');
+                    }
+                }
+
+                // Add click event listener for back to top button
+                document.getElementById('back-to-top').addEventListener('click', scrollToTop);
+
+                // Add scroll event listener for back to top button
+                window.addEventListener('scroll', handleBackToTopButton);
+                
+                // Initial check for back to top button
+                handleBackToTopButton();
             });
         </script>
+
+        <!-- Custom CSS for animations -->
+        <style>
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .animate-fade-in-up {
+                animation: fadeInUp 0.8s ease-out forwards;
+            }
+
+            .delay-300 {
+                animation-delay: 0.3s;
+            }
+
+            .delay-600 {
+                animation-delay: 0.6s;
+            }
+
+            .delay-900 {
+                animation-delay: 0.9s;
+            }
+
+
+            /* Back to top button animations */
+            @keyframes slideInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            @keyframes slideOutDown {
+                from {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+                to {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+            }
+
+            #back-to-top {
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            #back-to-top.visible {
+                animation: slideInUp 0.3s ease-out;
+            }
+
+            #back-to-top.invisible {
+                animation: slideOutDown 0.3s ease-in;
+            }
+
+            #back-to-top:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+            }
+
+            /* Smooth transitions for all interactive elements */
+            * {
+                transition: all 0.3s ease;
+            }
+
+            /* Custom scrollbar */
+            ::-webkit-scrollbar {
+                width: 8px;
+            }
+
+            ::-webkit-scrollbar-track {
+                background: #f1f1f1;
+            }
+
+            ::-webkit-scrollbar-thumb {
+                background: #888;
+                border-radius: 4px;
+            }
+
+            ::-webkit-scrollbar-thumb:hover {
+                background: #555;
+            }
+        </style>
+
+        <!-- Back to Top Button -->
+        <button id="back-to-top" class="fixed bottom-8 right-8 z-50 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-lg transition-all duration-300 opacity-0 invisible group" title="{{ __('app.back_to_top') }}">
+            <svg class="w-6 h-6 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+            </svg>
+        </button>
     </main>
 </x-public-layout>

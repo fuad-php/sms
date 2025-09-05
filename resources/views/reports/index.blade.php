@@ -300,9 +300,9 @@
                     <label for="format" class="block text-sm font-medium text-gray-700 mb-2">{{ __('app.export_format') }}</label>
                     <select name="format" id="format" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                         <option value="">{{ __('app.select_format') }}</option>
-                        <option value="pdf">PDF</option>
-                        <option value="excel">Excel</option>
-                        <option value="csv">CSV</option>
+                        <option value="pdf">{{ __('app.pdf') }}</option>
+                        <option value="excel">{{ __('app.excel') }}</option>
+                        <option value="csv">{{ __('app.csv') }}</option>
                     </select>
                 </div>
                 <div class="flex justify-end space-x-3">

@@ -1,18 +1,18 @@
 @extends('layouts.app')
 
-@section('title', 'Carousel Management')
+@section('title', __('app.carousel_management'))
 
 @section('content')
 <div class="container mx-auto px-4 py-8">
     <div class="mb-8">
         <div class="flex justify-between items-center">
             <div>
-                <h1 class="text-3xl font-bold text-gray-900">Carousel Management</h1>
-                <p class="text-gray-600">Manage homepage carousel slides</p>
+                <h1 class="text-3xl font-bold text-gray-900">{{ __('app.carousel_management') }}</h1>
+                <p class="text-gray-600">{{ __('app.manage_homepage_slides') }}</p>
             </div>
             <div class="flex space-x-3">
                 <a href="{{ route('admin.carousel.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">
-                    <i class="fas fa-plus mr-2"></i>Add Slide
+                    <i class="fas fa-plus mr-2"></i>{{ __('app.add_slide') }}
                 </a>
             </div>
         </div>
@@ -36,17 +36,17 @@
             <div class="text-gray-400 mb-4">
                 <i class="fas fa-images text-6xl"></i>
             </div>
-            <h3 class="text-lg font-medium text-gray-900 mb-2">No Carousel Slides</h3>
-            <p class="text-gray-600 mb-4">No carousel slides have been created yet.</p>
+            <h3 class="text-lg font-medium text-gray-900 mb-2">{{ __('app.no_carousel_slides') }}</h3>
+            <p class="text-gray-600 mb-4">{{ __('app.no_data_found') }}</p>
             <a href="{{ route('admin.carousel.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">
-                <i class="fas fa-plus mr-2"></i>Create First Slide
+                <i class="fas fa-plus mr-2"></i>{{ __('app.create_first_slide') }}
             </a>
         </div>
     @else
         <div class="bg-white rounded-lg shadow overflow-hidden">
             <div class="px-6 py-4 border-b border-gray-200">
                 <h3 class="text-lg font-semibold text-gray-900">
-                    <i class="fas fa-images mr-2"></i>Carousel Slides
+                    <i class="fas fa-images mr-2"></i>{{ __('app.carousel_slides') }}
                 </h3>
                 <p class="text-sm text-gray-600 mt-1">{{ $slides->count() }} slide{{ $slides->count() !== 1 ? 's' : '' }}</p>
             </div>
@@ -55,12 +55,12 @@
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Image</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subtitle</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('app.display_order') }}</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('app.image') }}</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('app.slide_title') }}</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('app.slide_subtitle') }}</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('app.status') }}</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('app.actions') }}</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
@@ -87,37 +87,37 @@
                                 @endif
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                {{ $slide->subtitle ?: 'N/A' }}
+                                {{ $slide->subtitle ?: __('app.not_available') }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $slide->is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
-                                    {{ $slide->is_active ? 'Active' : 'Inactive' }}
+                                    {{ $slide->is_active ? __('app.active') : __('app.inactive') }}
                                 </span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                 <div class="flex space-x-2">
                                     <a href="{{ route('admin.carousel.edit', $slide) }}" 
                                        class="inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                                       title="Edit slide">
-                                        <i class="fas fa-edit mr-1"></i>Edit
+                                       title="{{ __('app.edit') }}">
+                                        <i class="fas fa-edit mr-1"></i>{{ __('app.edit') }}
                                     </a>
                                     <form method="POST" action="{{ route('admin.carousel.toggle-status', $slide) }}" class="inline">
                                         @csrf
                                         @method('PATCH')
                                         <button type="submit" 
                                                 class="inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded-md text-white {{ $slide->is_active ? 'bg-yellow-600 hover:bg-yellow-700' : 'bg-green-600 hover:bg-green-700' }} focus:outline-none focus:ring-2 focus:ring-offset-2 {{ $slide->is_active ? 'focus:ring-yellow-500' : 'focus:ring-green-500' }}"
-                                                title="{{ $slide->is_active ? 'Deactivate slide' : 'Activate slide' }}">
+                                                title="{{ $slide->is_active ? __('app.deactivate') : __('app.activate') }}">
                                             <i class="fas fa-toggle-{{ $slide->is_active ? 'on' : 'off' }} mr-1"></i>
-                                            {{ $slide->is_active ? 'Deactivate' : 'Activate' }}
+                                            {{ $slide->is_active ? __('app.deactivate') : __('app.activate') }}
                                         </button>
                                     </form>
-                                    <form method="POST" action="{{ route('admin.carousel.destroy', $slide) }}" class="inline" onsubmit="return confirm('Are you sure you want to delete this slide? This action cannot be undone.')">
+                                    <form method="POST" action="{{ route('admin.carousel.destroy', $slide) }}" class="inline" onsubmit="return confirm('{{ __('app.confirm_delete') }}')">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" 
                                                 class="inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-                                                title="Delete slide">
-                                            <i class="fas fa-trash mr-1"></i>Delete
+                                                title="{{ __('app.delete') }}">
+                                            <i class="fas fa-trash mr-1"></i>{{ __('app.delete') }}
                                         </button>
                                     </form>
                                 </div>
@@ -132,7 +132,7 @@
         <!-- Preview Section -->
         <div class="mt-8 bg-white rounded-lg shadow p-6">
             <h3 class="text-lg font-semibold text-gray-900 mb-4">
-                <i class="fas fa-eye mr-2"></i>Carousel Preview
+                <i class="fas fa-eye mr-2"></i>{{ __('app.carousel_preview') }}
             </h3>
             <div class="relative h-64 bg-gray-100 rounded-lg overflow-hidden">
                 <div class="carousel-preview relative h-full">

@@ -120,6 +120,7 @@ class TeacherController extends Controller
             $teacher = Teacher::create([
                 'user_id' => $user->id,
                 'employee_id' => $request->employee_id,
+                'designation' => $request->designation,
                 'qualification' => $request->qualification,
                 'specialization' => $request->specialization,
                 'salary' => $request->salary,
@@ -215,6 +216,7 @@ class TeacherController extends Controller
             // Update teacher information
             $teacher->update([
                 'employee_id' => $request->employee_id,
+                'designation' => $request->designation,
                 'qualification' => $request->qualification,
                 'specialization' => $request->specialization,
                 'salary' => $request->salary,

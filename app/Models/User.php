@@ -140,6 +140,22 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
+     * Check if user has any of the specified roles
+     */
+    public function hasRole($roles)
+    {
+        if (is_string($roles)) {
+            return $this->role === $roles;
+        }
+        
+        if (is_array($roles)) {
+            return in_array($this->role, $roles);
+        }
+        
+        return false;
+    }
+
+    /**
      * Scope for users by role
      */
     public function scopeByRole($query, $role)

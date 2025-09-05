@@ -163,6 +163,16 @@
                                 @enderror
                             </div>
 
+                            <!-- Designation -->
+                            <div>
+                                <label for="designation" class="block text-sm font-medium text-gray-700">{{ __('app.designation') }}</label>
+                                <input type="text" name="designation" id="designation" value="{{ old('designation') }}"
+                                       class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm @error('designation') border-red-300 @enderror">
+                                @error('designation')
+                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+
                             <!-- Qualification -->
                             <div>
                                 <label for="qualification" class="block text-sm font-medium text-gray-700">Qualification *</label>

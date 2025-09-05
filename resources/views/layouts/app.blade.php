@@ -229,7 +229,11 @@
             @endif
 
             <!-- Page Content -->
-            @yield('content')
+            @isset($slot)
+                {{ $slot }}
+            @else
+                @yield('content')
+            @endisset
         </main>
         </div>
 

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Teacher Management')
+@section('title', __('app.teacher_management'))
 
 @section('content')
 <div class="container mx-auto px-4 py-8">
@@ -9,15 +9,15 @@
         <div class="mb-8">
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                    <h1 class="text-3xl font-bold text-gray-900 mb-2">Teacher Management</h1>
-                    <p class="text-gray-600">Manage school teachers, assignments, and professional development</p>
+                    <h1 class="text-3xl font-bold text-gray-900 mb-2">{{ __('app.teacher_management') }}</h1>
+                    <p class="text-gray-600">{{ __('app.manage_school_teachers') }}</p>
                 </div>
                 <div class="mt-4 sm:mt-0">
                     <a href="{{ route('teachers.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
                         <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                         </svg>
-                        Add Teacher
+                        {{ __('app.add_teacher') }}
                     </a>
                 </div>
             </div>
@@ -35,7 +35,7 @@
                         </div>
                         <div class="ml-5 w-0 flex-1">
                             <dl>
-                                <dt class="text-sm font-medium text-gray-500 truncate">Total Teachers</dt>
+                                <dt class="text-sm font-medium text-gray-500 truncate">{{ __('app.total_teachers') }}</dt>
                                 <dd class="text-lg font-medium text-gray-900">{{ $stats['total'] }}</dd>
                             </dl>
                         </div>
@@ -53,7 +53,7 @@
                         </div>
                         <div class="ml-5 w-0 flex-1">
                             <dl>
-                                <dt class="text-sm font-medium text-gray-500 truncate">Active Teachers</dt>
+                                <dt class="text-sm font-medium text-gray-500 truncate">{{ __('app.active_teachers') }}</dt>
                                 <dd class="text-lg font-medium text-gray-900">{{ $stats['active'] }}</dd>
                             </dl>
                         </div>
@@ -71,7 +71,7 @@
                         </div>
                         <div class="ml-5 w-0 flex-1">
                             <dl>
-                                <dt class="text-sm font-medium text-gray-500 truncate">Inactive Teachers</dt>
+                                <dt class="text-sm font-medium text-gray-500 truncate">{{ __('app.inactive_teachers') }}</dt>
                                 <dd class="text-lg font-medium text-gray-900">{{ $stats['inactive'] }}</dd>
                             </dl>
                         </div>
@@ -86,7 +86,7 @@
                 <form method="GET" action="{{ route('teachers.index') }}" class="space-y-4 sm:space-y-0 sm:flex sm:items-center sm:space-x-4">
                     <!-- Search -->
                     <div class="flex-1">
-                        <label for="search" class="sr-only">Search teachers</label>
+                        <label for="search" class="sr-only">{{ __('app.search_teachers') }}</label>
                         <div class="relative">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -95,41 +95,41 @@
                             </div>
                             <input type="text" name="search" id="search" value="{{ request('search') }}" 
                                    class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" 
-                                   placeholder="Search by name, email, employee ID...">
+                                   placeholder="{{ __('app.search_by_name_email_employee_id') }}">
                         </div>
                     </div>
 
                     <!-- Status Filter -->
                     <div>
                         <select name="status" class="block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
-                            <option value="">All Status</option>
-                            <option value="active" {{ request('status') === 'active' ? 'selected' : '' }}>Active</option>
-                            <option value="inactive" {{ request('status') === 'inactive' ? 'selected' : '' }}>Inactive</option>
+                            <option value="">{{ __('app.all_statuses') }}</option>
+                            <option value="active" {{ request('status') === 'active' ? 'selected' : '' }}>{{ __('app.active') }}</option>
+                            <option value="inactive" {{ request('status') === 'inactive' ? 'selected' : '' }}>{{ __('app.inactive') }}</option>
                         </select>
                     </div>
 
                     <!-- Sort -->
                     <div>
                         <select name="sort_by" class="block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
-                            <option value="created_at" {{ request('sort_by') === 'created_at' ? 'selected' : '' }}>Date Added</option>
-                            <option value="name" {{ request('sort_by') === 'name' ? 'selected' : '' }}>Name</option>
-                            <option value="joining_date" {{ request('sort_by') === 'joining_date' ? 'selected' : '' }}>Joining Date</option>
-                            <option value="experience" {{ request('sort_by') === 'experience' ? 'selected' : '' }}>Experience</option>
+                            <option value="created_at" {{ request('sort_by') === 'created_at' ? 'selected' : '' }}>{{ __('app.date_added') }}</option>
+                            <option value="name" {{ request('sort_by') === 'name' ? 'selected' : '' }}>{{ __('app.name') }}</option>
+                            <option value="joining_date" {{ request('sort_by') === 'joining_date' ? 'selected' : '' }}>{{ __('app.joining_date') }}</option>
+                            <option value="experience" {{ request('sort_by') === 'experience' ? 'selected' : '' }}>{{ __('app.experience') }}</option>
                         </select>
                     </div>
 
                     <!-- Sort Order -->
                     <div>
                         <select name="sort_order" class="block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
-                            <option value="desc" {{ request('sort_order') === 'desc' ? 'selected' : '' }}>Descending</option>
-                            <option value="asc" {{ request('sort_order') === 'asc' ? 'selected' : '' }}>Ascending</option>
+                            <option value="desc" {{ request('sort_order') === 'desc' ? 'selected' : '' }}>{{ __('app.descending') }}</option>
+                            <option value="asc" {{ request('sort_order') === 'asc' ? 'selected' : '' }}>{{ __('app.ascending') }}</option>
                         </select>
                     </div>
 
                     <!-- Submit Button -->
                     <div>
                         <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                            Filter
+                            {{ __('app.filter') }}
                         </button>
                     </div>
 
@@ -137,7 +137,7 @@
                     @if(request()->hasAny(['search', 'status', 'sort_by', 'sort_order']))
                     <div>
                         <a href="{{ route('teachers.index') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                            Clear
+                            {{ __('app.clear') }}
                         </a>
                     </div>
                     @endif
@@ -170,18 +170,18 @@
                                             <p class="text-sm font-medium text-gray-900">{{ $teacher->user->name }}</p>
                                             @if($teacher->is_active)
                                                 <span class="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                                    Active
+                                                    {{ __('app.active') }}
                                                 </span>
                                             @else
                                                 <span class="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                                                    Inactive
+                                                    {{ __('app.inactive') }}
                                                 </span>
                                             @endif
                                         </div>
                                         <div class="mt-1 text-sm text-gray-500">
                                             <p>{{ $teacher->user->email }}</p>
-                                            <p>Employee ID: {{ $teacher->employee_id }} | {{ $teacher->qualification }}</p>
-                                            <p>Experience: {{ $teacher->experience }} years | Joined: {{ $teacher->joining_date->format('M d, Y') }}</p>
+                                            <p>{{ __('app.employee_id') }}: {{ $teacher->employee_id }} | {{ $teacher->qualification }}</p>
+                                            <p>{{ __('app.experience') }}: {{ $teacher->experience }} {{ __('app.years') }} | {{ __('app.joined') }}: {{ $teacher->joining_date->format('M d, Y') }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -192,7 +192,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                         </svg>
-                                        View
+                                        {{ __('app.view') }}
                                     </a>
 
                                     <!-- Edit Button -->
@@ -200,7 +200,7 @@
                                         <svg class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                         </svg>
-                                        Edit
+                                        {{ __('app.edit') }}
                                     </a>
 
                                     <!-- Toggle Status Button -->
@@ -210,12 +210,12 @@
                                             <svg class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                             </svg>
-                                            Deactivate
+                                            {{ __('app.deactivate') }}
                                         @else
                                             <svg class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                             </svg>
-                                            Activate
+                                            {{ __('app.activate') }}
                                         @endif
                                     </button>
 
@@ -225,7 +225,7 @@
                                         <svg class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                         </svg>
-                                        Delete
+                                        {{ __('app.delete') }}
                                     </button>
                                 </div>
                             </div>
@@ -243,14 +243,14 @@
                     <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                     </svg>
-                    <h3 class="mt-2 text-sm font-medium text-gray-900">No teachers found</h3>
-                    <p class="mt-1 text-sm text-gray-500">Get started by creating a new teacher.</p>
+                    <h3 class="mt-2 text-sm font-medium text-gray-900">{{ __('app.no_teachers_found') }}</h3>
+                    <p class="mt-1 text-sm text-gray-500">{{ __('app.get_started_creating_teacher') }}</p>
                     <div class="mt-6">
                         <a href="{{ route('teachers.create') }}" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                             <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                             </svg>
-                            Add Teacher
+                            {{ __('app.add_teacher') }}
                         </a>
                     </div>
                 </div>
@@ -263,7 +263,7 @@
                 <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
-                Back to Dashboard
+                {{ __('app.back_to_dashboard') }}
             </a>
         </div>
     </div>
@@ -278,16 +278,16 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
                 </svg>
             </div>
-            <h3 class="text-lg font-medium text-gray-900 mt-4">Delete Teacher</h3>
+            <h3 class="text-lg font-medium text-gray-900 mt-4">{{ __('app.delete_teacher') }}</h3>
             <div class="mt-2 px-7 py-3">
-                <p class="text-sm text-gray-500">Are you sure you want to delete this teacher? This action cannot be undone.</p>
+                <p class="text-sm text-gray-500">{{ __('app.confirm_delete_teacher') }}</p>
             </div>
             <div class="items-center px-4 py-3">
                 <button id="confirmDelete" class="px-4 py-2 bg-red-500 text-white text-base font-medium rounded-md w-24 mr-2 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-300">
-                    Delete
+                    {{ __('app.delete') }}
                 </button>
                 <button onclick="closeDeleteModal()" class="px-4 py-2 bg-gray-500 text-white text-base font-medium rounded-md w-24 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-300">
-                    Cancel
+                    {{ __('app.cancel') }}
                 </button>
             </div>
         </div>
@@ -301,7 +301,7 @@
 let teacherToDelete = null;
 
 function toggleStatus(teacherId) {
-    if (confirm('Are you sure you want to change the status of this teacher?')) {
+    if (confirm('{{ __('app.confirm_change_teacher_status') }}')) {
         fetch(`/teachers/${teacherId}/toggle-status`, {
             method: 'POST',
             headers: {
@@ -314,12 +314,12 @@ function toggleStatus(teacherId) {
             if (data.success) {
                 location.reload();
             } else {
-                alert('Error: ' + data.message);
+                alert('{{ __('app.error') }}: ' + data.message);
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('An error occurred while updating the teacher status.');
+            alert('{{ __('app.error_updating_teacher_status') }}');
         });
     }
 }

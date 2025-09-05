@@ -227,9 +227,9 @@
                     </tbody>
                 </table>
             </div>
-            @if(isset($attendance) && $attendance->hasPages())
+            @if(isset($attendances) && $attendances->hasPages())
                 <div class="px-6 py-4 border-t border-gray-200">
-                    {{ $attendance->links() }}
+                    {{ $attendances->links() }}
                 </div>
             @endif
         </div>

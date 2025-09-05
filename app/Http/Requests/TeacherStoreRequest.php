@@ -36,6 +36,7 @@ class TeacherStoreRequest extends FormRequest
 
             // Teacher specific information
             'employee_id' => 'required|string|max:50|unique:teachers,employee_id',
+            'designation' => 'nullable|string|max:255',
             'qualification' => 'required|string|max:255',
             'specialization' => 'required|string|max:255',
             'salary' => 'required|numeric|min:0',

@@ -9,15 +9,15 @@
         <div class="mb-8">
             <div class="flex justify-between items-center">
                 <div>
-                    <h1 class="text-3xl font-bold text-gray-900">Subject Management</h1>
-                    <p class="text-gray-600 mt-1">Manage school subjects, curriculum, and teacher assignments</p>
+                    <h1 class="text-3xl font-bold text-gray-900">{{ __('app.subject_management') }}</h1>
+                    <p class="text-gray-600 mt-1">{{ __('app.manage_school_subjects_curriculum') }}</p>
                 </div>
                 @can('create', App\Models\Subject::class)
                 <a href="{{ route('subjects.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors">
                     <svg class="h-4 w-4 inline mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                     </svg>
-                    Add New Subject
+                    {{ __('app.add_new_subject') }}
                 </a>
                 @endcan
             </div>
@@ -33,7 +33,7 @@
                         </svg>
                     </div>
                     <div class="ml-4">
-                        <p class="text-sm font-medium text-gray-600">Total Subjects</p>
+                        <p class="text-sm font-medium text-gray-600">{{ __('app.total_subjects') }}</p>
                         <p class="text-2xl font-bold text-gray-900">{{ $stats['total_subjects'] }}</p>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                         </svg>
                     </div>
                     <div class="ml-4">
-                        <p class="text-sm font-medium text-gray-600">Active Subjects</p>
+                        <p class="text-sm font-medium text-gray-600">{{ __('app.active_subjects') }}</p>
                         <p class="text-2xl font-bold text-gray-900">{{ $stats['active_subjects'] }}</p>
                     </div>
                 </div>
@@ -61,7 +61,7 @@
                         </svg>
                     </div>
                     <div class="ml-4">
-                        <p class="text-sm font-medium text-gray-600">Classes Using Subjects</p>
+                        <p class="text-sm font-medium text-gray-600">{{ __('app.classes_using_subjects') }}</p>
                         <p class="text-2xl font-bold text-gray-900">{{ $stats['total_classes_using_subjects'] }}</p>
                     </div>
                 </div>
@@ -75,7 +75,7 @@
                         </svg>
                     </div>
                     <div class="ml-4">
-                        <p class="text-sm font-medium text-gray-600">Total Assignments</p>
+                        <p class="text-sm font-medium text-gray-600">{{ __('app.total_assignments') }}</p>
                         <p class="text-2xl font-bold text-gray-900">{{ $stats['total_classes_using_subjects'] }}</p>
                     </div>
                 </div>
@@ -89,22 +89,22 @@
                     <input type="text" 
                            name="search" 
                            value="{{ request('search') }}"
-                           placeholder="Search subjects by name, code, or description..."
+                           placeholder="{{ __('app.search_subjects_by_name_code') }}"
                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                 </div>
                 <div>
                     <select name="status" class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                        <option value="">All Status</option>
-                        <option value="active" {{ request('status') === 'active' ? 'selected' : '' }}>Active</option>
-                        <option value="inactive" {{ request('status') === 'inactive' ? 'selected' : '' }}>Inactive</option>
+                        <option value="">{{ __('app.all_statuses') }}</option>
+                        <option value="active" {{ request('status') === 'active' ? 'selected' : '' }}>{{ __('app.active') }}</option>
+                        <option value="inactive" {{ request('status') === 'inactive' ? 'selected' : '' }}>{{ __('app.inactive') }}</option>
                     </select>
                 </div>
                 <div class="flex gap-2">
                     <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors">
-                        Search
+                        {{ __('app.search') }}
                     </button>
                     <a href="{{ route('subjects.index') }}" class="bg-gray-300 text-gray-700 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors">
-                        Clear
+                        {{ __('app.clear') }}
                     </a>
                 </div>
             </form>
@@ -116,11 +116,11 @@
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subject</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Code</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Classes</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('app.subject') }}</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('app.code') }}</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('app.classes') }}</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('app.status') }}</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('app.actions') }}</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
@@ -146,24 +146,24 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="text-sm text-gray-900">{{ $subject->classes_count }}</div>
-                                <div class="text-xs text-gray-500">classes assigned</div>
+                                <div class="text-xs text-gray-500">{{ __('app.classes_assigned') }}</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full {{ $subject->is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
-                                    {{ $subject->is_active ? 'Active' : 'Inactive' }}
+                                    {{ $subject->is_active ? __('app.active') : __('app.inactive') }}
                                 </span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                 <div class="flex space-x-2">
-                                    <a href="{{ route('subjects.show', $subject) }}" class="text-blue-600 hover:text-blue-900">View</a>
+                                    <a href="{{ route('subjects.show', $subject) }}" class="text-blue-600 hover:text-blue-900">{{ __('app.view') }}</a>
                                     @can('update', $subject)
-                                    <a href="{{ route('subjects.edit', $subject) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                    <a href="{{ route('subjects.edit', $subject) }}" class="text-indigo-600 hover:text-indigo-900">{{ __('app.edit') }}</a>
                                     @endcan
                                     @can('delete', $subject)
-                                    <form method="POST" action="{{ route('subjects.destroy', $subject) }}" class="inline" onsubmit="return confirm('Are you sure you want to delete this subject?')">
+                                    <form method="POST" action="{{ route('subjects.destroy', $subject) }}" class="inline" onsubmit="return confirm('{{ __('app.confirm_delete_subject') }}')">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="text-red-600 hover:text-red-900">Delete</button>
+                                        <button type="submit" class="text-red-600 hover:text-red-900">{{ __('app.delete') }}</button>
                                     </form>
                                     @endcan
                                 </div>
@@ -172,9 +172,9 @@
                         @empty
                         <tr>
                             <td colspan="5" class="px-6 py-4 text-center text-gray-500">
-                                No subjects found. 
+                                {{ __('app.no_subjects_found') }} 
                                 @can('create', App\Models\Subject::class)
-                                <a href="{{ route('subjects.create') }}" class="text-blue-600 hover:text-blue-900">Create your first subject</a>
+                                <a href="{{ route('subjects.create') }}" class="text-blue-600 hover:text-blue-900">{{ __('app.create_your_first_subject') }}</a>
                                 @endcan
                             </td>
                         </tr>

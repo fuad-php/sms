@@ -50,6 +50,7 @@ class TeacherUpdateRequest extends FormRequest
                 'max:50',
                 Rule::unique('teachers', 'employee_id')->ignore($teacherId)
             ],
+            'designation' => 'nullable|string|max:255',
             'qualification' => 'required|string|max:255',
             'specialization' => 'required|string|max:255',
             'salary' => 'required|numeric|min:0',

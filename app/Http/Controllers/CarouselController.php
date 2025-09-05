@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\CarouselSlide;
+use App\Models\CarouselSlideTranslation;
 use Illuminate\Support\Facades\Storage;
 
 class CarouselController extends Controller
@@ -31,17 +32,32 @@ class CarouselController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'subtitle' => 'nullable|string|max:255',
-            'description' => 'nullable|string',
-            'button_text' => 'nullable|string|max:100',
+            // English (required)
+            'title_en' => 'required|string|max:255',
+            'subtitle_en' => 'nullable|string|max:255',
+            'description_en' => 'nullable|string',
+            'button_text_en' => 'nullable|string|max:100',
+            // Bangla (optional)
+            'title_bn' => 'nullable|string|max:255',
+            'subtitle_bn' => 'nullable|string|max:255',
+            'description_bn' => 'nullable|string',
+            'button_text_bn' => 'nullable|string|max:100',
+            // Common
             'button_url' => 'nullable|url|max:255',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'order' => 'nullable|integer|min:1',
             'is_active' => 'boolean',
         ]);
 
-        $data = $request->all();
+        $data = [
+            // Store English as base values for fallback
+            'title' => $request->input('title_en'),
+            'subtitle' => $request->input('subtitle_en'),
+            'description' => $request->input('description_en'),
+            'button_text' => $request->input('button_text_en'),
+            'button_url' => $request->input('button_url'),
+            'order' => $request->input('order'),
+        ];
         
         // Handle image upload
         if ($request->hasFile('image')) {
@@ -56,10 +72,33 @@ class CarouselController extends Controller
 
         $data['is_active'] = $request->has('is_active');
 
-        CarouselSlide::create($data);
+        $slide = CarouselSlide::create($data);
+
+        // Save translations
+        CarouselSlideTranslation::updateOrCreate(
+            ['carousel_slide_id' => $slide->id, 'locale' => 'en'],
+            [
+                'title' => $request->input('title_en'),
+                'subtitle' => $request->input('subtitle_en'),
+                'description' => $request->input('description_en'),
+                'button_text' => $request->input('button_text_en'),
+            ]
+        );
+
+        if ($request->filled('title_bn') || $request->filled('subtitle_bn') || $request->filled('description_bn') || $request->filled('button_text_bn')) {
+            CarouselSlideTranslation::updateOrCreate(
+                ['carousel_slide_id' => $slide->id, 'locale' => 'bn'],
+                [
+                    'title' => $request->input('title_bn'),
+                    'subtitle' => $request->input('subtitle_bn'),
+                    'description' => $request->input('description_bn'),
+                    'button_text' => $request->input('button_text_bn'),
+                ]
+            );
+        }
 
         return redirect()->route('admin.carousel.index')
-            ->with('success', 'Carousel slide created successfully!');
+            ->with('success', __('app.slide_created_successfully'));
     }
 
     /**
@@ -67,6 +106,7 @@ class CarouselController extends Controller
      */
     public function edit(CarouselSlide $slide)
     {
+        $slide->load('translations');
         return view('admin.carousel.edit', compact('slide'));
     }
 
@@ -76,17 +116,28 @@ class CarouselController extends Controller
     public function update(Request $request, CarouselSlide $slide)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'subtitle' => 'nullable|string|max:255',
-            'description' => 'nullable|string',
-            'button_text' => 'nullable|string|max:100',
+            'title_en' => 'required|string|max:255',
+            'subtitle_en' => 'nullable|string|max:255',
+            'description_en' => 'nullable|string',
+            'button_text_en' => 'nullable|string|max:100',
+            'title_bn' => 'nullable|string|max:255',
+            'subtitle_bn' => 'nullable|string|max:255',
+            'description_bn' => 'nullable|string',
+            'button_text_bn' => 'nullable|string|max:100',
             'button_url' => 'nullable|url|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'order' => 'nullable|integer|min:1',
             'is_active' => 'boolean',
         ]);
 
-        $data = $request->all();
+        $data = [
+            'title' => $request->input('title_en'),
+            'subtitle' => $request->input('subtitle_en'),
+            'description' => $request->input('description_en'),
+            'button_text' => $request->input('button_text_en'),
+            'button_url' => $request->input('button_url'),
+            'order' => $request->input('order'),
+        ];
 
         // Handle image upload
         if ($request->hasFile('image')) {
@@ -103,8 +154,31 @@ class CarouselController extends Controller
 
         $slide->update($data);
 
+        // Update translations
+        CarouselSlideTranslation::updateOrCreate(
+            ['carousel_slide_id' => $slide->id, 'locale' => 'en'],
+            [
+                'title' => $request->input('title_en'),
+                'subtitle' => $request->input('subtitle_en'),
+                'description' => $request->input('description_en'),
+                'button_text' => $request->input('button_text_en'),
+            ]
+        );
+
+        if ($request->filled('title_bn') || $request->filled('subtitle_bn') || $request->filled('description_bn') || $request->filled('button_text_bn')) {
+            CarouselSlideTranslation::updateOrCreate(
+                ['carousel_slide_id' => $slide->id, 'locale' => 'bn'],
+                [
+                    'title' => $request->input('title_bn'),
+                    'subtitle' => $request->input('subtitle_bn'),
+                    'description' => $request->input('description_bn'),
+                    'button_text' => $request->input('button_text_bn'),
+                ]
+            );
+        }
+
         return redirect()->route('admin.carousel.index')
-            ->with('success', 'Carousel slide updated successfully!');
+            ->with('success', __('app.slide_updated_successfully'));
     }
 
     /**
@@ -120,7 +194,7 @@ class CarouselController extends Controller
         $slide->delete();
 
         return redirect()->route('admin.carousel.index')
-            ->with('success', 'Carousel slide deleted successfully!');
+            ->with('success', __('app.slide_deleted_successfully'));
     }
 
     /**
@@ -139,7 +213,7 @@ class CarouselController extends Controller
                 ->update(['order' => $slideData['order']]);
         }
 
-        return response()->json(['message' => 'Order updated successfully']);
+        return response()->json(['message' => __('app.order_updated_successfully')]);
     }
 
     /**
@@ -150,7 +224,7 @@ class CarouselController extends Controller
         $slide->update(['is_active' => !$slide->is_active]);
 
         return redirect()->route('admin.carousel.index')
-            ->with('success', 'Slide status updated successfully!');
+            ->with('success', __('app.slide_status_updated'));
     }
 
     /**
@@ -158,9 +232,23 @@ class CarouselController extends Controller
      */
     public function getActiveSlides()
     {
-        $slides = CarouselSlide::where('is_active', true)
+        $slides = CarouselSlide::with('translations')
+            ->where('is_active', true)
             ->orderBy('order')
-            ->get();
+            ->get()
+            ->map(function ($slide) {
+                return [
+                    'id' => $slide->id,
+                    'title' => $slide->title_localized,
+                    'subtitle' => $slide->subtitle_localized,
+                    'description' => $slide->description_localized,
+                    'button_text' => $slide->button_text_localized,
+                    'button_url' => $slide->button_url,
+                    'image_url' => $slide->image_url,
+                    'order' => $slide->order,
+                    'is_active' => $slide->is_active,
+                ];
+            });
 
         return response()->json($slides);
     }

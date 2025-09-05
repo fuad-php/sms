@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Admin Dashboard')
+@section('title', __('app.admin_dashboard'))
 
 @section('content')
 <div class="container mx-auto px-4 py-8">
     <div class="mb-8">
-        <h1 class="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
-        <p class="text-gray-600">Welcome back, {{ auth()->user()->name }}!</p>
+        <h1 class="text-3xl font-bold text-gray-900">{{ __('app.admin_dashboard') }}</h1>
+        <p class="text-gray-600">{{ __('app.welcome_back') }}, {{ auth()->user()->name }}!</p>
     </div>
 
     <!-- Statistics Cards -->
@@ -19,7 +19,7 @@
                     </svg>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-600">Total Students</p>
+                    <p class="text-sm font-medium text-gray-600">{{ __('app.total_students') }}</p>
                     <p class="text-2xl font-semibold text-gray-900">{{ $totalStudents }}</p>
                 </div>
             </div>
@@ -33,7 +33,7 @@
                     </svg>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-600">Total Teachers</p>
+                    <p class="text-sm font-medium text-gray-600">{{ __('app.total_teachers') }}</p>
                     <p class="text-2xl font-semibold text-gray-900">{{ $totalTeachers }}</p>
                 </div>
             </div>
@@ -47,7 +47,7 @@
                     </svg>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-600">Total Classes</p>
+                    <p class="text-sm font-medium text-gray-600">{{ __('app.total_classes') }}</p>
                     <p class="text-2xl font-semibold text-gray-900">{{ $totalClasses }}</p>
                 </div>
             </div>
@@ -61,7 +61,7 @@
                     </svg>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-600">Total Subjects</p>
+                    <p class="text-sm font-medium text-gray-600">{{ __('app.total_subjects') }}</p>
                     <p class="text-2xl font-semibold text-gray-900">{{ $totalSubjects }}</p>
                 </div>
             </div>
@@ -70,11 +70,11 @@
 
     <!-- Attendance Rate -->
     <div class="bg-white rounded-lg shadow p-6 mb-8">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Today's Attendance Rate</h3>
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('app.todays_attendance_rate') }}</h3>
         <div class="flex items-center">
             <div class="flex-1">
                 <div class="flex items-center justify-between mb-2">
-                    <span class="text-sm font-medium text-gray-700">Attendance</span>
+                    <span class="text-sm font-medium text-gray-700">{{ __('app.attendance') }}</span>
                     <span class="text-sm font-medium text-gray-700">{{ $attendanceRate }}%</span>
                 </div>
                 <div class="w-full bg-gray-200 rounded-full h-2">
@@ -86,15 +86,15 @@
 
     <!-- Recent Students -->
     <div class="bg-white rounded-lg shadow p-6 mb-8">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Recent Students</h3>
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('app.recent_students') }}</h3>
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Class</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Admission Date</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('app.name') }}</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('app.class') }}</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('app.admission_date') }}</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('app.status') }}</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
@@ -117,7 +117,7 @@
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $student->admission_date ? $student->admission_date->format('M d, Y') : 'N/A' }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                Active
+                                {{ __('app.active') }}
                             </span>
                         </td>
                     </tr>
@@ -129,7 +129,7 @@
 
     <!-- Upcoming Exams -->
     <div class="bg-white rounded-lg shadow p-6 mb-8">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Upcoming Exams</h3>
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('app.upcoming_exams') }}</h3>
         <div class="space-y-4">
             @foreach($upcomingExams as $exam)
             <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
@@ -149,9 +149,9 @@
     <!-- Recent Announcements -->
     <div class="bg-white rounded-lg shadow p-6">
         <div class="flex justify-between items-center mb-4">
-            <h3 class="text-lg font-semibold text-gray-900">Recent Announcements</h3>
+            <h3 class="text-lg font-semibold text-gray-900">{{ __('app.recent_announcements') }}</h3>
             <a href="{{ route('announcements.index') }}" class="text-blue-600 hover:text-blue-800 text-sm font-medium">
-                View All <i class="fas fa-arrow-right ml-1"></i>
+                {{ __('app.view_all') }} <i class="fas fa-arrow-right ml-1"></i>
             </a>
         </div>
         <div class="space-y-4">
@@ -166,7 +166,7 @@
                                 {{ ucfirst($announcement->priority) }}
                             </span>
                             <span class="mx-2">•</span>
-                            <span>By {{ $announcement->createdBy->name }}</span>
+                            <span>{{ __('app.by') }} {{ $announcement->createdBy->name }}</span>
                             <span class="mx-2">•</span>
                             <span>{{ $announcement->created_at->diffForHumans() }}</span>
                         </div>
@@ -178,7 +178,7 @@
             </div>
             @empty
             <div class="text-center py-4">
-                <p class="text-gray-500 text-sm">No recent announcements</p>
+                <p class="text-gray-500 text-sm">{{ __('app.no_recent_announcements') }}</p>
             </div>
             @endforelse
         </div>
@@ -186,15 +186,15 @@
 
     <!-- Quick Actions -->
     <div class="bg-white rounded-lg shadow p-6 mt-8">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('app.quick_actions') }}</h3>
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
             <a href="{{ route('settings.index') }}" class="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50">
                 <div class="p-2 bg-blue-100 text-blue-600 rounded-lg mr-4">
                     <i class="fas fa-cog"></i>
                 </div>
                 <div>
-                    <h4 class="font-medium text-gray-900">School Settings</h4>
-                    <p class="text-sm text-gray-600">Manage school configuration</p>
+                    <h4 class="font-medium text-gray-900">{{ __('app.school_settings') }}</h4>
+                    <p class="text-sm text-gray-600">{{ __('app.manage_school_configuration') }}</p>
                 </div>
             </a>
             
@@ -203,8 +203,8 @@
                     <i class="fas fa-images"></i>
                 </div>
                 <div>
-                    <h4 class="font-medium text-gray-900">Carousel</h4>
-                    <p class="text-sm text-gray-600">Manage homepage slides</p>
+                    <h4 class="font-medium text-gray-900">{{ __('app.carousel') }}</h4>
+                    <p class="text-sm text-gray-600">{{ __('app.manage_homepage_slides') }}</p>
                 </div>
             </a>
             
@@ -213,8 +213,8 @@
                     <i class="fas fa-user-plus"></i>
                 </div>
                 <div>
-                    <h4 class="font-medium text-gray-900">Add Student</h4>
-                    <p class="text-sm text-gray-600">Register new student</p>
+                    <h4 class="font-medium text-gray-900">{{ __('app.add_student') }}</h4>
+                    <p class="text-sm text-gray-600">{{ __('app.register_new_student') }}</p>
                 </div>
             </a>
             
@@ -223,8 +223,8 @@
                     <i class="fas fa-bullhorn"></i>
                 </div>
                 <div>
-                    <h4 class="font-medium text-gray-900">New Announcement</h4>
-                    <p class="text-sm text-gray-600">Create announcement</p>
+                    <h4 class="font-medium text-gray-900">{{ __('app.new_announcement') }}</h4>
+                    <p class="text-sm text-gray-600">{{ __('app.create_announcement') }}</p>
                 </div>
             </a>
         </div>

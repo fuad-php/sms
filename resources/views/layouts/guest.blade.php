@@ -28,7 +28,7 @@
                     <h1 class="text-2xl font-bold text-gray-900">
                         {{ \App\Helpers\SettingsHelper::getSchoolName() }}
                     </h1>
-                    <p class="text-sm text-gray-600">School Management System</p>
+                    <p class="text-sm text-gray-600">{{ __('app.school_management_system') }}</p>
                 </div>
             </a>
         </div>
@@ -42,13 +42,13 @@
         <div class="mt-8 text-center">
             <div class="flex items-center justify-center space-x-6 text-sm text-gray-600">
                 <a href="{{ route('home') }}" class="hover:text-gray-900 transition-colors">
-                    Home
+                    {{ __('app.home') }}
                 </a>
                 <a href="{{ route('announcements.public') }}" class="hover:text-gray-900 transition-colors">
-                    Announcements
+                    {{ __('app.announcements') }}
                 </a>
                 <a href="{{ route('contact.index') }}" class="hover:text-gray-900 transition-colors">
-                    Contact
+                    {{ __('app.contact') }}
                 </a>
             </div>
         </div>

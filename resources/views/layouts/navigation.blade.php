@@ -18,6 +18,11 @@
                     <x-nav-link :href="route('announcements.public')" :active="request()->routeIs('announcements.public')">
                         {{ __('Announcements') }}
                     </x-nav-link>
+                    @can('viewAny', App\Models\ManagingCommittee::class)
+                        <x-nav-link :href="route('managing-committees.index')" :active="request()->routeIs('managing-committees.*')">
+                            {{ __('app.managing_committees') }}
+                        </x-nav-link>
+                    @endcan
                 </div>
             </div>
 
@@ -76,6 +81,11 @@
             <x-responsive-nav-link :href="route('announcements.public')" :active="request()->routeIs('announcements.public')">
                 {{ __('Announcements') }}
             </x-responsive-nav-link>
+            @can('viewAny', App\Models\ManagingCommittee::class)
+                <x-responsive-nav-link :href="route('managing-committees.index')" :active="request()->routeIs('managing-committees.*')">
+                    {{ __('app.managing_committees') }}
+                </x-responsive-nav-link>
+            @endcan
         </div>
 
         <!-- Responsive Settings Options -->
