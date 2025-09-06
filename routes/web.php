@@ -10,6 +10,10 @@ use App\Http\Controllers\CarouselController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ManagingCommitteeController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\GradebookController;
+use App\Http\Controllers\EnrollmentController;
+use App\Http\Controllers\ReportCardController;
+use App\Http\Controllers\TranscriptController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -45,6 +49,7 @@ Route::get('/programs', [WebController::class, 'programs'])->name('programs');
 Route::get('/admissions', [WebController::class, 'admissions'])->name('admissions');
 Route::get('/facilities', [WebController::class, 'facilities'])->name('facilities');
 Route::get('/news', [WebController::class, 'news'])->name('news');
+Route::get('/events', [WebController::class, 'events'])->name('events');
 Route::get('/help', [WebController::class, 'help'])->name('help');
 // Route moved to avoid conflict with announcements.public.show
 
@@ -104,6 +109,14 @@ Route::middleware(['auth', 'maintenance'])->group(function () {
         Route::get('/statistics/data', [App\Http\Controllers\ClassController::class, 'statistics'])->name('statistics');
         Route::get('/{class}/students', [App\Http\Controllers\ClassController::class, 'getStudents'])->name('students');
     });
+
+    // Room Management Routes
+    Route::group(['prefix' => 'rooms', 'as' => 'rooms.'], function () {
+        Route::get('/', [App\Http\Controllers\RoomController::class, 'index'])->name('index');
+        Route::get('/create', [App\Http\Controllers\RoomController::class, 'create'])->name('create');
+        Route::post('/', [App\Http\Controllers\RoomController::class, 'store'])->name('store');
+        Route::get('/{room}', [App\Http\Controllers\RoomController::class, 'show'])->name('show');
+    });
     
     // Subject Management Routes
     Route::group(['prefix' => 'subjects', 'as' => 'subjects.'], function () {
@@ -133,6 +146,35 @@ Route::middleware(['auth', 'maintenance'])->group(function () {
         Route::post('/{teacher}/assign-subjects', [App\Http\Controllers\TeacherController::class, 'assignSubjects'])->name('assign-subjects');
         Route::get('/statistics/data', [App\Http\Controllers\TeacherController::class, 'statistics'])->name('statistics');
         Route::get('/profile/view', [App\Http\Controllers\TeacherController::class, 'profile'])->name('profile');
+    });
+
+    // Staff Management (Admin)
+    Route::group(['prefix' => 'staff', 'as' => 'staff.'], function () {
+        Route::get('/', [App\Http\Controllers\StaffPageController::class, 'index'])->name('index')->middleware('role:admin');
+        Route::get('/create', [App\Http\Controllers\StaffPageController::class, 'create'])->name('create')->middleware('role:admin');
+        Route::post('/', [App\Http\Controllers\StaffPageController::class, 'store'])->name('store')->middleware('role:admin');
+    });
+
+    // Employee Attendance (Admin)
+    Route::group(['prefix' => 'employee-attendance', 'as' => 'employee-attendance.'], function () {
+        Route::get('/', [App\Http\Controllers\EmployeeAttendancePageController::class, 'index'])->name('index')->middleware('role:admin');
+        Route::get('/create', function() { return view('employee_attendance.create', ['pageTitle' => __('app.mark_employee_attendance')]); })->name('create')->middleware('role:admin');
+    });
+
+    // Leaves (Admin and Self)
+    Route::group(['prefix' => 'leaves', 'as' => 'leaves.'], function () {
+        Route::get('/', [App\Http\Controllers\LeavePageController::class, 'index'])->name('index');
+        Route::get('/my', [App\Http\Controllers\LeavePageController::class, 'my'])->name('my');
+        Route::get('/all', [App\Http\Controllers\LeavePageController::class, 'all'])->name('all')->middleware('role:admin');
+        Route::get('/apply', function() { return view('leaves.create', ['pageTitle' => __('app.apply_leave')]); })->name('create');
+        Route::post('/', [App\Http\Controllers\LeavePageController::class, 'store'])->name('store');
+        Route::get('/{leave}', [App\Http\Controllers\LeavePageController::class, 'show'])->name('show');
+    });
+
+    // Payroll (Admin and Self)
+    Route::group(['prefix' => 'payroll', 'as' => 'payroll.'], function () {
+        Route::get('/', [App\Http\Controllers\PayrollPageController::class, 'index'])->name('index');
+        Route::get('/create', function() { return view('payroll.create', ['pageTitle' => __('app.generate_payroll')]); })->name('create');
     });
     
     // Timetable Management Routes
@@ -177,6 +219,12 @@ Route::middleware(['auth', 'maintenance'])->group(function () {
         Route::put('/{result}', [App\Http\Controllers\ExamResultController::class, 'update'])->name('update')->middleware('role:admin,teacher');
         Route::delete('/{result}', [App\Http\Controllers\ExamResultController::class, 'destroy'])->name('destroy')->middleware('role:admin,teacher');
     });        
+
+    // Enrollment Routes
+    Route::group(['prefix' => 'students/{student}/enrollments', 'as' => 'enrollments.'], function () {
+        Route::get('/', [EnrollmentController::class, 'index'])->name('index')->middleware('role:admin,teacher');
+        Route::post('/', [EnrollmentController::class, 'store'])->name('store')->middleware('role:admin,teacher');
+    });
 
     // Announcements Routes
     Route::group(['prefix' => 'announcements', 'as' => 'announcements.'], function () {
@@ -243,6 +291,15 @@ Route::middleware(['auth', 'maintenance'])->group(function () {
         Route::post('/export', [App\Http\Controllers\ReportController::class, 'export'])->name('export');
         Route::get('/dashboard/data', [App\Http\Controllers\ReportController::class, 'dashboard'])->name('dashboard');
     });
+
+    // Gradebook (Admin/Teacher)
+    Route::get('/gradebook', [GradebookController::class, 'index'])->name('gradebook.index')->middleware('role:admin,teacher');
+
+    // Student Report Card & Transcript (authorized roles)
+    Route::get('/reports/report-cards', [ReportCardController::class, 'index'])->name('reports.report-cards');
+    Route::get('/reports/transcripts', [TranscriptController::class, 'index'])->name('reports.transcripts');
+    Route::get('/students/{student}/report-card', [ReportCardController::class, 'show'])->name('students.report-card');
+    Route::get('/students/{student}/transcript', [TranscriptController::class, 'show'])->name('students.transcript');
     
     // Settings/Configuration Routes
     Route::group(['prefix' => 'settings', 'as' => 'settings.'], function () {

@@ -37,6 +37,9 @@ class DashboardController extends Controller
                 return $this->getStudentDashboard($user);
             case 'parent':
                 return $this->getParentDashboard($user);
+            case 'staff':
+                // For now, staff users see the admin-style dashboard overview
+                return $this->getAdminDashboard();
             default:
                 return redirect()->route('school.dashboard')->with('error', 'Invalid user role');
         }

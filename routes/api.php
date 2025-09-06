@@ -95,6 +95,36 @@ Route::group(['prefix' => 'teachers', 'middleware' => 'auth:api'], function () {
     Route::get('/{teacher}/classes', [App\Http\Controllers\TeacherController::class, 'getClasses'])->middleware('role:admin,teacher');
     Route::get('/{teacher}/subjects', [App\Http\Controllers\TeacherController::class, 'getSubjects'])->middleware('role:admin,teacher');
     Route::get('/{teacher}/performance', [App\Http\Controllers\TeacherController::class, 'getPerformance'])->middleware('role:admin,teacher');
+    Route::post('/{teacher}/assign-subjects', [App\Http\Controllers\TeacherController::class, 'assignSubjects'])->middleware('role:admin');
+});
+
+// Staff Management Routes
+Route::group(['prefix' => 'staff', 'middleware' => 'auth:api'], function () {
+    Route::get('/', [App\Http\Controllers\StaffController::class, 'index'])->middleware('role:admin');
+    Route::post('/', [App\Http\Controllers\StaffController::class, 'store'])->middleware('role:admin');
+    Route::get('/{staff}', [App\Http\Controllers\StaffController::class, 'show'])->middleware('role:admin');
+    Route::put('/{staff}', [App\Http\Controllers\StaffController::class, 'update'])->middleware('role:admin');
+    Route::delete('/{staff}', [App\Http\Controllers\StaffController::class, 'destroy'])->middleware('role:admin');
+});
+
+// Employee Attendance Routes
+Route::group(['prefix' => 'employee-attendance', 'middleware' => 'auth:api'], function () {
+    Route::get('/', [App\Http\Controllers\EmployeeAttendanceController::class, 'index'])->middleware('role:admin');
+    Route::post('/mark', [App\Http\Controllers\EmployeeAttendanceController::class, 'mark'])->middleware('role:admin');
+});
+
+// Leave Management Routes
+Route::group(['prefix' => 'leaves', 'middleware' => 'auth:api'], function () {
+    Route::get('/', [App\Http\Controllers\LeaveController::class, 'index']);
+    Route::post('/apply', [App\Http\Controllers\LeaveController::class, 'apply']);
+    Route::post('/{leave}/approve', [App\Http\Controllers\LeaveController::class, 'approve'])->middleware('role:admin');
+    Route::post('/{leave}/reject', [App\Http\Controllers\LeaveController::class, 'reject'])->middleware('role:admin');
+});
+
+// Payroll Routes
+Route::group(['prefix' => 'payroll', 'middleware' => 'auth:api'], function () {
+    Route::get('/', [App\Http\Controllers\PayrollController::class, 'index']);
+    Route::post('/generate', [App\Http\Controllers\PayrollController::class, 'generate'])->middleware('role:admin');
 });
 
 // Timetable Management Routes (Basic structure for future implementation)

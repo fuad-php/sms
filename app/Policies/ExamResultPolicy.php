@@ -15,7 +15,7 @@ class ExamResultPolicy
      */
     public function viewAny(User $user): bool
     {
-        return in_array($user->role, ['admin', 'teacher', 'student', 'parent']);
+        return in_array($user->role, ['admin', 'teacher', 'student', 'parent', 'staff']);
     }
 
     /**
@@ -26,6 +26,11 @@ class ExamResultPolicy
         // Admins and teachers can view all results
         if (in_array($user->role, ['admin', 'teacher'])) {
             return true;
+        }
+
+        // Staff can view results summary screens only (not individual student results)
+        if ($user->role === 'staff') {
+            return false;
         }
 
         // Students can only view their own results

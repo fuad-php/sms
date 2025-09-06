@@ -111,12 +111,12 @@
         </section>
 
         <!-- About Section -->
-        <section class="py-20 bg-white">
+        <section class="py-20 bg-white" id="about">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
-                    <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">{{ __('app.about_our_school') }}</h2>
+                    <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">{{ \App\Helpers\SettingsHelper::getLocalized('home_about_title', __('app.about_our_school')) }}</h2>
                     <p class="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-                        {{ __('app.about_school_description') }}
+                        {{ \App\Helpers\SettingsHelper::getLocalized('home_about_description', __('app.about_school_description')) }}
                     </p>
                 </div>
 
@@ -130,15 +130,15 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                 </svg>
                             </div>
-                                <h3 class="text-2xl font-bold text-gray-900 mb-2">{{ __('app.head_teacher_name') }}</h3>
-                                <p class="text-blue-600 font-semibold text-lg">{{ __('app.head_teacher') }}</p>
+                                <h3 class="text-2xl font-bold text-gray-900 mb-2">{{ \App\Helpers\SettingsHelper::getLocalized('head_teacher_name', __('app.head_teacher_name')) }}</h3>
+                                <p class="text-blue-600 font-semibold text-lg">{{ \App\Helpers\SettingsHelper::getLocalized('head_teacher_title', __('app.head_teacher')) }}</p>
                         </div>
                             <div class="text-gray-700 space-y-4">
                                 <blockquote class="text-lg italic leading-relaxed">
-                                "{{ __('app.head_teacher_quote_1') }}"
+                                "{{ \App\Helpers\SettingsHelper::getLocalized('head_teacher_quote_1', __('app.head_teacher_quote_1')) }}"
                                 </blockquote>
                                 <blockquote class="text-lg italic leading-relaxed">
-                                "{{ __('app.head_teacher_quote_2') }}"
+                                "{{ \App\Helpers\SettingsHelper::getLocalized('head_teacher_quote_2', __('app.head_teacher_quote_2')) }}"
                                 </blockquote>
                             </div>
                         </div>
@@ -153,15 +153,15 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                 </svg>
                             </div>
-                                <h3 class="text-2xl font-bold text-gray-900 mb-2">{{ __('app.chairman_name') }}</h3>
-                                <p class="text-green-600 font-semibold text-lg">{{ __('app.school_chairman') }}</p>
+                                <h3 class="text-2xl font-bold text-gray-900 mb-2">{{ \App\Helpers\SettingsHelper::getLocalized('chairman_name', __('app.chairman_name')) }}</h3>
+                                <p class="text-green-600 font-semibold text-lg">{{ \App\Helpers\SettingsHelper::getLocalized('chairman_title', __('app.school_chairman')) }}</p>
                         </div>
                             <div class="text-gray-700 space-y-4">
                                 <blockquote class="text-lg italic leading-relaxed">
-                                "{{ __('app.chairman_quote_1') }}"
+                                "{{ \App\Helpers\SettingsHelper::getLocalized('chairman_quote_1', __('app.chairman_quote_1')) }}"
                                 </blockquote>
                                 <blockquote class="text-lg italic leading-relaxed">
-                                "{{ __('app.chairman_quote_2') }}"
+                                "{{ \App\Helpers\SettingsHelper::getLocalized('chairman_quote_2', __('app.chairman_quote_2')) }}"
                                 </blockquote>
                         </div>
                     </div>
@@ -348,7 +348,7 @@
                         </div>
                         
                             <div class="mt-auto pt-8 text-center">
-                                <a href="#" class="inline-flex items-center px-6 py-3 bg-green-600 text-white rounded-xl font-semibold hover:bg-green-700 transition-colors duration-300 group">
+                                <a href="{{ route('events') }}" class="inline-flex items-center px-6 py-3 bg-green-600 text-white rounded-xl font-semibold hover:bg-green-700 transition-colors duration-300 group">
                                     {{ __('app.see_more_events') }}
                                     <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -677,137 +677,201 @@
         </div>        
 
         <!-- Contact Section -->
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
-            <div class="bg-white rounded-lg shadow-sm border p-8">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{{ __('app.contact_us') }}</h2>
-                    <p class="text-xl text-gray-600">{{ __('app.get_in_touch') }}</p>
-                </div>
-
-                <!-- Success/Error Messages -->
-                @if(session('success'))
-                    <div class="mb-6 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-                        <span class="block sm:inline">{{ session('success') }}</span>
-                    </div>
-                @endif
-
-                @if(session('error'))
-                    <div class="mb-6 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                        <span class="block sm:inline">{{ session('error') }}</span>
-                    </div>
-                @endif
-
-                <div class="grid md:grid-cols-2 gap-12">
-                    <div>
-                        <h3 class="text-2xl font-bold text-gray-900 mb-6">{{ __('app.get_in_touch') }}</h3>
-                        <div class="space-y-4">
-                            <div class="flex items-start">
-                                <svg class="h-6 w-6 text-blue-600 mt-1 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                </svg>
-                                <div>
-                                    <h4 class="font-semibold text-gray-900">{{ __('app.address') }}</h4>
-                                    <p class="text-gray-600">123 Education Street, Learning City, LC 12345</p>
+        <section class="relative overflow-hidden mb-12">
+            <div class="absolute inset-0 bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-600 opacity-10 pointer-events-none"></div>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
+                    <!-- Left: Info Card -->
+                    <div class="relative">
+                        <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-gray-100 p-8 h-full">
+                            <div class="text-left mb-8">
+                                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-3">{{ __('app.contact_us') }}</h2>
+                                <p class="text-lg text-gray-600">{{ __('app.get_in_touch') }}</p>
+                            </div>
+                            <div class="space-y-6">
+                                <div class="flex items-start">
+                                    <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mr-4">
+                                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-gray-900">{{ __('app.address') }}</h4>
+                                        <p class="text-gray-600">123 Education Street, Learning City, LC 12345</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="w-10 h-10 rounded-xl bg-green-50 text-green-600 flex items-center justify-center mr-4">
+                                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-gray-900">{{ __('app.phone') }}</h4>
+                                        <p class="text-gray-600">+1 (555) 123-4567</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center mr-4">
+                                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-gray-900">{{ __('app.email') }}</h4>
+                                        <p class="text-gray-600">info@excellenceschool.edu</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center mr-4">
+                                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-gray-900">{{ __('app.office_hours') }}</h4>
+                                        <p class="text-gray-600">{{ __('app.office_hours_time') }}</p>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="flex items-start">
-                                <svg class="h-6 w-6 text-blue-600 mt-1 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                                </svg>
-                                <div>
-                                    <h4 class="font-semibold text-gray-900">{{ __('app.phone') }}</h4>
-                                    <p class="text-gray-600">+1 (555) 123-4567</p>
+                            <div class="mt-8 grid sm:grid-cols-3 gap-4">
+                                <div class="bg-gray-50 rounded-xl p-4 text-center">
+                                    <div class="text-2xl font-bold text-gray-900">24/7</div>
+                                    <div class="text-gray-500 text-sm">{{ __('app.support') }}</div>
                                 </div>
-                            </div>
-                            <div class="flex items-start">
-                                <svg class="h-6 w-6 text-blue-600 mt-1 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                                </svg>
-                                <div>
-                                    <h4 class="font-semibold text-gray-900">{{ __('app.email') }}</h4>
-                                    <p class="text-gray-600">info@excellenceschool.edu</p>
+                                <div class="bg-gray-50 rounded-xl p-4 text-center">
+                                    <div class="text-2xl font-bold text-gray-900">1h</div>
+                                    <div class="text-gray-500 text-sm">{{ __('app.avg_response_time') }}</div>
                                 </div>
-                            </div>
-                            <div class="flex items-start">
-                                <svg class="h-6 w-6 text-blue-600 mt-1 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                <div>
-                                    <h4 class="font-semibold text-gray-900">{{ __('app.office_hours') }}</h4>
-                                    <p class="text-gray-600">{{ __('app.office_hours_time') }}</p>
+                                <div class="bg-gray-50 rounded-xl p-4 text-center">
+                                    <div class="text-2xl font-bold text-gray-900">100%</div>
+                                    <div class="text-gray-500 text-sm">{{ __('app.satisfaction') }}</div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div>
-                        <h3 class="text-2xl font-bold text-gray-900 mb-6">{{ __('app.send_us_message') }}</h3>
-                        <form action="{{ route('contact.store') }}" method="POST" class="space-y-4">
-                            @csrf
-                            <div>
-                                <label for="contact_name" class="block text-sm font-medium text-gray-700 mb-1">{{ __('app.name') }}</label>
-                                <input type="text" id="contact_name" name="name" value="{{ old('name') }}" required
-                                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 @error('name') border-red-500 @enderror">
-                                @error('name')
-                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                                @enderror
-                            </div>
-                            <div>
-                                <label for="contact_email" class="block text-sm font-medium text-gray-700 mb-1">{{ __('app.email') }}</label>
-                                <input type="email" id="contact_email" name="email" value="{{ old('email') }}" required
-                                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 @error('email') border-red-500 @enderror">
-                                @error('email')
-                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                                @enderror
-                            </div>
-                            <div>
-                                <label for="contact_phone" class="block text-sm font-medium text-gray-700 mb-1">{{ __('app.phone') }}</label>
-                                <input type="tel" id="contact_phone" name="phone" value="{{ old('phone') }}"
-                                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 @error('phone') border-red-500 @enderror">
-                                @error('phone')
-                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                                @enderror
-                            </div>
-                            <div>
-                                <label for="contact_subject" class="block text-sm font-medium text-gray-700 mb-1">{{ __('app.subject') }}</label>
-                                <input type="text" id="contact_subject" name="subject" value="{{ old('subject') }}" required
-                                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 @error('subject') border-red-500 @enderror">
-                                @error('subject')
-                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                                @enderror
-                            </div>
-                            <div>
-                                <label for="contact_message" class="block text-sm font-medium text-gray-700 mb-1">{{ __('app.message') }}</label>
-                                <textarea id="contact_message" name="message" rows="4" required
-                                          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 @error('message') border-red-500 @enderror">{{ old('message') }}</textarea>
-                                @error('message')
-                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                                @enderror
-                            </div>
-                            <div>
-                                <label for="contact_department" class="block text-sm font-medium text-gray-700 mb-1">{{ __('app.department') }}</label>
-                                <select id="contact_department" name="department"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 @error('department') border-red-500 @enderror">
-                                    <option value="">{{ __('app.select_department') }}</option>
-                                    <option value="general" {{ old('department') == 'general' ? 'selected' : '' }}>{{ __('app.general_inquiry') }}</option>
-                                    <option value="admissions" {{ old('department') == 'admissions' ? 'selected' : '' }}>{{ __('app.admissions') }}</option>
-                                    <option value="academic" {{ old('department') == 'academic' ? 'selected' : '' }}>{{ __('app.academic_affairs') }}</option>
-                                    <option value="administration" {{ old('department') == 'administration' ? 'selected' : '' }}>{{ __('app.administration') }}</option>
-                                    <option value="support" {{ old('department') == 'support' ? 'selected' : '' }}>{{ __('app.technical_support') }}</option>
-                                </select>
-                                @error('department')
-                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                                @enderror
-                            </div>
-                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition duration-300">
-                                {{ __('app.send_message') }}
-                            </button>
-                        </form>
+                    <!-- Right: Modern Form Card -->
+                    <div class="relative">
+                        <div class="bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 sm:p-8">
+                            <!-- Success/Error Messages -->
+                            @if(session('success'))
+                                <div class="mb-6 rounded-xl bg-green-50 border border-green-200 text-green-800 px-4 py-3 flex items-start" role="alert">
+                                    <svg class="h-5 w-5 mt-0.5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m0 6a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                    <span class="block sm:inline">{{ session('success') }}</span>
+                                </div>
+                            @endif
+                            @if(session('error'))
+                                <div class="mb-6 rounded-xl bg-red-50 border border-red-200 text-red-800 px-4 py-3 flex items-start" role="alert">
+                                    <svg class="h-5 w-5 mt-0.5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M12 2a10 10 0 100 20 10 10 0 000-20z" /></svg>
+                                    <span class="block sm:inline">{{ session('error') }}</span>
+                                </div>
+                            @endif
+
+                            <h3 class="text-2xl font-bold text-gray-900 mb-6">{{ __('app.send_us_message') }}</h3>
+                            <form action="{{ route('contact.store') }}" method="POST" class="space-y-5">
+                                @csrf
+                                <div class="grid sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="contact_name" class="block text-sm font-medium text-gray-700 mb-1">{{ __('app.name') }}</label>
+                                        <div class="relative">
+                                            <span class="absolute inset-y-0 left-3 flex items-center text-gray-400">
+                                                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                                            </span>
+                                            <input type="text" id="contact_name" name="name" value="{{ old('name') }}" required
+                                                   class="w-full pl-10 pr-3 py-2 rounded-lg border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 @error('name') border-red-300 focus:ring-red-200 focus:border-red-400 @enderror">
+                                        </div>
+                                        @error('name')
+                                            <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                    <div>
+                                        <label for="contact_email" class="block text-sm font-medium text-gray-700 mb-1">{{ __('app.email') }}</label>
+                                        <div class="relative">
+                                            <span class="absolute inset-y-0 left-3 flex items-center text-gray-400">
+                                                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12H8m8 0a4 4 0 10-8 0 4 4 0 008 0z"/></svg>
+                                            </span>
+                                            <input type="email" id="contact_email" name="email" value="{{ old('email') }}" required
+                                                   class="w-full pl-10 pr-3 py-2 rounded-lg border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 @error('email') border-red-300 focus:ring-red-200 focus:border-red-400 @enderror">
+                                        </div>
+                                        @error('email')
+                                            <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="grid sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="contact_phone" class="block text-sm font-medium text-gray-700 mb-1">{{ __('app.phone') }} <span class="text-gray-400">({{ __('app.optional') }})</span></label>
+                                        <div class="relative">
+                                            <span class="absolute inset-y-0 left-3 flex items-center text-gray-400">
+                                                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                                            </span>
+                                            <input type="tel" id="contact_phone" name="phone" value="{{ old('phone') }}"
+                                                   class="w-full pl-10 pr-3 py-2 rounded-lg border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 @error('phone') border-red-300 focus:ring-red-200 focus:border-red-400 @enderror">
+                                        </div>
+                                        @error('phone')
+                                            <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                    <div>
+                                        <label for="contact_department" class="block text-sm font-medium text-gray-700 mb-1">{{ __('app.department') }}</label>
+                                        <div class="relative">
+                                            <span class="absolute inset-y-0 left-3 flex items-center text-gray-400">
+                                                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M6 12h12M9 17h6"/></svg>
+                                            </span>
+                                            <select id="contact_department" name="department"
+                                                    class="w-full pl-10 pr-8 py-2 rounded-lg border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 appearance-none @error('department') border-red-300 focus:ring-red-200 focus:border-red-400 @enderror">
+                                                <option value="">{{ __('app.select_department') }}</option>
+                                                <option value="general" {{ old('department') == 'general' ? 'selected' : '' }}>{{ __('app.general_inquiry') }}</option>
+                                                <option value="admissions" {{ old('department') == 'admissions' ? 'selected' : '' }}>{{ __('app.admissions') }}</option>
+                                                <option value="academic" {{ old('department') == 'academic' ? 'selected' : '' }}>{{ __('app.academic_affairs') }}</option>
+                                                <option value="administration" {{ old('department') == 'administration' ? 'selected' : '' }}>{{ __('app.administration') }}</option>
+                                                <option value="support" {{ old('department') == 'support' ? 'selected' : '' }}>{{ __('app.technical_support') }}</option>
+                                            </select>
+                                            <span class="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-400">
+                                                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                                            </span>
+                                        </div>
+                                        @error('department')
+                                            <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label for="contact_subject" class="block text-sm font-medium text-gray-700 mb-1">{{ __('app.subject') }}</label>
+                                    <div class="relative">
+                                        <span class="absolute inset-y-0 left-3 flex items-center text-gray-400">
+                                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6M4 6h16"/></svg>
+                                        </span>
+                                        <input type="text" id="contact_subject" name="subject" value="{{ old('subject') }}" required
+                                               class="w-full pl-10 pr-3 py-2 rounded-lg border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 @error('subject') border-red-300 focus:ring-red-200 focus:border-red-400 @enderror">
+                                    </div>
+                                    @error('subject')
+                                        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                                    @enderror
+                                </div>
+
+                                <div>
+                                    <label for="contact_message" class="block text-sm font-medium text-gray-700 mb-1">{{ __('app.message') }}</label>
+                                    <div class="relative">
+                                        <span class="absolute top-3 left-3 text-gray-400">
+                                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8s-9-3.582-9-8 4.03-8 9-8 9 3.582 9 8z"/></svg>
+                                        </span>
+                                        <textarea id="contact_message" name="message" rows="5" required
+                                                  class="w-full pl-10 pr-3 py-2 rounded-lg border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 @error('message') border-red-300 focus:ring-red-200 focus:border-red-400 @enderror">{{ old('message') }}</textarea>
+                                    </div>
+                                    @error('message')
+                                        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                                    @enderror
+                                </div>
+
+                                <div class="flex items-center justify-between flex-wrap gap-3">
+                                    <p class="text-sm text-gray-500">{{ __('app.we_respect_privacy') }}</p>
+                                    <button type="submit" class="inline-flex items-center px-6 py-3 rounded-xl text-white font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-lg shadow-blue-600/20 transition-all">
+                                        {{ __('app.send_message') }}
+                                        <svg class="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
         <!-- Useful Links Section -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">

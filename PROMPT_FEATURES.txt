@@ -1,0 +1,73 @@
+School Management System — Implemented Features (Prompt Reference)
+
+Purpose: Use this as a quick prompt/context to understand what the app already does.
+
+Public & General
+- Public landing page with dynamic stats and content
+- Public announcements listing, detail view, and attachment download
+- Public contact form (validation, department, success/error handling)
+- Gallery, programs, admissions, facilities, news, help, about pages
+- Health check endpoints for web and API
+- Multilingual localization (English, Bengali)
+- Dynamic school logo via settings (with fallback and caching)
+
+Authentication & Authorization
+- Session-based auth (web) with Laravel Breeze
+- JWT-based auth (API): login, register, logout, refresh, me, profile update, password change
+- Role-based access control via middleware (admin, teacher, student, parent, staff)
+- Verified user dashboard redirect to school dashboard
+
+Dashboards & Stats
+- Role-based school dashboard
+- Announcement and reports dashboard data endpoints
+- Admin contact statistics
+- Public API for active carousel slides and upcoming events
+
+Content & Communication
+- Announcements: CRUD, publish toggle, priorities, public/private, attachment download, dashboard data
+- Events (admin): CRUD, publish toggle, upcoming events API
+- Dynamic Home Carousel: CRUD, ordering, status toggle, active slides API
+
+Engagement & Inquiry
+- Contact inquiries: public form, admin inbox, toggle read, delete, export CSV, stats
+- Email notifications: admin notification and user confirmation emails
+
+Academic Management
+- Students: CRUD, profile (student), list by class, bulk import (admin)
+- Classes: CRUD, status toggle, assign subjects, statistics, list students
+- Subjects: CRUD, status toggle, assign to classes, statistics, related classes
+- Teachers: CRUD, status toggle, assign subjects, statistics, profile view
+- Parents: CRUD, status toggle, assign students, statistics, children listing, child performance (API)
+
+Attendance
+- Mark attendance (admin/teacher), class/student reports, statistics
+
+Timetable
+- Timetable: CRUD, weekly overview, conflict prevention, filtering, active/inactive
+
+Exams & Results
+- Exams: CRUD, publish toggle, statistics, upcoming exams, filter by class/subject
+- Results: CRUD, statistics, export CSV, bulk import UI and processing
+
+Reports & Analytics
+- Reports: academic performance, attendance, student analytics, teacher and class performance, export, dashboard
+
+Settings & System
+- Settings (admin): view groups, update, CRUD for settings, clear cache, reset defaults
+- School logo setting and component used across layouts
+
+APIs (selected)
+- /api/auth/* (JWT auth flows)
+- /api/dashboard (role-based data)
+- /api/carousel/active (active slides)
+- /api/events/upcoming (upcoming events)
+- RESTful endpoints for students, classes, subjects, teachers, attendance, exams, announcements, parents, reports
+
+Utilities & Tooling
+- Seeder data for many modules (students, teachers, classes, subjects, exams, results, announcements, carousel, contact, timetable, settings)
+- Health endpoints for uptime checks
+
+Notes
+- Web-first architecture with Blade views; API retained for select features
+- Strong validation, policies, and role middleware on sensitive routes
+- Localization keys used across UI; Tailwind CSS styling

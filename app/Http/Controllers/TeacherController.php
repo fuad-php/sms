@@ -358,6 +358,67 @@ class TeacherController extends Controller
     }
 
     /**
+     * Get classes associated with the teacher (as class teacher or subject teacher)
+     */
+    public function getClasses(Teacher $teacher)
+    {
+        $classTeacherOf = $teacher->classesAsTeacher()->get();
+
+        $subjectClasses = DB::table('class_subject')
+            ->join('classes', 'class_subject.class_id', '=', 'classes.id')
+            ->select('classes.*')
+            ->where('class_subject.teacher_id', $teacher->user_id)
+            ->distinct()
+            ->get();
+
+        return response()->json([
+            'class_teacher_of' => $classTeacherOf,
+            'subject_classes' => $subjectClasses,
+        ]);
+    }
+
+    /**
+     * Get subjects assigned to the teacher with class context
+     */
+    public function getSubjects(Teacher $teacher)
+    {
+        $subjects = $teacher->subjects()->with('classes')->get()->map(function ($subject) {
+            return [
+                'id' => $subject->id,
+                'name' => $subject->name,
+                'code' => $subject->code,
+                'pivot' => $subject->pivot,
+            ];
+        });
+
+        return response()->json($subjects);
+    }
+
+    /**
+     * Get simple performance metrics for the teacher
+     */
+    public function getPerformance(Teacher $teacher)
+    {
+        $classesCount = DB::table('class_subject')
+            ->where('teacher_id', $teacher->user_id)
+            ->distinct('class_id')
+            ->count('class_id');
+
+        $subjectsCount = DB::table('class_subject')
+            ->where('teacher_id', $teacher->user_id)
+            ->distinct('subject_id')
+            ->count('subject_id');
+
+        $attendanceMarked = \App\Models\Attendance::where('marked_by', $teacher->user_id)->count();
+
+        return response()->json([
+            'classes_taught' => $classesCount,
+            'subjects_taught' => $subjectsCount,
+            'attendance_marked' => $attendanceMarked,
+        ]);
+    }
+
+    /**
      * Get teacher statistics
      */
     public function statistics()

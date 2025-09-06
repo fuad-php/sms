@@ -90,6 +90,8 @@ class WebController extends Controller
                 return redirect()->route('school.dashboard');
             case 'parent':
                 return redirect()->route('school.dashboard');
+            case 'staff':
+                return redirect()->route('school.dashboard');
             default:
                 return redirect()->route('dashboard');
         }
@@ -196,6 +198,18 @@ class WebController extends Controller
             ->paginate(10);
             
         return view('news', compact('announcements'));
+    }
+
+    /**
+     * Public events landing page
+     */
+    public function events()
+    {
+        $events = Event::published()
+            ->orderBy('start_at', 'desc')
+            ->paginate(9);
+
+        return view('events', compact('events'));
     }
 
     /**

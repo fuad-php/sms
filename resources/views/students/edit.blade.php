@@ -128,19 +128,19 @@
                     </div>
 
                     <div>
-                        <label for="parent_name" class="block text-sm font-medium text-gray-700">Parent/Guardian Name</label>
-                        <input type="text" name="parent_name" id="parent_name" value="{{ old('parent_name', $student->parent_name) }}"
+                        <label for="guardian_name" class="block text-sm font-medium text-gray-700">Parent/Guardian Name</label>
+                        <input type="text" name="guardian_name" id="guardian_name" value="{{ old('guardian_name', $student->guardian_name) }}"
                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                        @error('parent_name')
+                        @error('guardian_name')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
 
                     <div>
-                        <label for="parent_phone" class="block text-sm font-medium text-gray-700">Parent/Guardian Phone</label>
-                        <input type="tel" name="parent_phone" id="parent_phone" value="{{ old('parent_phone', $student->parent_phone) }}"
+                        <label for="guardian_phone" class="block text-sm font-medium text-gray-700">Parent/Guardian Phone</label>
+                        <input type="tel" name="guardian_phone" id="guardian_phone" value="{{ old('guardian_phone', $student->guardian_phone) }}"
                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                        @error('parent_phone')
+                        @error('guardian_phone')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
@@ -155,6 +155,33 @@
                         <input type="file" name="avatar" id="avatar" accept="image/*"
                                class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                         @error('avatar')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="mother_name" class="block text-sm font-medium text-gray-700">Mother's Name</label>
+                        <input type="text" name="mother_name" id="mother_name" value="{{ old('mother_name', $student->mother_name) }}"
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        @error('mother_name')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="father_name" class="block text-sm font-medium text-gray-700">Father's Name</label>
+                        <input type="text" name="father_name" id="father_name" value="{{ old('father_name', $student->father_name) }}"
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        @error('father_name')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="birth_registration" class="block text-sm font-medium text-gray-700">Birth Registration Number</label>
+                        <input type="text" name="birth_registration" id="birth_registration" value="{{ old('birth_registration', $student->birth_registration) }}"
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        @error('birth_registration')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>

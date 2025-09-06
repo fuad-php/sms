@@ -15,6 +15,30 @@ class SettingsHelper
     }
 
     /**
+     * Get a localized setting value by key with fallbacks
+     * Tries key_{locale}, then key, then default
+     */
+    public static function getLocalized(string $key, $default = null, ?string $locale = null)
+    {
+        $useLocale = $locale ?: app()->getLocale();
+
+        // Try exact key for locale: e.g., home_about_title_en
+        $localizedKey = $key . '_' . $useLocale;
+        $value = self::get($localizedKey);
+        if (!is_null($value) && $value !== '') {
+            return $value;
+        }
+
+        // Fallback to base key
+        $baseValue = self::get($key);
+        if (!is_null($baseValue) && $baseValue !== '') {
+            return $baseValue;
+        }
+
+        return $default;
+    }
+
+    /**
      * Set a setting value by key
      */
     public static function set($key, $value)

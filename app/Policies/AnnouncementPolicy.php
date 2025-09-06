@@ -12,7 +12,7 @@ class AnnouncementPolicy
      */
     public function viewAny(User $user): bool
     {
-        return in_array($user->role, ['admin', 'teacher', 'student', 'parent']);
+        return in_array($user->role, ['admin', 'teacher', 'student', 'parent', 'staff']);
     }
 
     /**
@@ -46,6 +46,14 @@ class AnnouncementPolicy
             $hasClassAccess = is_null($announcement->class_id) || $childrenClasses->contains($announcement->class_id);
             $hasAudienceAccess = in_array($announcement->target_audience, ['all', 'parents']);
             return $hasClassAccess && $hasAudienceAccess;
+        }
+
+        if ($user->role === 'staff') {
+            // Staff can view public announcements and those targeted to staff
+            $hasAudienceAccess = in_array($announcement->target_audience, ['all', 'staff']);
+            // If announcement is class-specific, allow staff to view only if no class restriction
+            $hasClassAccess = is_null($announcement->class_id);
+            return $hasAudienceAccess && $hasClassAccess;
         }
 
         return false;

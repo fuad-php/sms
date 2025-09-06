@@ -72,7 +72,7 @@ class StudentController extends Controller
             'date_of_birth' => 'required|date',
             'gender' => 'required|in:male,female,other',
             
-            'student_id' => 'required|string|unique:students,student_id',
+            // student_id will be auto-generated
             'class_id' => 'required|exists:classes,id',
             'admission_date' => 'required|date',
             'roll_number' => 'nullable|string',
@@ -83,14 +83,13 @@ class StudentController extends Controller
             'guardian_email' => 'nullable|email',
             'guardian_address' => 'nullable|string',
             'emergency_contact' => 'nullable|string',
+            'mother_name' => 'required|string',
+            'father_name' => 'required|string',
+            'birth_registration' => 'nullable|string',
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Validation failed',
-                'errors' => $validator->errors()
-            ], 422);
+            return back()->withErrors($validator)->withInput();
         }
 
         try {
@@ -111,7 +110,7 @@ class StudentController extends Controller
             // Create student record
             $student = Student::create([
                 'user_id' => $user->id,
-                'student_id' => $request->student_id,
+                'student_id' => Student::generateStudentId(),
                 'class_id' => $request->class_id,
                 'admission_date' => $request->admission_date,
                 'roll_number' => $request->roll_number,
@@ -122,6 +121,9 @@ class StudentController extends Controller
                 'guardian_email' => $request->guardian_email,
                 'guardian_address' => $request->guardian_address,
                 'emergency_contact' => $request->emergency_contact,
+                'mother_name' => $request->mother_name,
+                'father_name' => $request->father_name,
+                'birth_registration' => $request->birth_registration,
             ]);
 
             DB::commit();
@@ -143,7 +145,7 @@ class StudentController extends Controller
     {
         $user = auth()->user();
         
-        $student = Student::with(['user', 'class', 'attendances.subject', 'examResults.exam.subject'])
+        $student = Student::with(['user', 'class', 'attendances.subject', 'examResults.exam.subject', 'enrollments.class'])
             ->find($id);
 
         if (!$student) {
@@ -223,11 +225,7 @@ class StudentController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Validation failed',
-                'errors' => $validator->errors()
-            ], 422);
+            return back()->withErrors($validator)->withInput();
         }
 
         try {
@@ -294,7 +292,7 @@ class StudentController extends Controller
             abort(403, 'Access denied');
         }
 
-        $student = $user->student->load(['class', 'attendances.subject', 'examResults.exam.subject']);
+        $student = $user->student->load(['class', 'attendances.subject', 'examResults.exam.subject', 'enrollments.class']);
         $student->attendance_percentage = $student->getAttendancePercentage();
         $student->grade_average = $student->getCurrentGradeAverage();
 

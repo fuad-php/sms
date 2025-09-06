@@ -13,18 +13,20 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create Admin User
-        User::create([
-            'name' => 'System Administrator',
-            'email' => 'admin@school.com',
-            'password' => Hash::make('admin123'),
-            'role' => 'admin',
-            'phone' => '+1-234-567-8900',
-            'address' => '123 School Admin Street',
-            'date_of_birth' => '1980-01-15',
-            'gender' => 'other',
-            'is_active' => true,
-        ]);
+        // Create or update Admin User
+        User::updateOrCreate(
+            ['email' => 'admin@school.com'],
+            [
+                'name' => 'System Administrator',
+                'password' => Hash::make('admin123'),
+                'role' => 'admin',
+                'phone' => '+1-234-567-8900',
+                'address' => '123 School Admin Street',
+                'date_of_birth' => '1980-01-15',
+                'gender' => 'other',
+                'is_active' => true,
+            ]
+        );
 
         // Create Sample Teachers
         $teachers = [
@@ -61,7 +63,10 @@ class UserSeeder extends Seeder
         ];
 
         foreach ($teachers as $teacher) {
-            User::create($teacher);
+            $email = $teacher['email'];
+            $data = $teacher;
+            unset($data['email']);
+            User::updateOrCreate(['email' => $email], $data);
         }
 
         // Create Sample Students
@@ -109,7 +114,10 @@ class UserSeeder extends Seeder
         ];
 
         foreach ($students as $student) {
-            User::create($student);
+            $email = $student['email'];
+            $data = $student;
+            unset($data['email']);
+            User::updateOrCreate(['email' => $email], $data);
         }
 
         // Create Sample Parents
@@ -137,7 +145,31 @@ class UserSeeder extends Seeder
         ];
 
         foreach ($parents as $parent) {
-            User::create($parent);
+            $email = $parent['email'];
+            $data = $parent;
+            unset($data['email']);
+            User::updateOrCreate(['email' => $email], $data);
+        }
+
+        // Create Sample Staff
+        $staffUsers = [
+            [
+                'name' => 'Emma Thompson',
+                'email' => 'emma.thompson@school.com',
+                'password' => Hash::make('staff123'),
+                'role' => 'staff',
+                'phone' => '+1-234-567-8930',
+                'address' => '555 Administration Way',
+                'date_of_birth' => '1990-04-18',
+                'gender' => 'female',
+            ],
+        ];
+
+        foreach ($staffUsers as $staff) {
+            $email = $staff['email'];
+            $data = $staff;
+            unset($data['email']);
+            User::updateOrCreate(['email' => $email], $data);
         }
     }
 }

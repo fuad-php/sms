@@ -22,6 +22,9 @@ class Student extends Model
         'guardian_email',
         'guardian_address',
         'emergency_contact',
+        'mother_name',
+        'father_name',
+        'birth_registration',
         'is_active',
     ];
 
@@ -58,6 +61,11 @@ class Student extends Model
     public function examResults()
     {
         return $this->hasMany(ExamResult::class);
+    }
+
+    public function enrollments()
+    {
+        return $this->hasMany(Enrollment::class);
     }
 
     /**
@@ -111,5 +119,19 @@ class Student extends Model
         });
 
         return $totalPossible > 0 ? round(($totalMarks / $totalPossible) * 100, 2) : 0;
+    }
+
+    /**
+     * Generate a unique student ID
+     */
+    public static function generateStudentId(): string
+    {
+        $prefix = 'STU-' . date('Y') . '-';
+        do {
+            $random = str_pad((string) random_int(0, 99999), 5, '0', STR_PAD_LEFT);
+            $candidate = $prefix . $random;
+        } while (self::where('student_id', $candidate)->exists());
+
+        return $candidate;
     }
 }

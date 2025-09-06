@@ -21,6 +21,7 @@ A comprehensive web-based school management system built with Laravel and modern
 - **Teacher**: Class management, attendance marking, grade input, announcements
 - **Student**: View personal information, timetables, grades, attendance
 - **Parent**: View children's academic progress, attendance, and school announcements
+- **Staff**: Office staff access to non-instructional modules, announcements, reports overview
 
 ## 🛠️ Tech Stack
 

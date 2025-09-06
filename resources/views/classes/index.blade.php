@@ -12,14 +12,14 @@
                     <h1 class="text-3xl font-bold text-gray-900">{{ __('app.class_management') }}</h1>
                     <p class="text-gray-600 mt-1">{{ __('app.manage_school_classes_sections') }}</p>
                 </div>
-                @can('create', App\Models\SchoolClass::class)
+                @if(auth()->check() && auth()->user()->role === 'admin')
                 <a href="{{ route('classes.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors">
                     <svg class="h-4 w-4 inline mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                     </svg>
                     {{ __('app.add_new_class') }}
                 </a>
-                @endcan
+                @endif
             </div>
         </div>
 
@@ -201,9 +201,9 @@
                         <tr>
                             <td colspan="7" class="px-6 py-4 text-center text-gray-500">
                                 {{ __('app.no_classes_found') }} 
-                                @can('create', App\Models\SchoolClass::class)
+                                @if(auth()->check() && auth()->user()->role === 'admin')
                                 <a href="{{ route('classes.create') }}" class="text-blue-600 hover:text-blue-900">{{ __('app.create_your_first_class') }}</a>
-                                @endcan
+                                @endif
                             </td>
                         </tr>
                         @endforelse
@@ -220,4 +220,12 @@
         </div>
     </div>
 </div>
+@if(auth()->check() && auth()->user()->role === 'admin')
+<a href="{{ route('classes.create') }}" aria-label="{{ __('app.add_new_class') }}" class="fixed bottom-6 right-6 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition transform hover:scale-105">
+    <span class="sr-only">{{ __('app.add_new_class') }}</span>
+    <svg class="h-12 w-12 p-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v12m6-6H6" />
+    </svg>
+</a>
+@endif
 @endsection

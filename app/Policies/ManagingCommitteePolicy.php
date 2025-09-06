@@ -13,7 +13,7 @@ class ManagingCommitteePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasRole(['admin', 'teacher', 'parent', 'student']);
+        return $user->hasRole(['admin', 'teacher', 'parent', 'student', 'staff']);
     }
 
     /**
@@ -21,7 +21,7 @@ class ManagingCommitteePolicy
      */
     public function view(User $user, ManagingCommittee $managingCommittee): bool
     {
-        return $user->hasRole(['admin', 'teacher', 'parent', 'student']);
+        return $user->hasRole(['admin', 'teacher', 'parent', 'student', 'staff']);
     }
 
     /**

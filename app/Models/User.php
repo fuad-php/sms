@@ -98,6 +98,26 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasOne(ParentModel::class);
     }
 
+    public function staff()
+    {
+        return $this->hasOne(Staff::class);
+    }
+
+    public function employeeAttendances()
+    {
+        return $this->hasMany(EmployeeAttendance::class);
+    }
+
+    public function leaves()
+    {
+        return $this->hasMany(Leave::class);
+    }
+
+    public function payrolls()
+    {
+        return $this->hasMany(Payroll::class);
+    }
+
     public function announcements()
     {
         return $this->hasMany(Announcement::class, 'created_by');
@@ -129,6 +149,11 @@ class User extends Authenticatable implements JWTSubject
     public function isParent()
     {
         return $this->role === 'parent';
+    }
+
+    public function isStaff()
+    {
+        return $this->role === 'staff';
     }
 
     /**

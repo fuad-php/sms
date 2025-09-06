@@ -1,0 +1,70 @@
+@extends('layouts.app')
+
+@section('content')
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        @if(session('success'))
+            <div class="mb-4 rounded-lg border border-green-200 bg-green-50 p-4 text-green-800">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        <div class="bg-white shadow rounded-xl overflow-hidden">
+            <div class="px-6 py-5 border-b border-gray-100 flex items-center justify-between">
+                <h1 class="text-xl font-semibold text-gray-900">{{ __('app.leave_details') }}</h1>
+                <a href="{{ url()->previous() }}" class="text-sm px-3 py-1.5 rounded-lg border hover:bg-gray-50">{{ __('app.back') }}</a>
+            </div>
+
+            <div class="px-6 py-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <div class="text-xs uppercase text-gray-500">{{ __('app.user') }}</div>
+                    <div class="mt-1 text-gray-900">{{ $leave->user->name }}</div>
+                </div>
+                <div>
+                    <div class="text-xs uppercase text-gray-500">{{ __('app.leave_type') }}</div>
+                    <div class="mt-1 text-gray-900">{{ ucfirst($leave->type ?? $leave->leave_type) }}</div>
+                </div>
+                <div>
+                    <div class="text-xs uppercase text-gray-500">{{ __('app.start_date') }}</div>
+                    <div class="mt-1 text-gray-900">{{ $leave->start_date?->format('Y-m-d') }}</div>
+                </div>
+                <div>
+                    <div class="text-xs uppercase text-gray-500">{{ __('app.end_date') }}</div>
+                    <div class="mt-1 text-gray-900">{{ $leave->end_date?->format('Y-m-d') }}</div>
+                </div>
+                <div>
+                    <div class="text-xs uppercase text-gray-500">{{ __('app.status') }}</div>
+                    <div class="mt-1">
+                        <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium
+                            @if($leave->status === 'approved') bg-green-100 text-green-800
+                            @elseif($leave->status === 'rejected') bg-red-100 text-red-800
+                            @else bg-yellow-100 text-yellow-800 @endif">
+                            {{ ucfirst($leave->status) }}
+                        </span>
+                    </div>
+                </div>
+                <div>
+                    <div class="text-xs uppercase text-gray-500">{{ __('app.created_at') }}</div>
+                    <div class="mt-1 text-gray-900">{{ $leave->created_at->format('Y-m-d H:i') }}</div>
+                </div>
+
+                @if($leave->approved_by)
+                    <div>
+                        <div class="text-xs uppercase text-gray-500">{{ __('app.approved_by') }}</div>
+                        <div class="mt-1 text-gray-900">{{ $leave->approver?->name }}</div>
+                    </div>
+                    <div>
+                        <div class="text-xs uppercase text-gray-500">{{ __('app.approval_date') }}</div>
+                        <div class="mt-1 text-gray-900">{{ optional($leave->approval_date)->format('Y-m-d H:i') }}</div>
+                    </div>
+                @endif
+            </div>
+
+            <div class="px-6 pb-6">
+                <div class="text-xs uppercase text-gray-500">{{ __('app.reason') }}</div>
+                <div class="mt-2 text-gray-900 whitespace-pre-line bg-gray-50 rounded-lg p-4">{{ $leave->reason ?: __('app.no_remarks') }}</div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+

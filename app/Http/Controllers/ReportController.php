@@ -40,7 +40,7 @@ class ReportController extends Controller
     public function academicPerformance(Request $request)
     {
         $request->validate([
-            'class_id' => 'nullable|exists:school_classes,id',
+            'class_id' => 'nullable|exists:classes,id',
             'subject_id' => 'nullable|exists:subjects,id',
             'exam_id' => 'nullable|exists:exams,id',
             'date_from' => 'nullable|date',
@@ -103,7 +103,7 @@ class ReportController extends Controller
     public function attendance(Request $request)
     {
         $request->validate([
-            'class_id' => 'nullable|exists:school_classes,id',
+            'class_id' => 'nullable|exists:classes,id',
             'student_id' => 'nullable|exists:students,id',
             'date_from' => 'nullable|date',
             'date_to' => 'nullable|date|after_or_equal:date_from',
@@ -156,7 +156,7 @@ class ReportController extends Controller
     public function studentAnalytics(Request $request)
     {
         $request->validate([
-            'class_id' => 'nullable|exists:school_classes,id',
+            'class_id' => 'nullable|exists:classes,id',
             'date_from' => 'nullable|date',
             'date_to' => 'nullable|date|after_or_equal:date_from',
         ]);
@@ -265,7 +265,7 @@ class ReportController extends Controller
     public function classPerformance(Request $request)
     {
         $request->validate([
-            'class_id' => 'nullable|exists:school_classes,id',
+            'class_id' => 'nullable|exists:classes,id',
             'date_from' => 'nullable|date',
             'date_to' => 'nullable|date|after_or_equal:date_from',
         ]);
