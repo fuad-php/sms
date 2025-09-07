@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Add New Teacher')
+@section('title', __('app.add_new_teacher'))
 
 @section('content')
 <div class="container mx-auto px-4 py-8">
@@ -9,14 +9,14 @@
         <div class="mb-8">
             <div class="flex items-center justify-between">
                 <div>
-                    <h1 class="text-3xl font-bold text-gray-900 mb-2">Add New Teacher</h1>
-                    <p class="text-gray-600">Create a new teacher account with professional information</p>
+                    <h1 class="text-3xl font-bold text-gray-900 mb-2">{{ __('app.add_new_teacher') }}</h1>
+                    <p class="text-gray-600">{{ __('app.create_teacher_account_description') }}</p>
                 </div>
                 <a href="{{ route('teachers.index') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                     <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                     </svg>
-                    Back to Teachers
+                    {{ __('app.back_to_teachers') }}
                 </a>
             </div>
         </div>
@@ -29,11 +29,11 @@
                 <div class="px-4 py-5 sm:p-6">
                     <!-- Personal Information -->
                     <div class="mb-8">
-                        <h3 class="text-lg font-medium text-gray-900 mb-4">Personal Information</h3>
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">{{ __('app.personal_information') }}</h3>
                         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
                             <!-- Name -->
                             <div>
-                                <label for="name" class="block text-sm font-medium text-gray-700">Full Name *</label>
+                                <label for="name" class="block text-sm font-medium text-gray-700">{{ __('app.full_name') }} *</label>
                                 <input type="text" name="name" id="name" value="{{ old('name') }}" required
                                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm @error('name') border-red-300 @enderror">
                                 @error('name')
@@ -43,7 +43,7 @@
 
                             <!-- Email -->
                             <div>
-                                <label for="email" class="block text-sm font-medium text-gray-700">Email Address *</label>
+                                <label for="email" class="block text-sm font-medium text-gray-700">{{ __('app.email') }} *</label>
                                 <input type="email" name="email" id="email" value="{{ old('email') }}" required
                                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm @error('email') border-red-300 @enderror">
                                 @error('email')
@@ -53,7 +53,7 @@
 
                             <!-- Phone -->
                             <div>
-                                <label for="phone" class="block text-sm font-medium text-gray-700">Phone Number</label>
+                                <label for="phone" class="block text-sm font-medium text-gray-700">{{ __('app.phone') }}</label>
                                 <input type="text" name="phone" id="phone" value="{{ old('phone') }}"
                                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm @error('phone') border-red-300 @enderror">
                                 @error('phone')
@@ -63,7 +63,7 @@
 
                             <!-- Contact Number -->
                             <div>
-                                <label for="contact_number" class="block text-sm font-medium text-gray-700">Contact Number</label>
+                                <label for="contact_number" class="block text-sm font-medium text-gray-700">{{ __('app.contact_number') }}</label>
                                 <input type="text" name="contact_number" id="contact_number" value="{{ old('contact_number') }}"
                                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm @error('contact_number') border-red-300 @enderror">
                                 @error('contact_number')
@@ -73,7 +73,7 @@
 
                             <!-- Date of Birth -->
                             <div>
-                                <label for="date_of_birth" class="block text-sm font-medium text-gray-700">Date of Birth</label>
+                                <label for="date_of_birth" class="block text-sm font-medium text-gray-700">{{ __('app.birth_date') }}</label>
                                 <input type="date" name="date_of_birth" id="date_of_birth" value="{{ old('date_of_birth') }}"
                                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm @error('date_of_birth') border-red-300 @enderror">
                                 @error('date_of_birth')
@@ -83,12 +83,12 @@
 
                             <!-- Gender -->
                             <div>
-                                <label for="gender" class="block text-sm font-medium text-gray-700">Gender</label>
+                                <label for="gender" class="block text-sm font-medium text-gray-700">{{ __('app.gender') }}</label>
                                 <select name="gender" id="gender" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm @error('gender') border-red-300 @enderror">
-                                    <option value="">Select Gender</option>
-                                    <option value="male" {{ old('gender') === 'male' ? 'selected' : '' }}>Male</option>
-                                    <option value="female" {{ old('gender') === 'female' ? 'selected' : '' }}>Female</option>
-                                    <option value="other" {{ old('gender') === 'other' ? 'selected' : '' }}>Other</option>
+                                    <option value="">{{ __('app.select_gender') }}</option>
+                                    <option value="male" {{ old('gender') === 'male' ? 'selected' : '' }}>{{ __('app.male') }}</option>
+                                    <option value="female" {{ old('gender') === 'female' ? 'selected' : '' }}>{{ __('app.female') }}</option>
+                                    <option value="other" {{ old('gender') === 'other' ? 'selected' : '' }}>{{ __('app.other') }}</option>
                                 </select>
                                 @error('gender')
                                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
@@ -97,9 +97,9 @@
 
                             <!-- Blood Group -->
                             <div>
-                                <label for="blood_group" class="block text-sm font-medium text-gray-700">Blood Group</label>
+                                <label for="blood_group" class="block text-sm font-medium text-gray-700">{{ __('app.blood_group') }}</label>
                                 <select name="blood_group" id="blood_group" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm @error('blood_group') border-red-300 @enderror">
-                                    <option value="">Select Blood Group</option>
+                                    <option value="">{{ __('app.blood_group') }}</option>
                                     <option value="A+" {{ old('blood_group') === 'A+' ? 'selected' : '' }}>A+</option>
                                     <option value="A-" {{ old('blood_group') === 'A-' ? 'selected' : '' }}>A-</option>
                                     <option value="B+" {{ old('blood_group') === 'B+' ? 'selected' : '' }}>B+</option>
@@ -116,7 +116,7 @@
 
                             <!-- Address -->
                             <div class="sm:col-span-2">
-                                <label for="address" class="block text-sm font-medium text-gray-700">Address</label>
+                                <label for="address" class="block text-sm font-medium text-gray-700">{{ __('app.address') }}</label>
                                 <textarea name="address" id="address" rows="3" 
                                           class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm @error('address') border-red-300 @enderror">{{ old('address') }}</textarea>
                                 @error('address')
@@ -126,7 +126,7 @@
 
                             <!-- Profile Image -->
                             <div class="sm:col-span-2">
-                                <label for="profile_image" class="block text-sm font-medium text-gray-700">Profile Image</label>
+                                <label for="profile_image" class="block text-sm font-medium text-gray-700">{{ __('app.profile_picture') }}</label>
                                 <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md hover:border-gray-400 transition-colors">
                                     <div class="space-y-1 text-center">
                                         <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
@@ -134,12 +134,13 @@
                                         </svg>
                                         <div class="flex text-sm text-gray-600">
                                             <label for="profile_image" class="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
-                                                <span>Upload a file</span>
+                                                <span>{{ __('app.choose_file') }}</span>
                                                 <input id="profile_image" name="profile_image" type="file" class="sr-only" accept="image/*">
                                             </label>
-                                            <p class="pl-1">or drag and drop</p>
+                                            <p class="pl-1">{{ __('app.drag_drop_files') }}</p>
                                         </div>
-                                        <p class="text-xs text-gray-500">PNG, JPG, GIF up to 2MB</p>
+                                        <p class="text-xs text-gray-500">{{ __('app.allowed_file_types', ['types' => 'PNG, JPG, GIF']) }}</p>
+                                        <p class="text-xs text-gray-500">{{ __('app.file_size_limit', ['size' => 2]) }}</p>
                                     </div>
                                 </div>
                                 @error('profile_image')
@@ -151,11 +152,11 @@
 
                     <!-- Professional Information -->
                     <div class="mb-8">
-                        <h3 class="text-lg font-medium text-gray-900 mb-4">Professional Information</h3>
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">{{ __('app.professional_information') }}</h3>
                         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
                             <!-- Employee ID -->
                             <div>
-                                <label for="employee_id" class="block text-sm font-medium text-gray-700">Employee ID *</label>
+                                <label for="employee_id" class="block text-sm font-medium text-gray-700">{{ __('app.employee_id') }} *</label>
                                 <input type="text" name="employee_id" id="employee_id" value="{{ old('employee_id') }}" required
                                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm @error('employee_id') border-red-300 @enderror">
                                 @error('employee_id')
@@ -166,8 +167,19 @@
                             <!-- Designation -->
                             <div>
                                 <label for="designation" class="block text-sm font-medium text-gray-700">{{ __('app.designation') }}</label>
-                                <input type="text" name="designation" id="designation" value="{{ old('designation') }}"
-                                       class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm @error('designation') border-red-300 @enderror">
+                                @php
+                                    $locale = app()->getLocale();
+                                    $key = $locale === 'bn' ? 'teacher_designations_bn' : 'teacher_designations_en';
+                                    $designations = \App\Helpers\SettingsHelper::get($key, '[]');
+                                    $designations = is_string($designations) ? json_decode($designations, true) : (array) $designations;
+                                @endphp
+                                <select name="designation" id="designation"
+                                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm @error('designation') border-red-300 @enderror">
+                                    <option value="">{{ __('app.select_option') }}</option>
+                                    @foreach($designations as $item)
+                                        <option value="{{ $item }}" {{ old('designation') === $item ? 'selected' : '' }}>{{ $item }}</option>
+                                    @endforeach
+                                </select>
                                 @error('designation')
                                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
@@ -175,7 +187,7 @@
 
                             <!-- Qualification -->
                             <div>
-                                <label for="qualification" class="block text-sm font-medium text-gray-700">Qualification *</label>
+                                <label for="qualification" class="block text-sm font-medium text-gray-700">{{ __('app.qualification') }} *</label>
                                 <input type="text" name="qualification" id="qualification" value="{{ old('qualification') }}" required
                                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm @error('qualification') border-red-300 @enderror">
                                 @error('qualification')
@@ -185,7 +197,7 @@
 
                             <!-- Specialization -->
                             <div>
-                                <label for="specialization" class="block text-sm font-medium text-gray-700">Specialization *</label>
+                                <label for="specialization" class="block text-sm font-medium text-gray-700">{{ __('app.specialization') }} *</label>
                                 <input type="text" name="specialization" id="specialization" value="{{ old('specialization') }}" required
                                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm @error('specialization') border-red-300 @enderror">
                                 @error('specialization')
@@ -195,7 +207,7 @@
 
                             <!-- Experience -->
                             <div>
-                                <label for="experience" class="block text-sm font-medium text-gray-700">Years of Experience *</label>
+                                <label for="experience" class="block text-sm font-medium text-gray-700">{{ __('app.experience') }} *</label>
                                 <input type="number" name="experience" id="experience" value="{{ old('experience') }}" min="0" max="50" required
                                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm @error('experience') border-red-300 @enderror">
                                 @error('experience')
@@ -205,7 +217,7 @@
 
                             <!-- Salary -->
                             <div>
-                                <label for="salary" class="block text-sm font-medium text-gray-700">Salary *</label>
+                                <label for="salary" class="block text-sm font-medium text-gray-700">{{ __('app.salary') }} *</label>
                                 <input type="number" name="salary" id="salary" value="{{ old('salary') }}" min="0" step="0.01" required
                                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm @error('salary') border-red-300 @enderror">
                                 @error('salary')
@@ -215,7 +227,7 @@
 
                             <!-- Joining Date -->
                             <div>
-                                <label for="joining_date" class="block text-sm font-medium text-gray-700">Joining Date *</label>
+                                <label for="joining_date" class="block text-sm font-medium text-gray-700">{{ __('app.joining_date') }} *</label>
                                 <input type="date" name="joining_date" id="joining_date" value="{{ old('joining_date') }}" required
                                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm @error('joining_date') border-red-300 @enderror">
                                 @error('joining_date')
@@ -227,11 +239,11 @@
 
                     <!-- Account Information -->
                     <div class="mb-8">
-                        <h3 class="text-lg font-medium text-gray-900 mb-4">Account Information</h3>
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">{{ __('app.account_information') }}</h3>
                         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
                             <!-- Password -->
                             <div>
-                                <label for="password" class="block text-sm font-medium text-gray-700">Password *</label>
+                                <label for="password" class="block text-sm font-medium text-gray-700">{{ __('app.password') }} *</label>
                                 <input type="password" name="password" id="password" required
                                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm @error('password') border-red-300 @enderror">
                                 @error('password')
@@ -241,7 +253,7 @@
 
                             <!-- Password Confirmation -->
                             <div>
-                                <label for="password_confirmation" class="block text-sm font-medium text-gray-700">Confirm Password *</label>
+                                <label for="password_confirmation" class="block text-sm font-medium text-gray-700">{{ __('app.confirm_password') }} *</label>
                                 <input type="password" name="password_confirmation" id="password_confirmation" required
                                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                             </div>
@@ -252,46 +264,46 @@
                                     <input type="checkbox" name="is_active" id="is_active" value="1" {{ old('is_active', true) ? 'checked' : '' }}
                                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
                                     <label for="is_active" class="ml-2 block text-sm text-gray-900">
-                                        Active Account
+                                        {{ __('app.active_account') }}
                                     </label>
                                 </div>
-                                <p class="mt-1 text-sm text-gray-500">Uncheck to create an inactive account</p>
+                                <p class="mt-1 text-sm text-gray-500">{{ __('app.uncheck_to_create_inactive') }}</p>
                             </div>
                         </div>
                     </div>
 
                     <!-- Subject Assignments -->
                     <div class="mb-8">
-                        <h3 class="text-lg font-medium text-gray-900 mb-4">Subject Assignments (Optional)</h3>
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">{{ __('app.subject_assignments') }} ({{ __('app.optional') }})</h3>
                         <div id="subject-assignments">
                             <div class="subject-assignment border border-gray-200 rounded-lg p-4 mb-4">
                                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-700">Subject</label>
+                                        <label class="block text-sm font-medium text-gray-700">{{ __('app.subject') }}</label>
                                         <select name="subjects[0][subject_id]" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                                            <option value="">Select Subject</option>
+                                            <option value="">{{ __('app.select_subject') }}</option>
                                             @foreach($subjects as $subject)
                                                 <option value="{{ $subject->id }}">{{ $subject->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-700">Class</label>
+                                        <label class="block text-sm font-medium text-gray-700">{{ __('app.class') }}</label>
                                         <select name="subjects[0][class_id]" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                                            <option value="">Select Class</option>
+                                            <option value="">{{ __('app.select_class') }}</option>
                                             @foreach($classes as $class)
                                                 <option value="{{ $class->id }}">{{ $class->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-700">Periods per Week</label>
+                                        <label class="block text-sm font-medium text-gray-700">{{ __('app.periods_per_week') }}</label>
                                         <input type="number" name="subjects[0][periods_per_week]" min="1" max="10" value="1"
                                                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                                     </div>
                                 </div>
                                 <button type="button" onclick="removeSubjectAssignment(this)" class="mt-2 text-sm text-red-600 hover:text-red-800">
-                                    Remove Assignment
+                                    {{ __('app.remove_assignment') }}
                                 </button>
                             </div>
                         </div>
@@ -299,7 +311,7 @@
                             <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                             </svg>
-                            Add Subject Assignment
+                            {{ __('app.add_subject_assignment') }}
                         </button>
                     </div>
                 </div>
@@ -308,13 +320,13 @@
                 <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
                     <div class="flex justify-end space-x-3">
                         <a href="{{ route('teachers.index') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                            Cancel
+                            {{ __('app.cancel') }}
                         </a>
                         <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                             <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                             </svg>
-                            Create Teacher
+                            {{ __('app.create_teacher') }}
                         </button>
                     </div>
                 </div>
@@ -335,31 +347,31 @@ function addSubjectAssignment() {
     newAssignment.innerHTML = `
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
             <div>
-                <label class="block text-sm font-medium text-gray-700">Subject</label>
+                <label class="block text-sm font-medium text-gray-700">{{ __('app.subject') }}</label>
                 <select name="subjects[${subjectAssignmentIndex}][subject_id]" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                    <option value="">Select Subject</option>
+                    <option value="">{{ __('app.select_subject') }}</option>
                     @foreach($subjects as $subject)
                         <option value="{{ $subject->id }}">{{ $subject->name }}</option>
                     @endforeach
                 </select>
             </div>
             <div>
-                <label class="block text-sm font-medium text-gray-700">Class</label>
+                <label class="block text-sm font-medium text-gray-700">{{ __('app.class') }}</label>
                 <select name="subjects[${subjectAssignmentIndex}][class_id]" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                    <option value="">Select Class</option>
+                    <option value="">{{ __('app.select_class') }}</option>
                     @foreach($classes as $class)
                         <option value="{{ $class->id }}">{{ $class->name }}</option>
                     @endforeach
                 </select>
             </div>
             <div>
-                <label class="block text-sm font-medium text-gray-700">Periods per Week</label>
+                <label class="block text-sm font-medium text-gray-700">{{ __('app.periods_per_week') }}</label>
                 <input type="number" name="subjects[${subjectAssignmentIndex}][periods_per_week]" min="1" max="10" value="1"
                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
             </div>
         </div>
         <button type="button" onclick="removeSubjectAssignment(this)" class="mt-2 text-sm text-red-600 hover:text-red-800">
-            Remove Assignment
+            {{ __('app.remove_assignment') }}
         </button>
     `;
     container.appendChild(newAssignment);

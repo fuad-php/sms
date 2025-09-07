@@ -11,12 +11,14 @@ class Timetable extends Model
 
     protected $fillable = [
         'class_id',
+        'section_id',
         'subject_id',
         'teacher_id',
         'day_of_week',
         'start_time',
         'end_time',
         'room',
+        'room_id',
         'is_active',
     ];
 
@@ -34,6 +36,11 @@ class Timetable extends Model
         return $this->belongsTo(SchoolClass::class, 'class_id');
     }
 
+    public function section()
+    {
+        return $this->belongsTo(Section::class);
+    }
+
     public function subject()
     {
         return $this->belongsTo(Subject::class);
@@ -42,6 +49,11 @@ class Timetable extends Model
     public function teacher()
     {
         return $this->belongsTo(User::class, 'teacher_id');
+    }
+
+    public function room()
+    {
+        return $this->belongsTo(Room::class);
     }
 
     /**

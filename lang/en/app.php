@@ -92,6 +92,24 @@ return [
     'confirm_change_teacher_status' => 'Are you sure you want to change the status of this teacher?',
     'error_updating_teacher_status' => 'An error occurred while updating the teacher status.',
 
+    // Teacher Create Page
+    'add_new_teacher' => 'Add New Teacher',
+    'create_teacher_account_description' => 'Create a new teacher account with professional information',
+    'back_to_teachers' => 'Back to Teachers',
+    'contact_number' => 'Contact Number',
+    'gender' => 'Gender',
+    'blood_group' => 'Blood Group',
+    'qualification' => 'Qualification',
+    'specialization' => 'Specialization',
+    'account_information' => 'Account Information',
+    'active_account' => 'Active Account',
+    'uncheck_to_create_inactive' => 'Uncheck to create an inactive account',
+    'subject_assignments' => 'Subject Assignments',
+    'remove_assignment' => 'Remove Assignment',
+    'add_subject_assignment' => 'Add Subject Assignment',
+    'periods_per_week' => 'Periods per Week',
+    'create_teacher' => 'Create Teacher',
+
     // Parent Management
     'manage_parent_accounts' => 'Manage parent accounts and family information',
     'total_parents' => 'Total Parents',
@@ -822,6 +840,17 @@ return [
     'previous_step' => 'Previous Step',
     'finish' => 'Finish',
     'skip' => 'Skip',
+
+    // Gallery
+    'gallery' => 'Gallery',
+    'explore_school_gallery' => 'Explore photos from our school activities and events',
+    'grid_view' => 'Grid',
+    'masonry_view' => 'Masonry',
+    'list_view' => 'List',
+    'compact_view' => 'Compact',
+    'featured' => 'Featured',
+    'feature' => 'Feature',
+    'unfeature' => 'Unfeature',
 
     // Table Headers
     'table_id' => 'ID',
@@ -1567,7 +1596,13 @@ return [
     'profile_picture' => 'Profile Picture',
     'auto_generated' => 'Auto-generated',
     'student_id_auto_note' => 'A unique student ID will be generated automatically upon creation.',
+    'leave_blank_for_auto_roll' => 'Leave blank to auto-assign the next roll number.',
     'mother_name' => 'Mother\'s Name',
     'father_name' => 'Father\'s Name',
     'birth_registration' => 'Birth Registration Number',
+    'select_option' => 'Select an option',
+    // Exams
+    'no_exams_found' => 'No exams found.',
+    'get_started_creating_exam' => 'Get started by creating your first exam.',
+    'past' => 'Past',
 ];

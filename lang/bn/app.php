@@ -92,6 +92,24 @@ return [
     'confirm_change_teacher_status' => 'আপনি কি নিশ্চিত যে আপনি এই শিক্ষকের অবস্থা পরিবর্তন করতে চান?',
     'error_updating_teacher_status' => 'শিক্ষকের অবস্থা আপডেট করার সময় একটি ত্রুটি ঘটেছে।',
 
+    // Teacher Create Page
+    'add_new_teacher' => 'নতুন শিক্ষক যোগ করুন',
+    'create_teacher_account_description' => 'পেশাগত তথ্যসহ একটি নতুন শিক্ষক অ্যাকাউন্ট তৈরি করুন',
+    'back_to_teachers' => 'শিক্ষকদের তালিকায় ফিরে যান',
+    'contact_number' => 'যোগাযোগের নম্বর',
+    'gender' => 'লিঙ্গ',
+    'blood_group' => 'রক্তের গ্রুপ',
+    'qualification' => 'যোগ্যতা',
+    'specialization' => 'বিশেষায়ন',
+    'account_information' => 'অ্যাকাউন্ট তথ্য',
+    'active_account' => 'সক্রিয় অ্যাকাউন্ট',
+    'uncheck_to_create_inactive' => 'নিষ্ক্রিয় অ্যাকাউন্ট তৈরি করতে আনচেক করুন',
+    'subject_assignments' => 'বিষয় বরাদ্দ',
+    'remove_assignment' => 'বরাদ্দ মুছুন',
+    'add_subject_assignment' => 'বিষয় বরাদ্দ যোগ করুন',
+    'periods_per_week' => 'সপ্তাহে পিরিয়ড সংখ্যা',
+    'create_teacher' => 'শিক্ষক তৈরি করুন',
+
     // Parent Management
     'manage_parent_accounts' => 'অভিভাবক অ্যাকাউন্ট এবং পরিবারের তথ্য ব্যবস্থাপনা করুন',
     'total_parents' => 'মোট অভিভাবক',
@@ -1184,6 +1202,17 @@ return [
     'event_status_updated' => 'ইভেন্টের অবস্থা সফলভাবে আপডেট হয়েছে।',
     'no_events_available' => 'এই মুহূর্তে কোন ইভেন্ট নেই।',
     
+    // Gallery
+    'gallery' => 'গ্যালারি',
+    'explore_school_gallery' => 'বিদ্যালয়ের কার্যক্রম ও ইভেন্টের ছবি দেখুন',
+    'grid_view' => 'গ্রিড',
+    'masonry_view' => 'মেসোনরি',
+    'list_view' => 'লিস্ট',
+    'compact_view' => 'কম্প্যাক্ট',
+    'featured' => 'ফিচার্ড',
+    'feature' => 'ফিচার করুন',
+    'unfeature' => 'ফিচার অপসারণ',
+    
     // Newly added keys (Gradebook, Reports, Enrollment)
     'gradebook' => 'গ্রেডবুক',
     'report_card' => 'রিপোর্ট কার্ড',
@@ -1233,7 +1262,13 @@ return [
     'profile_picture' => 'প্রোফাইল ছবি',
     'auto_generated' => 'স্বয়ংক্রিয়ভাবে তৈরি',
     'student_id_auto_note' => 'শিক্ষার্থী তৈরি করার সময় একটি ইউনিক আইডি স্বয়ংক্রিয়ভাবে তৈরি হবে।',
+    'leave_blank_for_auto_roll' => 'পরবর্তী রোল নম্বর স্বয়ংক্রিয়ভাবে দিতে খালি রাখুন।',
     'mother_name' => 'মায়ের নাম',
     'father_name' => 'বাবার নাম',
     'birth_registration' => 'জন্ম নিবন্ধন নম্বর',
+    'select_option' => 'একটি অপশন নির্বাচন করুন',
+    // Exams
+    'no_exams_found' => 'কোন পরীক্ষা পাওয়া যায়নি।',
+    'get_started_creating_exam' => 'প্রথম পরীক্ষা তৈরি করে শুরু করুন।',
+    'past' => 'পূর্ববর্তী',
 ];

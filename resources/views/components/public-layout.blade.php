@@ -114,6 +114,10 @@
                            class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition-colors {{ request()->routeIs('events') ? 'text-gray-900 bg-gray-100' : '' }}">
                             {{ __('app.events') }}
                         </a>
+                        <a href="{{ route('gallery') }}" 
+                           class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition-colors {{ request()->routeIs('gallery') ? 'text-gray-900 bg-gray-100' : '' }}">
+                            {{ __('app.gallery') }}
+                        </a>
                         <a href="{{ route('about') }}" 
                            class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition-colors {{ request()->routeIs('about') ? 'text-gray-900 bg-gray-100' : '' }}">
                             {{ __('app.about') }}
@@ -152,6 +156,10 @@
                         <a href="{{ route('events') }}" 
                            class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 transition-colors {{ request()->routeIs('events') ? 'text-gray-900 bg-gray-100' : '' }}">
                             {{ __('app.events') }}
+                        </a>
+                        <a href="{{ route('gallery') }}" 
+                           class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 transition-colors {{ request()->routeIs('gallery') ? 'text-gray-900 bg-gray-100' : '' }}">
+                            {{ __('app.gallery') }}
                         </a>
                         <a href="{{ route('about') }}" 
                            class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 transition-colors {{ request()->routeIs('about') ? 'text-gray-900 bg-gray-100' : '' }}">

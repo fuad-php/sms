@@ -62,7 +62,11 @@ class AnnouncementController extends Controller
             // Admin can see all announcements
         } elseif ($user->role === 'teacher') {
             // Teachers can see announcements for their classes and general announcements
-            $teacherClasses = $user->teacher->classesAsTeacher->pluck('id');
+            if ($user->teacher) {
+                $teacherClasses = $user->teacher->classesAsTeacher->pluck('id');
+            } else {
+                $teacherClasses = SchoolClass::where('class_teacher_id', $user->id)->pluck('id');
+            }
             $query->where(function ($q) use ($teacherClasses) {
                 $q->whereNull('class_id')
                   ->orWhereIn('class_id', $teacherClasses);
@@ -395,7 +399,11 @@ class AnnouncementController extends Controller
                 });
             }
         } elseif ($user->role === 'teacher') {
-            $teacherClasses = $user->teacher->classesAsTeacher->pluck('id');
+            if ($user->teacher) {
+                $teacherClasses = $user->teacher->classesAsTeacher->pluck('id');
+            } else {
+                $teacherClasses = SchoolClass::where('class_teacher_id', $user->id)->pluck('id');
+            }
             $query->where(function ($q) use ($teacherClasses) {
                 $q->whereNull('class_id')
                   ->orWhereIn('class_id', $teacherClasses);

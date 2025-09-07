@@ -75,7 +75,7 @@ class StudentController extends Controller
             // student_id will be auto-generated
             'class_id' => 'required|exists:classes,id',
             'admission_date' => 'required|date',
-            'roll_number' => 'nullable|string',
+            'roll_number' => 'nullable|integer|min:1',
             'blood_group' => 'nullable|string',
             'medical_info' => 'nullable|string',
             'guardian_name' => 'required|string',
@@ -107,13 +107,13 @@ class StudentController extends Controller
                 'gender' => $request->gender,
             ]);
 
-            // Create student record
-            $student = Student::create([
+            // Create student record (assign next roll if not provided)
+            $studentData = [
                 'user_id' => $user->id,
                 'student_id' => Student::generateStudentId(),
                 'class_id' => $request->class_id,
                 'admission_date' => $request->admission_date,
-                'roll_number' => $request->roll_number,
+                'roll_number' => null,
                 'blood_group' => $request->blood_group,
                 'medical_info' => $request->medical_info,
                 'guardian_name' => $request->guardian_name,
@@ -124,7 +124,24 @@ class StudentController extends Controller
                 'mother_name' => $request->mother_name,
                 'father_name' => $request->father_name,
                 'birth_registration' => $request->birth_registration,
-            ]);
+            ];
+
+            // Determine roll number: provided (validate uniqueness) or auto-generate
+            if ($request->filled('roll_number')) {
+                // Ensure uniqueness within class
+                $exists = Student::where('class_id', $request->class_id)
+                    ->where('roll_number', $request->roll_number)
+                    ->exists();
+                if ($exists) {
+                    throw new \Exception('Roll number already exists in this class.');
+                }
+                $studentData['roll_number'] = (int) $request->roll_number;
+            } else {
+                // Auto-assign next roll in a transaction-safe manner
+                $studentData['roll_number'] = Student::nextRollNumber((int) $request->class_id);
+            }
+
+            $student = Student::create($studentData);
 
             DB::commit();
 
@@ -354,7 +371,7 @@ class StudentController extends Controller
                     $user = User::create([
                         'name' => $studentData['name'],
                         'email' => $studentData['email'],
-                        'password' => Hash::make('password123'), // Default password
+                        'password' => Hash::make('student123'), // Default password
                         'role' => 'student',
                         'phone' => $studentData['phone'] ?? null,
                         'date_of_birth' => $studentData['date_of_birth'] ?? null,

@@ -149,9 +149,10 @@
                     </div>
 
                     <div>
-                        <label for="roll_number" class="block text-sm font-medium text-gray-700">{{ __('app.roll_number') }}</label>
-                        <input type="number" name="roll_number" id="roll_number" value="{{ old('roll_number') }}"
+                        <label for="roll_number" class="block text-sm font-medium text-gray-700">{{ __('app.roll_number') }} <span class="text-gray-400">({{ __('app.optional') }})</span></label>
+                        <input type="number" name="roll_number" id="roll_number" value="{{ old('roll_number') }}" min="1"
                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        <p class="mt-1 text-xs text-gray-500">{{ __('app.leave_blank_for_auto_roll') }}</p>
                         @error('roll_number')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror

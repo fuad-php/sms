@@ -135,11 +135,8 @@ class WebController extends Controller
      */
     public function gallery()
     {
-        $carouselSlides = CarouselSlide::where('is_active', true)
-            ->orderBy('order')
-            ->get();
-            
-        return view('gallery', compact('carouselSlides'));
+        $images = \App\Models\GalleryImage::featuredFirst()->paginate(24);
+        return view('gallery', compact('images'));
     }
 
     /**

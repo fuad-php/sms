@@ -7,6 +7,7 @@ use App\Models\ExamResult;
 use App\Models\SchoolClass;
 use App\Models\Student;
 use App\Models\Subject;
+use App\Models\Timetable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -32,8 +33,13 @@ class ExamResultController extends Controller
             $query->whereIn('student_id', $studentIds);
         } elseif ($user->role === 'teacher') {
             // Teachers can see results for subjects they teach
-            $teacherClasses = $user->teacher->subjects()->pluck('class_id')->unique();
-            $teacherSubjects = $user->teacher->subjects()->pluck('subject_id')->unique();
+            if ($user->teacher) {
+                $teacherClasses = $user->teacher->subjects()->pluck('class_id')->unique();
+                $teacherSubjects = $user->teacher->subjects()->pluck('subject_id')->unique();
+            } else {
+                $teacherClasses = Timetable::where('teacher_id', $user->id)->pluck('class_id')->unique();
+                $teacherSubjects = Timetable::where('teacher_id', $user->id)->pluck('subject_id')->unique();
+            }
             $query->whereHas('exam', function ($q) use ($teacherClasses, $teacherSubjects) {
                 $q->whereIn('class_id', $teacherClasses)
                   ->whereIn('subject_id', $teacherSubjects);
@@ -97,8 +103,13 @@ class ExamResultController extends Controller
         // Get available exams
         $examQuery = Exam::with(['class', 'subject']);
         if ($user->role === 'teacher') {
-            $teacherClasses = $user->teacher->subjects()->pluck('class_id')->unique();
-            $teacherSubjects = $user->teacher->subjects()->pluck('subject_id')->unique();
+            if ($user->teacher) {
+                $teacherClasses = $user->teacher->subjects()->pluck('class_id')->unique();
+                $teacherSubjects = $user->teacher->subjects()->pluck('subject_id')->unique();
+            } else {
+                $teacherClasses = Timetable::where('teacher_id', $user->id)->pluck('class_id')->unique();
+                $teacherSubjects = Timetable::where('teacher_id', $user->id)->pluck('subject_id')->unique();
+            }
             $examQuery->whereIn('class_id', $teacherClasses)
                      ->whereIn('subject_id', $teacherSubjects);
         }
@@ -336,8 +347,13 @@ class ExamResultController extends Controller
         // Get available exams
         $examQuery = Exam::with(['class', 'subject']);
         if ($user->role === 'teacher') {
-            $teacherClasses = $user->teacher->subjects()->pluck('class_id')->unique();
-            $teacherSubjects = $user->teacher->subjects()->pluck('subject_id')->unique();
+            if ($user->teacher) {
+                $teacherClasses = $user->teacher->subjects()->pluck('class_id')->unique();
+                $teacherSubjects = $user->teacher->subjects()->pluck('subject_id')->unique();
+            } else {
+                $teacherClasses = Timetable::where('teacher_id', $user->id)->pluck('class_id')->unique();
+                $teacherSubjects = Timetable::where('teacher_id', $user->id)->pluck('subject_id')->unique();
+            }
             $examQuery->whereIn('class_id', $teacherClasses)
                      ->whereIn('subject_id', $teacherSubjects);
         }
@@ -370,8 +386,13 @@ class ExamResultController extends Controller
 
         // Apply filters based on user role
         if ($user->role === 'teacher') {
-            $teacherClasses = $user->teacher->subjects()->pluck('class_id')->unique();
-            $teacherSubjects = $user->teacher->subjects()->pluck('subject_id')->unique();
+            if ($user->teacher) {
+                $teacherClasses = $user->teacher->subjects()->pluck('class_id')->unique();
+                $teacherSubjects = $user->teacher->subjects()->pluck('subject_id')->unique();
+            } else {
+                $teacherClasses = Timetable::where('teacher_id', $user->id)->pluck('class_id')->unique();
+                $teacherSubjects = Timetable::where('teacher_id', $user->id)->pluck('subject_id')->unique();
+            }
             $query->whereHas('exam', function ($q) use ($teacherClasses, $teacherSubjects) {
                 $q->whereIn('class_id', $teacherClasses)
                   ->whereIn('subject_id', $teacherSubjects);

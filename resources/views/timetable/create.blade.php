@@ -39,6 +39,22 @@
                     @enderror
                 </div>
 
+                <!-- Section Selection (optional) -->
+                <div>
+                    <label for="section_id" class="block text-sm font-medium text-gray-700">{{ __('app.section') }}</label>
+                    <select name="section_id" id="section_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 @error('section_id') border-red-500 @enderror">
+                        <option value="">{{ __('app.select_section') }}</option>
+                        @foreach($sections as $section)
+                            <option value="{{ $section->id }}" {{ old('section_id') == $section->id ? 'selected' : '' }}>
+                                {{ $section->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('section_id')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+
                 <!-- Subject Selection -->
                 <div>
                     <label for="subject_id" class="block text-sm font-medium text-gray-700">{{ __('app.subject') }} <span class="text-red-500">*</span></label>
@@ -105,11 +121,18 @@
                     </div>
                 </div>
 
-                <!-- Room -->
+                <!-- Room Selection (optional) -->
                 <div>
-                    <label for="room" class="block text-sm font-medium text-gray-700">{{ __('app.room') }}</label>
-                    <input type="text" name="room" id="room" value="{{ old('room') }}" placeholder="{{ __('app.enter_room_number') }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 @error('room') border-red-500 @enderror">
-                    @error('room')
+                    <label for="room_id" class="block text-sm font-medium text-gray-700">{{ __('app.room') }}</label>
+                    <select name="room_id" id="room_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 @error('room_id') border-red-500 @enderror">
+                        <option value="">{{ __('app.select_room') }}</option>
+                        @foreach($rooms as $room)
+                            <option value="{{ $room->id }}" {{ old('room_id') == $room->id ? 'selected' : '' }}>
+                                {{ $room->name }} @if($room->code) ({{ $room->code }}) @endif
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('room_id')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
                 </div>

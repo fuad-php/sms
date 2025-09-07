@@ -14,6 +14,7 @@ use App\Http\Controllers\GradebookController;
 use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\ReportCardController;
 use App\Http\Controllers\TranscriptController;
+use App\Http\Controllers\GalleryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -290,6 +291,17 @@ Route::middleware(['auth', 'maintenance'])->group(function () {
         Route::get('/class-performance', [App\Http\Controllers\ReportController::class, 'classPerformance'])->name('class-performance');
         Route::post('/export', [App\Http\Controllers\ReportController::class, 'export'])->name('export');
         Route::get('/dashboard/data', [App\Http\Controllers\ReportController::class, 'dashboard'])->name('dashboard');
+    });
+
+    // Admin Gallery Management
+    Route::group(['prefix' => 'admin/gallery', 'as' => 'admin.gallery.'], function () {
+        Route::get('/', [GalleryController::class, 'index'])->name('index')->middleware('role:admin');
+        Route::get('/create', [GalleryController::class, 'create'])->name('create')->middleware('role:admin,teacher,staff');
+        Route::post('/', [GalleryController::class, 'store'])->name('store')->middleware('role:admin,teacher,staff');
+        Route::get('/{galleryImage}/edit', [GalleryController::class, 'edit'])->name('edit')->middleware('role:admin');
+        Route::put('/{galleryImage}', [GalleryController::class, 'update'])->name('update')->middleware('role:admin');
+        Route::delete('/{galleryImage}', [GalleryController::class, 'destroy'])->name('destroy')->middleware('role:admin');
+        Route::patch('/{galleryImage}/toggle-featured', [GalleryController::class, 'toggleFeatured'])->name('toggle-featured')->middleware('role:admin');
     });
 
     // Gradebook (Admin/Teacher)

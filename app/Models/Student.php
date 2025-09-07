@@ -134,4 +134,17 @@ class Student extends Model
 
         return $candidate;
     }
+
+    /**
+     * Get the next auto-incremental roll number for a given class
+     */
+    public static function nextRollNumber(int $classId): int
+    {
+        // Lock rows for this class to avoid race conditions when assigning roll
+        $max = self::where('class_id', $classId)
+            ->lockForUpdate()
+            ->max('roll_number');
+
+        return ((int) $max) + 1;
+    }
 }

@@ -89,11 +89,11 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                 </svg>
                             </div>
-                            <h3 class="text-2xl font-bold text-gray-900 mb-2">{{ __('app.head_teacher_name') }}</h3>
-                            <p class="text-blue-600 font-semibold text-lg mb-4">{{ __('app.head_teacher') }}</p>
+                            <h3 class="text-2xl font-bold text-gray-900 mb-2">{{ \App\Helpers\SettingsHelper::getLocalized('headmaster_name', \App\Helpers\SettingsHelper::getLocalized('head_teacher_name', __('app.head_teacher_name'))) }}</h3>
+                            <p class="text-blue-600 font-semibold text-lg mb-4">{{ \App\Helpers\SettingsHelper::getLocalized('head_teacher_title', __('app.head_teacher')) }}</p>
                             <div class="text-gray-700 space-y-4">
                                 <blockquote class="text-lg italic leading-relaxed">
-                                    "{{ __('app.head_teacher_quote_1') }}"
+                                    "{{ \App\Helpers\SettingsHelper::getLocalized('head_teacher_quote_1', __('app.head_teacher_quote_1')) }}"
                                 </blockquote>
                             </div>
                         </div>
@@ -107,11 +107,11 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                 </svg>
                             </div>
-                            <h3 class="text-2xl font-bold text-gray-900 mb-2">{{ __('app.chairman_name') }}</h3>
-                            <p class="text-green-600 font-semibold text-lg mb-4">{{ __('app.school_chairman') }}</p>
+                            <h3 class="text-2xl font-bold text-gray-900 mb-2">{{ \App\Helpers\SettingsHelper::getLocalized('managing_committee_president_name', \App\Helpers\SettingsHelper::getLocalized('chairman_name', __('app.chairman_name'))) }}</h3>
+                            <p class="text-green-600 font-semibold text-lg mb-4">{{ \App\Helpers\SettingsHelper::getLocalized('chairman_title', __('app.school_chairman')) }}</p>
                             <div class="text-gray-700 space-y-4">
                                 <blockquote class="text-lg italic leading-relaxed">
-                                    "{{ __('app.chairman_quote_1') }}"
+                                    "{{ \App\Helpers\SettingsHelper::getLocalized('chairman_quote_1', __('app.chairman_quote_1')) }}"
                                 </blockquote>
                             </div>
                         </div>

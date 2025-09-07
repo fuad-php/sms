@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class EventController extends Controller
 {
@@ -20,6 +21,14 @@ class EventController extends Controller
 
     public function store(Request $request)
     {
+        // Normalize datetime-local inputs before validation
+        if ($request->filled('start_at')) {
+            $request->merge(['start_at' => Carbon::parse($request->input('start_at'))->format('Y-m-d H:i:s')]);
+        }
+        if ($request->filled('end_at')) {
+            $request->merge(['end_at' => Carbon::parse($request->input('end_at'))->format('Y-m-d H:i:s')]);
+        }
+
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -28,9 +37,8 @@ class EventController extends Controller
             'end_at' => 'nullable|date|after_or_equal:start_at',
             'type' => 'nullable|string|max:50',
             'color' => 'nullable|string|max:20',
-            'is_published' => 'boolean',
         ]);
-
+        
         $validated['is_published'] = $request->has('is_published');
 
         Event::create($validated);
@@ -45,6 +53,14 @@ class EventController extends Controller
 
     public function update(Request $request, Event $event)
     {
+        // Normalize datetime-local inputs before validation
+        if ($request->filled('start_at')) {
+            $request->merge(['start_at' => Carbon::parse($request->input('start_at'))->format('Y-m-d H:i:s')]);
+        }
+        if ($request->filled('end_at')) {
+            $request->merge(['end_at' => Carbon::parse($request->input('end_at'))->format('Y-m-d H:i:s')]);
+        }
+
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -53,7 +69,6 @@ class EventController extends Controller
             'end_at' => 'nullable|date|after_or_equal:start_at',
             'type' => 'nullable|string|max:50',
             'color' => 'nullable|string|max:20',
-            'is_published' => 'boolean',
         ]);
 
         $validated['is_published'] = $request->has('is_published');

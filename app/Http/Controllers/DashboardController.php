@@ -132,14 +132,25 @@ class DashboardController extends Controller
     private function getTeacherDashboard(User $user)
     {
         $teacher = $user->teacher;
-        
-        // Today's schedule
-        $todaySchedule = $teacher->getTodaySchedule();
-        
-        // Classes assigned as class teacher
-        $classesAsTeacher = $teacher->classesAsTeacher()
-            ->with('students')
-            ->get();
+
+        // Build schedule and assigned classes safely even if Teacher profile is missing
+        if ($teacher) {
+            $todaySchedule = $teacher->getTodaySchedule();
+            $classesAsTeacher = $teacher->classesAsTeacher()
+                ->with('students')
+                ->get();
+        } else {
+            $today = strtolower(Carbon::now()->format('l'));
+            $todaySchedule = Timetable::with(['class', 'subject'])
+                ->where('teacher_id', $user->id)
+                ->where('day_of_week', $today)
+                ->where('is_active', true)
+                ->orderBy('start_time')
+                ->get();
+            $classesAsTeacher = SchoolClass::where('class_teacher_id', $user->id)
+                ->with('students')
+                ->get();
+        }
         
         // Today's attendance to mark
         $attendanceToMark = [];

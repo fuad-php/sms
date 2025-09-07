@@ -43,7 +43,7 @@ class CarouselController extends Controller
             'description_bn' => 'nullable|string',
             'button_text_bn' => 'nullable|string|max:100',
             // Common
-            'button_url' => 'nullable|url|max:255',
+            'button_url' => 'nullable|string|max:255',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'order' => 'nullable|integer|min:1',
             'is_active' => 'boolean',

@@ -130,7 +130,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                 </svg>
                             </div>
-                                <h3 class="text-2xl font-bold text-gray-900 mb-2">{{ \App\Helpers\SettingsHelper::getLocalized('head_teacher_name', __('app.head_teacher_name')) }}</h3>
+                                <h3 class="text-2xl font-bold text-gray-900 mb-2">{{ \App\Helpers\SettingsHelper::getLocalized('headmaster_name', \App\Helpers\SettingsHelper::getLocalized('head_teacher_name', __('app.head_teacher_name'))) }}</h3>
                                 <p class="text-blue-600 font-semibold text-lg">{{ \App\Helpers\SettingsHelper::getLocalized('head_teacher_title', __('app.head_teacher')) }}</p>
                         </div>
                             <div class="text-gray-700 space-y-4">
@@ -153,7 +153,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                 </svg>
                             </div>
-                                <h3 class="text-2xl font-bold text-gray-900 mb-2">{{ \App\Helpers\SettingsHelper::getLocalized('chairman_name', __('app.chairman_name')) }}</h3>
+                                <h3 class="text-2xl font-bold text-gray-900 mb-2">{{ \App\Helpers\SettingsHelper::getLocalized('managing_committee_president_name', \App\Helpers\SettingsHelper::getLocalized('chairman_name', __('app.chairman_name'))) }}</h3>
                                 <p class="text-green-600 font-semibold text-lg">{{ \App\Helpers\SettingsHelper::getLocalized('chairman_title', __('app.school_chairman')) }}</p>
                         </div>
                             <div class="text-gray-700 space-y-4">
@@ -308,7 +308,7 @@
                             ];
                         @endphp
                         
-                        <div class="space-y-6">
+                        <div id="upcoming-events" class="space-y-6">
                             @forelse(($events ?? []) as $event)
                                 @php $color = $event->color ?: ($colorMap[$event->type] ?? 'green'); @endphp
                                 <div class="group border-l-4 border-{{ $color }}-200 pl-6 py-4 hover:border-{{ $color }}-500 transition-all duration-300">
@@ -1155,6 +1155,44 @@
 
                 // Load carousel on page load
                 loadCarouselSlides();
+
+                // Load upcoming events dynamically
+                async function loadUpcomingEvents() {
+                    try {
+                        const res = await fetch('/api/events/upcoming');
+                        if (!res.ok) return;
+                        const items = await res.json();
+                        const container = document.getElementById('upcoming-events');
+                        if (!container) return;
+
+                        if (!items || items.length === 0) {
+                            container.innerHTML = `<div class="text-center py-6 text-gray-500">{{ __('app.no_events_available') }}</div>`;
+                            return;
+                        }
+
+                        const html = items.map(e => {
+                            const color = e.color || 'green';
+                            return `
+                                <div class="group border-l-4 border-${color}-200 pl-6 py-4 hover:border-${color}-500 transition-all duration-300">
+                                    <h4 class="text-lg font-semibold text-gray-900 group-hover:text-${color}-600 transition-colors mb-3">${e.title}</h4>
+                                    <div class="flex items-center text-sm text-gray-500 space-x-4 mb-3">
+                                        <span class="flex items-center">
+                                            <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                                            ${e.date}
+                                        </span>
+                                        ${e.location ? `<span class="flex items-center"><svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>${e.location}</span>` : ''}
+                                    </div>
+                                    ${e.type ? `<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-${color}-100 text-${color}-800">${e.type.charAt(0).toUpperCase() + e.type.slice(1)}</span>` : ''}
+                                </div>
+                            `;
+                        }).join('');
+                        container.innerHTML = html;
+                    } catch (err) {
+                        // Silent fail; keep any SSR content
+                    }
+                }
+
+                loadUpcomingEvents();
 
                 // Smooth scrolling for anchor links
                 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
