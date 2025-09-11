@@ -68,8 +68,8 @@
                     </div>
                             <div class="text-4xl md:text-5xl font-bold text-white mb-2 counter" data-target="{{ $stats['students'] }}">0</div>
                             <div class="text-blue-100 text-lg font-medium">{{ __('app.students') }}</div>
+                        </div>
                     </div>
-                </div>
                     
                     <div class="text-center group">
                         <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-2xl p-8 hover:bg-opacity-30 transition-all duration-300 group-hover:scale-105">
@@ -80,8 +80,8 @@
                             </div>
                             <div class="text-4xl md:text-5xl font-bold text-white mb-2 counter" data-target="{{ $stats['teachers'] }}">0</div>
                             <div class="text-blue-100 text-lg font-medium">{{ __('app.teachers') }}</div>
-            </div>
-        </div>
+                        </div>
+                    </div>
                     
                     <div class="text-center group">
                         <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-2xl p-8 hover:bg-opacity-30 transition-all duration-300 group-hover:scale-105">
@@ -127,18 +127,18 @@
                             <div class="text-center mb-8">
                                 <div class="w-32 h-32 mx-auto bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center mb-6 group-hover:rotate-12 transition-transform duration-500">
                                     <svg class="h-16 w-16 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                </svg>
-                            </div>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                    </svg>
+                                </div>
                                 <h3 class="text-2xl font-bold text-gray-900 mb-2">{{ \App\Helpers\SettingsHelper::getLocalized('headmaster_name', \App\Helpers\SettingsHelper::getLocalized('head_teacher_name', __('app.head_teacher_name'))) }}</h3>
                                 <p class="text-blue-600 font-semibold text-lg">{{ \App\Helpers\SettingsHelper::getLocalized('head_teacher_title', __('app.head_teacher')) }}</p>
-                        </div>
+                            </div>
                             <div class="text-gray-700 space-y-4">
                                 <blockquote class="text-lg italic leading-relaxed">
-                                "{{ \App\Helpers\SettingsHelper::getLocalized('head_teacher_quote_1', __('app.head_teacher_quote_1')) }}"
+                                    "{{ \App\Helpers\SettingsHelper::getLocalized('head_teacher_quote_1', __('app.head_teacher_quote_1')) }}"
                                 </blockquote>
                                 <blockquote class="text-lg italic leading-relaxed">
-                                "{{ \App\Helpers\SettingsHelper::getLocalized('head_teacher_quote_2', __('app.head_teacher_quote_2')) }}"
+                                    "{{ \App\Helpers\SettingsHelper::getLocalized('head_teacher_quote_2', __('app.head_teacher_quote_2')) }}"
                                 </blockquote>
                             </div>
                         </div>
@@ -150,24 +150,24 @@
                             <div class="text-center mb-8">
                                 <div class="w-32 h-32 mx-auto bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center mb-6 group-hover:rotate-12 transition-transform duration-500">
                                     <svg class="h-16 w-16 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                </svg>
-                            </div>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                    </svg>
+                                </div>
                                 <h3 class="text-2xl font-bold text-gray-900 mb-2">{{ \App\Helpers\SettingsHelper::getLocalized('managing_committee_president_name', \App\Helpers\SettingsHelper::getLocalized('chairman_name', __('app.chairman_name'))) }}</h3>
                                 <p class="text-green-600 font-semibold text-lg">{{ \App\Helpers\SettingsHelper::getLocalized('chairman_title', __('app.school_chairman')) }}</p>
-                        </div>
+                            </div>
                             <div class="text-gray-700 space-y-4">
                                 <blockquote class="text-lg italic leading-relaxed">
-                                "{{ \App\Helpers\SettingsHelper::getLocalized('chairman_quote_1', __('app.chairman_quote_1')) }}"
+                                    "{{ \App\Helpers\SettingsHelper::getLocalized('chairman_quote_1', __('app.chairman_quote_1')) }}"
                                 </blockquote>
                                 <blockquote class="text-lg italic leading-relaxed">
-                                "{{ \App\Helpers\SettingsHelper::getLocalized('chairman_quote_2', __('app.chairman_quote_2')) }}"
+                                    "{{ \App\Helpers\SettingsHelper::getLocalized('chairman_quote_2', __('app.chairman_quote_2')) }}"
                                 </blockquote>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
         </section>
 
         <!-- Latest Announcements & Events Section -->
@@ -210,159 +210,159 @@
                     @endphp
                     
                     @if($latestAnnouncements->count() > 0)
-                                <div class="space-y-6">
+                        <div class="space-y-6">
                             @foreach($latestAnnouncements as $announcement)
-                                        <div class="group border-l-4 border-blue-200 pl-6 py-4 hover:border-blue-500 transition-all duration-300">
-                                            <div class="flex items-start justify-between mb-3">
-                                                <h4 class="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
-                                                    <a href="{{ route('announcements.public.show', $announcement->id) }}" class="hover:underline">
-                                                        {{ Str::limit($announcement->title, 60) }}
-                                                    </a>
-                                                </h4>
-                                                <div class="flex flex-wrap gap-2 ml-4">
-                                        @if($announcement->priority === 'urgent')
-                                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 animate-pulse">
-                                                🚨 URGENT
-                                            </span>
-                                        @elseif($announcement->priority === 'high')
-                                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
-                                                ⚠️ HIGH
-                                            </span>
-                                        @elseif($announcement->priority === 'medium')
-                                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                                                📢 MEDIUM
-                                            </span>
-                                        @endif
-                                        @if($announcement->created_at->diffInDays(now()) <= 3)
-                                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                                🆕 NEW
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-                                            
-                                            <div class="flex items-center text-sm text-gray-500 space-x-4 mb-3">
-                                                <span class="flex items-center">
-                                                    <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                                    </svg>
-                                                    {{ $announcement->created_at->format('d M Y') }}
+                                <div class="group border-l-4 border-blue-200 pl-6 py-4 hover:border-blue-500 transition-all duration-300">
+                                    <div class="flex items-start justify-between mb-3">
+                                        <h4 class="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
+                                            <a href="{{ route('announcements.public.show', $announcement->id) }}" class="hover:underline">
+                                                {{ Str::limit($announcement->title, 60) }}
+                                            </a>
+                                        </h4>
+                                        <div class="flex flex-wrap gap-2 ml-4">
+                                            @if($announcement->priority === 'urgent')
+                                                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 animate-pulse">
+                                                    🚨 URGENT
                                                 </span>
-                                                <span class="flex items-center">
-                                                    <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                                    </svg>
-                                                    {{ $announcement->createdBy->name }}
+                                            @elseif($announcement->priority === 'high')
+                                                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
+                                                    ⚠️ HIGH
                                                 </span>
-                        </div>
-                                            
-                                            @if($announcement->description)
-                                                <p class="text-gray-600 text-sm leading-relaxed">
-                                                    {{ Str::limit($announcement->description, 120) }}
-                                                </p>
-                    @endif
+                                            @elseif($announcement->priority === 'medium')
+                                                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                                    📢 MEDIUM
+                                                </span>
+                                            @endif
+                                            @if($announcement->created_at->diffInDays(now()) <= 3)
+                                                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                                    🆕 NEW
+                                                </span>
+                                            @endif
                                         </div>
-                                    @endforeach
-                                </div>
-                    
-                                <div class="mt-auto pt-8 text-center">
-                        <a href="{{ route('announcements.public') }}" 
-                                       class="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition-colors duration-300 group">
-                                        {{ __('app.view_all_announcements') }}
-                                        <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                        </svg>
-                                    </a>
-                                </div>
-                            @else
-                                <div class="text-center py-12">
-                                    <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                        <svg class="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
-                                        </svg>
                                     </div>
-                                    <p class="text-gray-500 text-lg">{{ __('app.no_announcements_available') }}</p>
-                                </div>
-                            @endif
-                    </div>
-                </div>
-
-                <!-- Upcoming Events -->
-                    <div class="flex flex-col">
-                        <div class="bg-white rounded-2xl shadow-xl p-8 hover:shadow-2xl transition-all duration-300 flex flex-col h-full">
-                        <div class="flex items-center mb-8">
-                            <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mr-4">
-                                <svg class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                            </div>
-                            <h3 class="text-2xl font-bold text-gray-900">{{ __('app.upcoming_events') }}</h3>
-                        </div>
-                        
-                        @php
-                            $colorMap = [
-                                'sports' => 'green',
-                                'academic' => 'blue',
-                                'meeting' => 'purple',
-                                'cultural' => 'orange',
-                            ];
-                        @endphp
-                        
-                        <div id="upcoming-events" class="space-y-6">
-                            @forelse(($events ?? []) as $event)
-                                @php $color = $event->color ?: ($colorMap[$event->type] ?? 'green'); @endphp
-                                <div class="group border-l-4 border-{{ $color }}-200 pl-6 py-4 hover:border-{{ $color }}-500 transition-all duration-300">
-                                    <h4 class="text-lg font-semibold text-gray-900 group-hover:text-{{ $color }}-600 transition-colors mb-3">
-                                        {{ $event->title }}
-                                    </h4>
                                     
                                     <div class="flex items-center text-sm text-gray-500 space-x-4 mb-3">
                                         <span class="flex items-center">
                                             <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                             </svg>
-                                            {{ $event->start_at->format('d M Y') }}
+                                            {{ $announcement->created_at->format('d M Y') }}
                                         </span>
-                                        @if($event->location)
                                         <span class="flex items-center">
                                             <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                             </svg>
-                                            {{ $event->location }}
+                                            {{ $announcement->createdBy->name }}
                                         </span>
-                                        @endif
                                     </div>
                                     
-                                    <div class="flex items-center">
-                                        @if($event->type)
-                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-{{ $color }}-100 text-{{ $color }}-800">
-                                            {{ ucfirst($event->type) }}
-                                        </span>
-                                        @endif
-                                    </div>
+                                    @if($announcement->description)
+                                        <p class="text-gray-600 text-sm leading-relaxed">
+                                            {{ Str::limit($announcement->description, 120) }}
+                                        </p>
+                                    @endif
                                 </div>
-                            @empty
-                                <div class="text-center py-6 text-gray-500">{{ __('app.no_events_available') }}</div>
-                            @endforelse
+                            @endforeach
                         </div>
                         
-                            <div class="mt-auto pt-8 text-center">
-                                <a href="{{ route('events') }}" class="inline-flex items-center px-6 py-3 bg-green-600 text-white rounded-xl font-semibold hover:bg-green-700 transition-colors duration-300 group">
-                                    {{ __('app.see_more_events') }}
-                                    <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                    </svg>
-                        </a>
-                    </div>
+                        <div class="mt-auto pt-8 text-center">
+                            <a href="{{ route('announcements.public') }}" 
+                               class="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition-colors duration-300 group">
+                                {{ __('app.view_all_announcements') }}
+                                <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                        </div>
+                    @else
+                        <div class="text-center py-12">
+                            <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                                </svg>
+                            </div>
+                            <p class="text-gray-500 text-lg">{{ __('app.no_announcements_available') }}</p>
+                        </div>
+                    @endif
                 </div>
+            </div>
+
+            <!-- Upcoming Events -->
+            <div class="flex flex-col">
+                <div class="bg-white rounded-2xl shadow-xl p-8 hover:shadow-2xl transition-all duration-300 flex flex-col h-full">
+                    <div class="flex items-center mb-8">
+                        <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mr-4">
+                            <svg class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900">{{ __('app.upcoming_events') }}</h3>
+                    </div>
+                    
+                    @php
+                        $colorMap = [
+                            'sports' => 'green',
+                            'academic' => 'blue',
+                            'meeting' => 'purple',
+                            'cultural' => 'orange',
+                        ];
+                    @endphp
+                    
+                    <div id="upcoming-events" class="space-y-6">
+                        @forelse(($events ?? []) as $event)
+                            @php $color = $event->color ?: ($colorMap[$event->type] ?? 'green'); @endphp
+                            <div class="group border-l-4 border-{{ $color }}-200 pl-6 py-4 hover:border-{{ $color }}-500 transition-all duration-300">
+                                <h4 class="text-lg font-semibold text-gray-900 group-hover:text-{{ $color }}-600 transition-colors mb-3">
+                                    {{ $event->title }}
+                                </h4>
+                                
+                                <div class="flex items-center text-sm text-gray-500 space-x-4 mb-3">
+                                    <span class="flex items-center">
+                                        <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                        </svg>
+                                        {{ $event->start_at->format('d M Y') }}
+                                    </span>
+                                    @if($event->location)
+                                    <span class="flex items-center">
+                                        <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        </svg>
+                                        {{ $event->location }}
+                                    </span>
+                                    @endif
+                                </div>
+                                
+                                <div class="flex items-center">
+                                    @if($event->type)
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-{{ $color }}-100 text-{{ $color }}-800">
+                                        {{ ucfirst($event->type) }}
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+                        @empty
+                            <div class="text-center py-6 text-gray-500">{{ __('app.no_events_available') }}</div>
+                        @endforelse
+                    </div>
+                    
+                    <div class="mt-auto pt-8 text-center">
+                        <a href="{{ route('events') }}" class="inline-flex items-center px-6 py-3 bg-green-600 text-white rounded-xl font-semibold hover:bg-green-700 transition-colors duration-300 group">
+                            {{ __('app.see_more_events') }}
+                            <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </a>
                     </div>
                 </div>
             </div>
         </section>
 
-                    <!-- Featured Courses -->
-                    <div class="bg-white rounded-2xl shadow-xl p-8 hover:shadow-2xl transition-all duration-300">
+        <!-- Featured Courses Section -->
+        <section class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-white rounded-2xl shadow-xl p-8 hover:shadow-2xl transition-all duration-300">
                         <div class="flex items-center mb-8">
                             <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mr-4">
                                 <svg class="h-6 w-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -440,7 +440,6 @@
                     </div>
                 </div>
             </div>
-        </div>                
         </section>
 
         <!-- Calendar Section -->

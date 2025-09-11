@@ -1,13 +1,22 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('app.transcript') }} — {{ $student->user->name }}
-        </h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-6">
-        <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white shadow sm:rounded-lg p-6">
+@section('title', __('app.student_transcript'))
+
+@section('content')
+<div class="min-h-screen bg-gray-50">
+    <x-page-header>
+        <x-slot name="actions">
+            <a href="{{ route('reports.transcripts') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg flex items-center transition-colors">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                {{ __('app.back_to_transcripts') }}
+            </a>
+        </x-slot>
+    </x-page-header>
+
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <div class="bg-white shadow sm:rounded-lg p-6">
                 <div class="flex justify-between items-start mb-6">
                     <div>
                         <div class="text-lg font-semibold">{{ $student->user->name }}</div>
@@ -56,7 +65,7 @@
                 <div class="mt-8 text-right">
                     <button onclick="window.print()" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">{{ __('app.print') }}</button>
                 </div>
-            </div>
         </div>
     </div>
-</x-app-layout>
+</div>
+@endsection

@@ -3,19 +3,17 @@
 @section('title', __('app.students_management'))
 
 @section('content')
-<div class="container mx-auto px-4 py-8">
-    <div class="mb-8">
-        <h1 class="text-3xl font-bold text-gray-900">{{ __('app.students_management') }}</h1>
-        <p class="text-gray-600">{{ __('app.manage_student_records') }}</p>
-    </div>
-
-    <div class="bg-white rounded-lg shadow p-6">
-        <div class="flex justify-between items-center mb-6">
-            <h2 class="text-xl font-semibold text-gray-900">{{ __('app.students_list') }}</h2>
+<div class="min-h-screen bg-gray-50">
+    <x-page-header>
+        <x-slot name="actions">
             <a href="{{ route('students.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">
                 {{ __('app.add_new_student') }}
             </a>
-        </div>
+        </x-slot>
+    </x-page-header>
+
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <div class="bg-white rounded-lg shadow p-6">
 
         @if($students->count() > 0)
             <div class="overflow-x-auto">

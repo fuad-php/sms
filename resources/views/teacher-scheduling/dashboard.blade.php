@@ -3,34 +3,21 @@
 @section('title', __('app.teacher_scheduling'))
 
 @section('content')
-<div class="container mx-auto px-4 py-8">
-    <!-- Header -->
-    <div class="mb-8">
-        <div class="flex items-center justify-between">
-            <div>
-                <h1 class="text-3xl font-bold text-gray-900">{{ __('app.teacher_scheduling') }}</h1>
-                <p class="mt-2 text-gray-600">{{ __('app.comprehensive_teacher_scheduling_system') }}</p>
-            </div>
-            <div class="flex space-x-3">
-                <a href="{{ route('teacher-scheduling.workload-analytics') }}" 
-                   class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors">
-                    <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                    </svg>
-                    {{ __('app.workload_analytics') }}
-                </a>
-                @can('admin')
-                <a href="{{ route('teacher-scheduling.create') }}" 
-                   class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-                    <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                    </svg>
-                    {{ __('app.add_schedule') }}
-                </a>
-                @endcan
-            </div>
-        </div>
-    </div>
+<div class="min-h-screen bg-gray-50">
+    <x-page-header>
+        <x-slot name="actions">
+            <a href="{{ route('teacher-scheduling.workload-analytics') }}" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                <i class="fas fa-chart-bar mr-2"></i>{{ __('app.workload_analytics') }}
+            </a>
+            @can('admin')
+            <a href="{{ route('teacher-scheduling.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                <i class="fas fa-plus mr-2"></i>{{ __('app.add_schedule') }}
+            </a>
+            @endcan
+        </x-slot>
+    </x-page-header>
+
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
 
     <!-- Statistics Cards -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">

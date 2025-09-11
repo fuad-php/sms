@@ -1,13 +1,18 @@
 @extends('layouts.app')
 
-@section('title', __('app.attendance_management'))
+@section('title', __('app.attendance'))
 
 @section('content')
-<div class="container mx-auto px-4 py-8">
-    <div class="mb-8">
-        <h1 class="text-3xl font-bold text-gray-900">{{ __('app.attendance_management') }}</h1>
-        <p class="text-gray-600">{{ __('app.view_and_manage_student_attendance') }}</p>
-    </div>
+<div class="min-h-screen bg-gray-50">
+    <x-page-header>
+        <x-slot name="actions">
+            <a href="{{ route('attendance.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                <i class="fas fa-plus mr-2"></i>{{ __('app.mark_attendance') }}
+            </a>
+        </x-slot>
+    </x-page-header>
+
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
 
     <!-- Attendance Form -->
     <div class="bg-white rounded-lg shadow p-6 mb-6">
@@ -23,9 +28,9 @@
                 <select name="class_id" id="class_id" required
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                     <option value="">{{ __('app.select_class') }}</option>
-                    @foreach(\App\Models\SchoolClass::active()->get() as $class)
+                    @foreach(\App\Models\SchoolClass::active()->orderBy('name')->orderBy('section')->get() as $class)
                         <option value="{{ $class->id }}" {{ request('class_id') == $class->id ? 'selected' : '' }}>
-                            {{ $class->name }}
+                            {{ $class->class_with_section }}
                         </option>
                     @endforeach
                 </select>
@@ -224,6 +229,7 @@
             </div>
         </div>
     @endif
+    </div>
 </div>
 @endsection
 

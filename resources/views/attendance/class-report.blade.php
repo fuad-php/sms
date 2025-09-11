@@ -6,7 +6,7 @@
 <div class="container mx-auto px-4 py-8">
     <div class="mb-8">
         <h1 class="text-3xl font-bold text-gray-900">{{ __('app.class_attendance_report') }}</h1>
-        <p class="text-gray-600">{{ __('app.view_attendance_summary_for', ['class' => $class->name]) }}</p>
+        <p class="text-gray-600">{{ __('app.view_attendance_summary_for', ['class' => $class->class_with_section]) }}</p>
     </div>
 
     <!-- Class Information -->
@@ -14,7 +14,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
                 <label class="block text-sm font-medium text-gray-500">{{ __('app.class_name') }}</label>
-                <p class="mt-1 text-lg font-semibold text-gray-900">{{ $class->name }}</p>
+                <p class="mt-1 text-lg font-semibold text-gray-900">{{ $class->class_with_section }}</p>
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-500">{{ __('app.total_students') }}</label>

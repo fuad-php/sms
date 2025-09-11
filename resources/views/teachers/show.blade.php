@@ -13,11 +13,11 @@
                         <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                         </svg>
-                        Back to Teachers
+                        {{ __('app.back_to_teachers') }}
                     </a>
                     <div>
                         <h1 class="text-3xl font-bold text-gray-900">{{ $teacher->user->name }}</h1>
-                        <p class="text-gray-600">Teacher Profile</p>
+                        <p class="text-gray-600">{{ __('app.teacher_profile') }}</p>
                     </div>
                 </div>
                 <div class="flex items-center space-x-3">
@@ -26,21 +26,21 @@
                             <svg class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            Active
+                            {{ __('app.active') }}
                         </span>
                     @else
                         <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800">
                             <svg class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            Inactive
+                            {{ __('app.inactive') }}
                         </span>
                     @endif
                     <a href="{{ route('teachers.edit', $teacher) }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                         <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                         </svg>
-                        Edit Profile
+                        {{ __('app.edit_profile') }}
                     </a>
                 </div>
             </div>
@@ -198,7 +198,7 @@
                                                 {{ $assignment->name }}
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                {{ $assignment->pivot->class->name ?? 'N/A' }}
+                                                {{ $assignment->class_name ?? 'N/A' }}
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                 {{ $assignment->pivot->periods_per_week }}
@@ -239,7 +239,7 @@
                         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                             @foreach($teacher->classesAsTeacher as $class)
                             <div class="border border-gray-200 rounded-lg p-4">
-                                <h4 class="text-sm font-medium text-gray-900">{{ $class->name }}</h4>
+                                <h4 class="text-sm font-medium text-gray-900">{{ $class->class_with_section }}</h4>
                                 <p class="text-sm text-gray-500 mt-1">{{ $class->students->count() }} students</p>
                                 <p class="text-xs text-gray-400 mt-2">Class Teacher</p>
                             </div>
@@ -259,7 +259,7 @@
                                 <dd class="mt-1 text-sm text-gray-900">{{ $teacher->user->created_at->format('M d, Y') }}</dd>
                             </div>
                             <div>
-                                <dt class="text-sm font-medium text-gray-500">Last Updated</dt>
+                                <dt class="text-sm font-medium text-gray-500">{{ __('app.last_updated') }}</dt>
                                 <dd class="mt-1 text-sm text-gray-900">{{ $teacher->user->updated_at->format('M d, Y') }}</dd>
                             </div>
                             <div>
@@ -312,10 +312,10 @@
                     
                     <div class="flex space-x-3">
                         <button type="button" onclick="closeSubjectModal()" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                            Cancel
+                            {{ __('app.cancel') }}
                         </button>
                         <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                            Save Assignments
+                            {{ __('app.save_assignments') }}
                         </button>
                     </div>
                 </div>
@@ -349,15 +349,13 @@ function addSubjectAssignmentModal() {
             <div>
                 <label class="block text-sm font-medium text-gray-700">Subject</label>
                 <select name="subjects[${subjectAssignmentIndex}][subject_id]" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                    <option value="">Select Subject</option>
-                    <!-- Subjects will be loaded via AJAX -->
+                    <option value="">{{ __('app.select_subject') }}</option>
                 </select>
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700">Class</label>
                 <select name="subjects[${subjectAssignmentIndex}][class_id]" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                    <option value="">Select Class</option>
-                    <!-- Classes will be loaded via AJAX -->
+                    <option value="">{{ __('app.select_class') }}</option>
                 </select>
             </div>
             <div>
@@ -367,21 +365,140 @@ function addSubjectAssignmentModal() {
             </div>
         </div>
         <button type="button" onclick="removeSubjectAssignmentModal(this)" class="mt-2 text-sm text-red-600 hover:text-red-800">
-            Remove Assignment
+            {{ __('app.remove_assignment') }}
         </button>
     `;
     container.appendChild(newAssignment);
+    
+    // Populate the dropdowns with data
+    populateDropdowns(newAssignment);
+    
     subjectAssignmentIndex++;
+}
+
+function populateDropdowns(assignmentElement) {
+    const subjectSelect = assignmentElement.querySelector('select[name*="[subject_id]"]');
+    const classSelect = assignmentElement.querySelector('select[name*="[class_id]"]');
+    
+    // Populate subjects dropdown
+    subjectsData.forEach(subject => {
+        const option = document.createElement('option');
+        option.value = subject.id;
+        option.textContent = subject.name + (subject.code ? ` (${subject.code})` : '');
+        subjectSelect.appendChild(option);
+    });
+    
+    // Populate classes dropdown
+    classesData.forEach(classItem => {
+        const option = document.createElement('option');
+        option.value = classItem.id;
+        option.textContent = classItem.display_name;
+        classSelect.appendChild(option);
+    });
 }
 
 function removeSubjectAssignmentModal(button) {
     button.parentElement.remove();
 }
 
+// Handle form submission
+document.getElementById('subjectAssignmentForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    const assignments = [];
+    
+    // Collect all assignment data
+    const assignmentElements = document.querySelectorAll('.subject-assignment');
+    assignmentElements.forEach((element, index) => {
+        const subjectId = element.querySelector('select[name*="[subject_id]"]').value;
+        const classId = element.querySelector('select[name*="[class_id]"]').value;
+        const periodsPerWeek = element.querySelector('input[name*="[periods_per_week]"]').value;
+        
+        if (subjectId && classId && periodsPerWeek) {
+            assignments.push({
+                subject_id: subjectId,
+                class_id: classId,
+                periods_per_week: periodsPerWeek
+            });
+        }
+    });
+    
+    if (assignments.length === 0) {
+        alert('{{ __('app.please_add_subject_assignment') }}');
+        return;
+    }
+    
+    // Submit the data
+    fetch('{{ route("teachers.assign-subjects", $teacher->id) }}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({
+            subjects: assignments
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Subject assignments updated successfully!');
+            closeSubjectModal();
+            location.reload(); // Reload the page to show updated assignments
+        } else {
+            alert('Error updating subject assignments: ' + (data.message || 'Unknown error'));
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('{{ __('app.error_updating_assignments') }}');
+    });
+});
+
+// Global variables to store subjects and classes data
+let subjectsData = [];
+let classesData = [];
+
 // Load subjects and classes for the modal
 document.addEventListener('DOMContentLoaded', function() {
-    // This would typically load via AJAX
-    // For now, we'll add a placeholder
+    loadSubjectsAndClasses();
 });
+
+function loadSubjectsAndClasses() {
+    // Load subjects
+    fetch('{{ route("teachers.ajax.subjects") }}')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            subjectsData = data;
+            console.log('Subjects loaded:', subjectsData.length);
+        })
+        .catch(error => {
+            console.error('Error loading subjects:', error);
+            alert('{{ __('app.error_loading_subjects') }}');
+        });
+
+    // Load classes
+    fetch('{{ route("teachers.ajax.classes") }}')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            classesData = data;
+            console.log('Classes loaded:', classesData.length);
+        })
+        .catch(error => {
+            console.error('Error loading classes:', error);
+            alert('{{ __('app.error_loading_classes') }}');
+        });
+}
 </script>
 @endpush

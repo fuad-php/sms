@@ -28,9 +28,9 @@
                 <select name="class_id" id="class_id"
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                     <option value="">{{ __('app.all_classes') }}</option>
-                    @foreach(\App\Models\SchoolClass::active()->get() as $class)
+                    @foreach(\App\Models\SchoolClass::active()->orderBy('name')->orderBy('section')->get() as $class)
                         <option value="{{ $class->id }}" {{ request('class_id') == $class->id ? 'selected' : '' }}>
-                            {{ $class->name }}
+                            {{ $class->class_with_section }}
                         </option>
                     @endforeach
                 </select>
@@ -132,7 +132,7 @@
                     <tbody class="bg-white divide-y divide-gray-200">
                         @foreach($classStats as $class)
                         <tr>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $class['name'] }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $class['class_with_section'] ?? $class['name'] }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $class['total_students'] }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $class['average_attendance'] }}%</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $class['best_day'] ?? __('app.not_available') }}</td>

@@ -1,27 +1,22 @@
 @extends('layouts.app')
 
-@section('title', __('app.create_exam'))
+@section('title', __('app.add_exam'))
 
 @section('content')
-<div class="container mx-auto px-4 py-8">
-    <div class="max-w-4xl mx-auto">
-        <!-- Header -->
-        <div class="mb-8">
-            <div class="flex items-center justify-between">
-                <div>
-                    <h1 class="text-3xl font-bold text-gray-900 mb-2">{{ __('app.create_exam') }}</h1>
-                    <p class="text-gray-600">{{ __('app.create_new_examination') }}</p>
-                </div>
-                <div>
-                    <a href="{{ route('exams.index') }}" class="inline-flex items-center px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                        <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                        </svg>
-                        {{ __('app.back_to_exams') }}
-                    </a>
-                </div>
-            </div>
-        </div>
+<div class="min-h-screen bg-gray-50">
+    <x-page-header>
+        <x-slot name="actions">
+            <a href="{{ route('exams.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg flex items-center transition-colors">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                {{ __('app.back_to_exams') }}
+            </a>
+        </x-slot>
+    </x-page-header>
+
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto">
 
         <!-- Form -->
         <div class="bg-white shadow-sm border border-gray-200 rounded-lg">
@@ -214,6 +209,9 @@
                     </button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
         </div>
     </div>
 </div>

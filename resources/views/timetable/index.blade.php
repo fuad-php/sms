@@ -1,33 +1,21 @@
 @extends('layouts.app')
 
-@section('title', __('app.timetable_management'))
+@section('title', __('app.timetable'))
 
 @section('content')
-<div class="container mx-auto px-4 py-8">
-    <div class="max-w-7xl mx-auto">
-        <!-- Header -->
-        <div class="mb-8">
-            <div class="flex justify-between items-center">
-                <div>
-                    <h1 class="text-3xl font-bold text-gray-900 mb-2">{{ __('app.timetable_management') }}</h1>
-                    <p class="text-gray-600">{{ __('app.manage_class_schedules') }}</p>
-                </div>
-                <div class="flex space-x-3">
-                    <a href="{{ route('timetable.weekly') }}" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm font-medium">
-                        <svg class="h-4 w-4 inline mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                        {{ __('app.weekly_view') }}
-                    </a>
-                    <a href="{{ route('timetable.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">
-                        <svg class="h-4 w-4 inline mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                        </svg>
-                        {{ __('app.add_timetable') }}
-                    </a>
-                </div>
-            </div>
-        </div>
+<div class="min-h-screen bg-gray-50">
+    <x-page-header>
+        <x-slot name="actions">
+            <a href="{{ route('timetable.weekly') }}" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                <i class="fas fa-calendar-week mr-2"></i>{{ __('app.weekly_view') }}
+            </a>
+            <a href="{{ route('timetable.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                <i class="fas fa-plus mr-2"></i>{{ __('app.add_timetable') }}
+            </a>
+        </x-slot>
+    </x-page-header>
+
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
 
         <!-- Filters -->
         <div class="bg-white rounded-lg shadow p-6 mb-6">

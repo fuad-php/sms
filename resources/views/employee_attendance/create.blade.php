@@ -3,8 +3,21 @@
 @section('title', __('app.mark_employee_attendance'))
 
 @section('content')
-    <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="bg-white shadow rounded-lg p-6">
+<div class="min-h-screen bg-gray-50">
+    <x-page-header>
+        <x-slot name="actions">
+            <a href="{{ route('employee-attendance.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg flex items-center transition-colors">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                {{ __('app.back') }}
+            </a>
+        </x-slot>
+    </x-page-header>
+
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-2xl mx-auto">
+            <div class="bg-white shadow rounded-lg p-6">
             <form method="POST" action="{{ url('/api/employee-attendance/mark') }}" class="space-y-4">
                 @csrf
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -46,8 +59,10 @@
                     <button class="bg-blue-600 text-white px-4 py-2 rounded">{{ __('app.save') }}</button>
                 </div>
             </form>
+            </div>
         </div>
     </div>
+</div>
 @endsection
 
 

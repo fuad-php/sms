@@ -20,7 +20,7 @@
                 <div class="text-center">
                     @if($student->user->avatar)
                         <img src="{{ asset('storage/' . $student->user->avatar) }}" 
-                             alt="Profile Picture" 
+                             alt="{{ __('app.profile_picture') }}" 
                              class="w-32 h-32 rounded-full mx-auto mb-4 object-cover">
                     @else
                         <div class="w-32 h-32 rounded-full mx-auto mb-4 bg-gray-300 flex items-center justify-center">

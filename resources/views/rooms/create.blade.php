@@ -1,14 +1,22 @@
 @extends('layouts.app')
 
-@section('title', __('app.create_room'))
+@section('title', __('app.add_room'))
 
 @section('content')
-<div class="py-8">
-    <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="mb-8">
-            <h1 class="text-3xl font-bold text-gray-900">{{ __('app.create_room') }}</h1>
-            <p class="text-gray-600 mt-1">{{ __('app.add_new_room_help') }}</p>
-        </div>
+<div class="min-h-screen bg-gray-50">
+    <x-page-header>
+        <x-slot name="actions">
+            <a href="{{ route('rooms.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg flex items-center transition-colors">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                {{ __('app.back_to_rooms') }}
+            </a>
+        </x-slot>
+    </x-page-header>
+
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-2xl mx-auto">
 
         <div class="bg-white rounded-lg shadow-sm border">
             <form method="POST" action="{{ route('rooms.store') }}" class="p-6 space-y-6">
@@ -64,6 +72,7 @@
                     </button>
                 </div>
             </form>
+        </div>
         </div>
     </div>
 </div>

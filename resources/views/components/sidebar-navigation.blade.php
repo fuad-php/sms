@@ -363,6 +363,13 @@
                         </svg>
                         {{ __('app.fee_management') }}
                     </a>
+                    <a href="{{ route('yearly-leaves.index') }}" 
+                       class="flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors {{ request()->routeIs('yearly-leaves.*') ? 'bg-blue-100 text-blue-700' : 'text-gray-700 hover:bg-gray-100' }}">
+                        <svg class="mr-3 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        {{ __('app.yearly_leave_settings') }}
+                    </a>
 
                     <!-- Enrollment Management -->
                     <a href="{{ route('enrollments.dashboard') }}" 

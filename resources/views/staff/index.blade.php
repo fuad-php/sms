@@ -3,7 +3,16 @@
 @section('title', __('app.staff'))
 
 @section('content')
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="min-h-screen bg-gray-50">
+    <x-page-header>
+        <x-slot name="actions">
+            <a href="{{ route('staff.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                <i class="fas fa-plus mr-2"></i>{{ __('app.add_staff') }}
+            </a>
+        </x-slot>
+    </x-page-header>
+
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         <div class="bg-white shadow rounded-lg p-6">
             <form method="GET" class="mb-4 flex gap-2">
                 <input type="text" name="search" value="{{ request('search') }}" placeholder="{{ __('Search staff...') }}" class="border rounded px-3 py-2 w-full">
@@ -48,6 +57,7 @@
             <div class="mt-4">{{ $staff->links() }}</div>
         </div>
     </div>
+</div>
 @endsection
 
 

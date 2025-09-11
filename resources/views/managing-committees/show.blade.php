@@ -1,24 +1,27 @@
-<x-app-layout>
-    <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('app.committee_member_details') }}
-            </h2>
-            <div class="flex space-x-2">
-                @can('update', $managingCommittee)
-                    <a href="{{ route('managing-committees.edit', $managingCommittee) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                        {{ __('app.edit') }}
-                    </a>
-                @endcan
-                <a href="{{ route('managing-committees.index') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-                    {{ __('app.back_to_list') }}
-                </a>
-            </div>
-        </div>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-12">
-        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+@section('title', __('app.committee_member_details'))
+
+@section('content')
+<div class="min-h-screen bg-gray-50">
+    <x-page-header>
+        <x-slot name="actions">
+            @can('update', $managingCommittee)
+                <a href="{{ route('managing-committees.edit', $managingCommittee) }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                    <i class="fas fa-edit mr-2"></i>{{ __('app.edit') }}
+                </a>
+            @endcan
+            <a href="{{ route('managing-committees.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg flex items-center transition-colors">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                {{ __('app.back_to_list') }}
+            </a>
+        </x-slot>
+    </x-page-header>
+
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -191,4 +194,5 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+</div>
+@endsection

@@ -3,23 +3,17 @@
 @section('title', __('app.contact_management'))
 
 @section('content')
-<div class="container mx-auto px-4 py-8">
-    <div class="max-w-7xl mx-auto">
-        <!-- Header -->
-        <div class="mb-8">
-            <div class="flex justify-between items-center">
-                <div>
-                    <h1 class="text-3xl font-bold text-gray-900">{{ __('app.contact_management') }}</h1>
-                    <p class="text-gray-600 mt-2">{{ __('app.manage_contact_inquiries') }}</p>
-                </div>
-                <div class="flex space-x-3">
-                    <a href="{{ route('admin.contact.export', ['format' => 'csv']) }}" 
-                       class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm font-medium">
-                        <i class="fas fa-download mr-2"></i>{{ __('app.export') }}
-                    </a>
-                </div>
-            </div>
-        </div>
+<div class="min-h-screen bg-gray-50">
+    <x-page-header>
+        <x-slot name="actions">
+            <a href="{{ route('admin.contact.export', ['format' => 'csv']) }}" 
+               class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                <i class="fas fa-download mr-2"></i>{{ __('app.export') }}
+            </a>
+        </x-slot>
+    </x-page-header>
+
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
 
         <!-- Stats Cards -->
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
@@ -245,4 +239,6 @@ function loadStats() {
 }
 </script>
 @endpush
+    </div>
+</div>
 @endsection

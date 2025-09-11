@@ -1,13 +1,14 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('app.report_card') }} — {{ __('app.select_student') }}
-        </h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-6">
-        <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white shadow sm:rounded-lg p-6">
+@section('title', __('app.report_cards'))
+
+@section('content')
+<div class="min-h-screen bg-gray-50">
+    <x-page-header>
+    </x-page-header>
+
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <div class="bg-white shadow sm:rounded-lg p-6">
                 <form method="GET" class="mb-4">
                     <input type="text" name="search" value="{{ request('search') }}" placeholder="{{ __('app.search_students') }}" class="w-full border-gray-300 rounded-md" />
                 </form>
@@ -40,7 +41,7 @@
                 @if(method_exists($students, 'links'))
                     <div class="mt-4">{{ $students->links() }}</div>
                 @endif
-            </div>
         </div>
     </div>
-</x-app-layout>
+</div>
+@endsection

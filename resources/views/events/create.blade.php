@@ -3,8 +3,20 @@
 @section('title', __('app.create_event'))
 
 @section('content')
-<div class="container mx-auto px-4 py-8">
-    <h1 class="text-3xl font-bold text-gray-900 mb-6">{{ __('app.create_event') }}</h1>
+<div class="min-h-screen bg-gray-50">
+    <x-page-header>
+        <x-slot name="actions">
+            <a href="{{ route('events.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg flex items-center transition-colors">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                {{ __('app.cancel') }}
+            </a>
+        </x-slot>
+    </x-page-header>
+
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-2xl mx-auto">
     <form action="{{ route('events.store') }}" method="POST" class="space-y-6">
         @csrf
         <div>
@@ -49,10 +61,11 @@
             </div>
         </div>
         <div class="flex justify-end space-x-3">
-            <a href="{{ route('events.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded">{{ __('app.cancel') }}</a>
             <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">{{ __('app.create_event') }}</button>
         </div>
     </form>
+        </div>
+    </div>
 </div>
 @endsection
 

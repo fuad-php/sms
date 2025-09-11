@@ -3,25 +3,18 @@
 @section('title', __('app.classes'))
 
 @section('content')
-<div class="py-8">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Header -->
-        <div class="mb-8">
-            <div class="flex justify-between items-center">
-                <div>
-                    <h1 class="text-3xl font-bold text-gray-900">{{ __('app.class_management') }}</h1>
-                    <p class="text-gray-600 mt-1">{{ __('app.manage_school_classes_sections') }}</p>
-                </div>
-                @if(auth()->check() && auth()->user()->role === 'admin')
-                <a href="{{ route('classes.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors">
-                    <svg class="h-4 w-4 inline mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                    </svg>
-                    {{ __('app.add_new_class') }}
-                </a>
-                @endif
-            </div>
-        </div>
+<div class="min-h-screen bg-gray-50">
+    <x-page-header>
+        <x-slot name="actions">
+            @if(auth()->check() && auth()->user()->role === 'admin')
+            <a href="{{ route('classes.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                <i class="fas fa-plus mr-2"></i>{{ __('app.add_class') }}
+            </a>
+            @endif
+        </x-slot>
+    </x-page-header>
+
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
 
         <!-- Statistics Cards -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -228,4 +221,6 @@
     </svg>
 </a>
 @endif
+    </div>
+</div>
 @endsection

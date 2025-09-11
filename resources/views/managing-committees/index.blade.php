@@ -1,21 +1,22 @@
-<x-app-layout>
-    <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('app.managing_committees') }}
-            </h2>
+@extends('layouts.app')
+
+@section('title', __('app.managing_committees'))
+
+@section('content')
+<div class="min-h-screen bg-gray-50">
+    <x-page-header>
+        <x-slot name="actions">
             @can('create', App\Models\ManagingCommittee::class)
-                <a href="{{ route('managing-committees.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    {{ __('app.add_committee_member') }}
+                <a href="{{ route('managing-committees.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                    <i class="fas fa-plus mr-2"></i>{{ __('app.add_committee_member') }}
                 </a>
             @endcan
-        </div>
-    </x-slot>
+        </x-slot>
+    </x-page-header>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="p-6 text-gray-900">
                     <!-- Search and Filter Section -->
                     <div class="mb-6">
                         <form method="GET" action="{{ route('managing-committees.index') }}" class="space-y-4 md:space-y-0 md:flex md:items-center md:space-x-4">
@@ -293,4 +294,8 @@
         });
     </script>
     @endpush
-</x-app-layout>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection

@@ -3,20 +3,29 @@
 @section('title', $announcement->title)
 
 @section('content')
-<div class="container mx-auto px-4 py-8">
-    <div class="max-w-4xl mx-auto">
-        <!-- Back Button -->
-        <div class="mb-6">
+<div class="min-h-screen bg-gray-50">
+    <x-page-header>
+        <x-slot name="actions">
             @auth
-                <a href="{{ route('announcements.index') }}" class="text-blue-600 hover:text-blue-800 font-medium">
-                    <i class="fas fa-arrow-left mr-2"></i>Back to Announcements
+                <a href="{{ route('announcements.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg flex items-center transition-colors">
+                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                    {{ __('app.back_to_announcements') }}
                 </a>
             @else
-                <a href="{{ route('announcements.public') }}" class="text-blue-600 hover:text-blue-800 font-medium">
-                    <i class="fas fa-arrow-left mr-2"></i>Back to Public Announcements
+                <a href="{{ route('announcements.public') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg flex items-center transition-colors">
+                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                    {{ __('app.back_to_public_announcements') }}
                 </a>
             @endauth
-        </div>
+        </x-slot>
+    </x-page-header>
+
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto">
 
         <!-- Announcement Header -->
         <div class="bg-white rounded-lg shadow-md p-6 mb-6">
@@ -42,13 +51,13 @@
                         @auth
                             <a href="{{ route('announcements.download', $announcement) }}" 
                                class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg transition duration-200" 
-                               title="Download Attachment">
+                               title="{{ __('app.download_attachment') }}">
                                 <i class="fas fa-download mr-2"></i>Download
                             </a>
                         @else
                             <a href="{{ route('announcements.public.download', $announcement) }}" 
                                class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg transition duration-200" 
-                               title="Download Attachment">
+                               title="{{ __('app.download_attachment') }}">
                                 <i class="fas fa-download mr-2"></i>Download
                             </a>
                         @endauth
@@ -174,6 +183,7 @@
                     </form>
                 @endcan
             </div>
+        </div>
         </div>
     </div>
 </div>

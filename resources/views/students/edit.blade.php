@@ -149,7 +149,7 @@
                         <label for="avatar" class="block text-sm font-medium text-gray-700">Profile Picture</label>
                         @if($student->user->avatar)
                             <div class="mb-2">
-                                <img src="{{ asset('storage/' . $student->user->avatar) }}" alt="Current Avatar" class="w-20 h-20 rounded-full object-cover">
+                                <img src="{{ asset('storage/' . $student->user->avatar) }}" alt="{{ __('app.current_avatar') }}" class="w-20 h-20 rounded-full object-cover">
                             </div>
                         @endif
                         <input type="file" name="avatar" id="avatar" accept="image/*"

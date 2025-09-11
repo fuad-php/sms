@@ -1,16 +1,22 @@
 @extends('layouts.app')
 
-@section('title', __('app.create_announcement'))
+@section('title', __('app.new_announcement'))
 
 @section('content')
-<div class="container mx-auto px-4 py-8">
-    <div class="max-w-4xl mx-auto">
-        <div class="flex items-center justify-between mb-6">
-            <h1 class="text-3xl font-bold text-gray-900">{{ __('app.create_announcement') }}</h1>
-            <a href="{{ route('announcements.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg transition duration-200">
-                <i class="fas fa-arrow-left mr-2"></i>{{ __('app.back_to_announcements') }}
+<div class="min-h-screen bg-gray-50">
+    <x-page-header>
+        <x-slot name="actions">
+            <a href="{{ route('announcements.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg flex items-center transition-colors">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                {{ __('app.back_to_announcements') }}
             </a>
-        </div>
+        </x-slot>
+    </x-page-header>
+
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto">
 
         <div class="bg-white rounded-lg shadow-md p-6">
             <form method="POST" action="{{ route('announcements.store') }}" enctype="multipart/form-data">
@@ -168,4 +174,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+        </div>
+    </div>
+</div>
 @endsection

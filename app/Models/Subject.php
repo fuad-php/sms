@@ -55,8 +55,10 @@ class Subject extends Model
 
     public function students()
     {
-        // Return empty collection for now to avoid query builder issues
-        return collect();
+        // Return a relationship that always returns empty results
+        // This is a placeholder since subjects don't have direct student relationships
+        return $this->belongsToMany(Student::class, 'class_subject', 'subject_id', 'class_id')
+                    ->whereRaw('1 = 0'); // This ensures no results are returned
     }
 
     /**
@@ -64,7 +66,9 @@ class Subject extends Model
      */
     public function getStudentsCount()
     {
-        return $this->students()->count();
+        // For now, return 0 since the students relationship is not directly implemented
+        // This can be enhanced later if needed
+        return 0;
     }
 
     /**

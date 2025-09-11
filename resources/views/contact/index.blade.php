@@ -172,13 +172,13 @@
                         <select id="department" 
                                 name="department"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('department') border-red-500 @enderror">
-                            <option value="">Select a department</option>
-                            <option value="Admissions" {{ old('department') === 'Admissions' ? 'selected' : '' }}>Admissions</option>
-                            <option value="Academic" {{ old('department') === 'Academic' ? 'selected' : '' }}>Academic</option>
-                            <option value="Administration" {{ old('department') === 'Administration' ? 'selected' : '' }}>Administration</option>
-                            <option value="Student Services" {{ old('department') === 'Student Services' ? 'selected' : '' }}>Student Services</option>
-                            <option value="IT Support" {{ old('department') === 'IT Support' ? 'selected' : '' }}>IT Support</option>
-                            <option value="General Inquiry" {{ old('department') === 'General Inquiry' ? 'selected' : '' }}>General Inquiry</option>
+                            <option value="">{{ __('app.select_department') }}</option>
+                            <option value="Admissions" {{ old('department') === 'Admissions' ? 'selected' : '' }}>{{ __('app.admissions') }}</option>
+                            <option value="Academic" {{ old('department') === 'Academic' ? 'selected' : '' }}>{{ __('app.academic') }}</option>
+                            <option value="Administration" {{ old('department') === 'Administration' ? 'selected' : '' }}>{{ __('app.administration') }}</option>
+                            <option value="Student Services" {{ old('department') === 'Student Services' ? 'selected' : '' }}>{{ __('app.student_services') }}</option>
+                            <option value="IT Support" {{ old('department') === 'IT Support' ? 'selected' : '' }}>{{ __('app.it_support') }}</option>
+                            <option value="General Inquiry" {{ old('department') === 'General Inquiry' ? 'selected' : '' }}>{{ __('app.general_inquiry') }}</option>
                         </select>
                         @error('department')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>

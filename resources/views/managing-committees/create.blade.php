@@ -1,17 +1,22 @@
-<x-app-layout>
-    <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('app.add_committee_member') }}
-            </h2>
-            <a href="{{ route('managing-committees.index') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+@extends('layouts.app')
+
+@section('title', __('app.add_committee_member'))
+
+@section('content')
+<div class="min-h-screen bg-gray-50">
+    <x-page-header>
+        <x-slot name="actions">
+            <a href="{{ route('managing-committees.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg flex items-center transition-colors">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
                 {{ __('app.back_to_list') }}
             </a>
-        </div>
-    </x-slot>
+        </x-slot>
+    </x-page-header>
 
-    <div class="py-12">
-        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <form method="POST" action="{{ route('managing-committees.store') }}" enctype="multipart/form-data" class="space-y-6">
@@ -201,4 +206,5 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+</div>
+@endsection

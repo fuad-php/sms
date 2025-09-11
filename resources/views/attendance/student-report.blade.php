@@ -23,7 +23,7 @@
             @endif
             <div class="ml-4">
                 <h2 class="text-xl font-semibold text-gray-900">{{ $student->user->name }}</h2>
-                <p class="text-gray-600">{{ $student->student_id }} • {{ $student->class->name ?? __('app.no_class') }}</p>
+                <p class="text-gray-600">{{ $student->student_id }} • {{ $student->class->class_with_section ?? __('app.no_class') }}</p>
                 <p class="text-sm text-gray-500">{{ __('app.roll_number') }}: {{ $student->roll_number ?? __('app.not_available') }}</p>
             </div>
         </div>

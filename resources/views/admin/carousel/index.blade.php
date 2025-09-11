@@ -3,20 +3,16 @@
 @section('title', __('app.carousel_management'))
 
 @section('content')
-<div class="container mx-auto px-4 py-8">
-    <div class="mb-8">
-        <div class="flex justify-between items-center">
-            <div>
-                <h1 class="text-3xl font-bold text-gray-900">{{ __('app.carousel_management') }}</h1>
-                <p class="text-gray-600">{{ __('app.manage_homepage_slides') }}</p>
-            </div>
-            <div class="flex space-x-3">
-                <a href="{{ route('admin.carousel.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">
-                    <i class="fas fa-plus mr-2"></i>{{ __('app.add_slide') }}
-                </a>
-            </div>
-        </div>
-    </div>
+<div class="min-h-screen bg-gray-50">
+    <x-page-header>
+        <x-slot name="actions">
+            <a href="{{ route('admin.carousel.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                <i class="fas fa-plus mr-2"></i>{{ __('app.add_slide') }}
+            </a>
+        </x-slot>
+    </x-page-header>
+
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
 
     <!-- Success/Error Messages -->
     @if(session('success'))
@@ -181,4 +177,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 @endpush
+    </div>
+</div>
 @endsection

@@ -3,23 +3,21 @@
 @section('title', __('app.contact_inquiry_details'))
 
 @section('content')
-<div class="container mx-auto px-4 py-8">
-    <div class="max-w-4xl mx-auto">
-        <!-- Header -->
-        <div class="mb-8">
-            <div class="flex justify-between items-center">
-                <div>
-                    <h1 class="text-3xl font-bold text-gray-900">{{ __('app.contact_inquiry_details') }}</h1>
-                    <p class="text-gray-600 mt-2">{{ __('app.view_contact_inquiry_information') }}</p>
-                </div>
-                <div class="flex space-x-3">
-                    <a href="{{ route('admin.contact.index') }}" 
-                       class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-md text-sm font-medium">
-                        <i class="fas fa-arrow-left mr-2"></i>{{ __('app.back_to_contact_list') }}
-                    </a>
-                </div>
-            </div>
-        </div>
+<div class="min-h-screen bg-gray-50">
+    <x-page-header>
+        <x-slot name="actions">
+            <a href="{{ route('admin.contact.index') }}" 
+               class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg flex items-center transition-colors">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                {{ __('app.back_to_contact_list') }}
+            </a>
+        </x-slot>
+    </x-page-header>
+
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto">
 
         <!-- Inquiry Details -->
         <div class="bg-white rounded-lg shadow overflow-hidden">
@@ -163,6 +161,7 @@
                     <p class="mt-1 text-sm text-gray-900">{{ $inquiry->updated_at->format('F j, Y \a\t g:i A') }}</p>
                 </div>
             </div>
+        </div>
         </div>
     </div>
 </div>

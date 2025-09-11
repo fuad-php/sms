@@ -3,37 +3,31 @@
 @section('title', __('app.results_management'))
 
 @section('content')
-<div class="container mx-auto px-4 py-8">
-    <div class="max-w-7xl mx-auto">
-        <!-- Header -->
-        <div class="mb-8">
-            <div class="flex items-center justify-between">
-                <div>
-                    <h1 class="text-3xl font-bold text-gray-900 mb-2">{{ __('app.results_management') }}</h1>
-                    <p class="text-gray-600">{{ __('app.manage_exam_results') }}</p>
-                </div>
-                <div class="flex space-x-3">
-                    @can('create', App\Models\ExamResult::class)
-                        <a href="{{ route('results.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md">
-                            {{ __('app.add_result') }}
-                        </a>
-                    @endcan
-                    @can('bulkImport', App\Models\ExamResult::class)
-                        <a href="{{ route('results.bulk-import') }}" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-md">
-                            {{ __('app.bulk_import') }}
-                        </a>
-                    @endcan
-                    <a href="{{ route('results.statistics') }}" class="bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-4 rounded-md">
-                        {{ __('app.statistics') }}
-                    </a>
-                    @can('export', App\Models\ExamResult::class)
-                        <a href="{{ route('results.export') }}" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-md">
-                            {{ __('app.export') }}
-                        </a>
-                    @endcan
-                </div>
-            </div>
-        </div>
+<div class="min-h-screen bg-gray-50">
+    <x-page-header>
+        <x-slot name="actions">
+            @can('create', App\Models\ExamResult::class)
+                <a href="{{ route('results.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                    <i class="fas fa-plus mr-2"></i>{{ __('app.add_result') }}
+                </a>
+            @endcan
+            @can('bulkImport', App\Models\ExamResult::class)
+                <a href="{{ route('results.bulk-import') }}" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                    <i class="fas fa-upload mr-2"></i>{{ __('app.bulk_import') }}
+                </a>
+            @endcan
+            <a href="{{ route('results.statistics') }}" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                <i class="fas fa-chart-bar mr-2"></i>{{ __('app.statistics') }}
+            </a>
+            @can('export', App\Models\ExamResult::class)
+                <a href="{{ route('results.export') }}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                    <i class="fas fa-download mr-2"></i>{{ __('app.export') }}
+                </a>
+            @endcan
+        </x-slot>
+    </x-page-header>
+
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
 
         <!-- Filters -->
         <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">

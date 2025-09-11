@@ -15,6 +15,7 @@ use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\ReportCardController;
 use App\Http\Controllers\TranscriptController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\YearlyLeaveController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -147,6 +148,8 @@ Route::middleware(['auth', 'maintenance'])->group(function () {
         Route::delete('/{teacher}', [App\Http\Controllers\TeacherController::class, 'destroy'])->name('destroy');
         Route::post('/{teacher}/toggle-status', [App\Http\Controllers\TeacherController::class, 'toggleStatus'])->name('toggle-status');
         Route::post('/{teacher}/assign-subjects', [App\Http\Controllers\TeacherController::class, 'assignSubjects'])->name('assign-subjects');
+        Route::get('/ajax/subjects', [App\Http\Controllers\TeacherController::class, 'getAllSubjects'])->name('ajax.subjects');
+        Route::get('/ajax/classes', [App\Http\Controllers\TeacherController::class, 'getAllClasses'])->name('ajax.classes');
         Route::get('/statistics/data', [App\Http\Controllers\TeacherController::class, 'statistics'])->name('statistics');
         Route::get('/profile/view', [App\Http\Controllers\TeacherController::class, 'profile'])->name('profile');
         
@@ -408,6 +411,18 @@ Route::middleware(['auth', 'maintenance'])->group(function () {
         Route::put('/{feeCategory}', [App\Http\Controllers\FeeCategoryController::class, 'update'])->name('update')->middleware('role:admin');
         Route::delete('/{feeCategory}', [App\Http\Controllers\FeeCategoryController::class, 'destroy'])->name('destroy')->middleware('role:admin');
         Route::post('/{feeCategory}/toggle-status', [App\Http\Controllers\FeeCategoryController::class, 'toggleStatus'])->name('toggle-status')->middleware('role:admin');
+    });
+
+    // Yearly Leave Settings Routes (Admin only)
+    Route::group(['prefix' => 'yearly-leaves', 'as' => 'yearly-leaves.'], function () {
+        Route::get('/', [YearlyLeaveController::class, 'index'])->name('index')->middleware('role:admin');
+        Route::get('/create', [YearlyLeaveController::class, 'create'])->name('create')->middleware('role:admin');
+        Route::post('/', [YearlyLeaveController::class, 'store'])->name('store')->middleware('role:admin');
+        Route::get('/{yearlyLeave}', [YearlyLeaveController::class, 'show'])->name('show')->middleware('role:admin');
+        Route::get('/{yearlyLeave}/edit', [YearlyLeaveController::class, 'edit'])->name('edit')->middleware('role:admin');
+        Route::put('/{yearlyLeave}', [YearlyLeaveController::class, 'update'])->name('update')->middleware('role:admin');
+        Route::delete('/{yearlyLeave}', [YearlyLeaveController::class, 'destroy'])->name('destroy')->middleware('role:admin');
+        Route::post('/{yearlyLeave}/toggle-status', [YearlyLeaveController::class, 'toggleStatus'])->name('toggle-status')->middleware('role:admin');
     });
 });
 

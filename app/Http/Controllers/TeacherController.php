@@ -148,7 +148,7 @@ class TeacherController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->withInput()
-                ->with('error', 'Failed to create teacher: ' . $e->getMessage());
+                ->with('error', __('app.failed_to_create_teacher') . ': ' . $e->getMessage());
         }
     }
 
@@ -157,10 +157,55 @@ class TeacherController extends Controller
      */
     public function show(Teacher $teacher)
     {
-        $teacher->load(['user', 'subjects.subject', 'subjects.class', 'classesAsTeacher']);
+        // Load subjects with their classes through the pivot
+        $teacher->load(['user', 'classesAsTeacher']);
+        
+        // Load subjects with class information
+        $subjects = $teacher->subjects()->with('classes')->get();
+        
+        // Add class_name attribute to each subject
+        $subjects->each(function ($subject) {
+            $class = \App\Models\SchoolClass::find($subject->pivot->class_id);
+            $subject->class_name = $class ? $class->class_with_section : 'N/A';
+        });
+        
+        $teacher->subjects = $subjects;
         
         return view('teachers.show', compact('teacher'))->with('pageTitle', $teacher->user->name);
     }
+
+    /**
+     * Get all subjects for AJAX requests
+     */
+    public function getAllSubjects()
+    {
+        $subjects = \App\Models\Subject::where('is_active', true)
+            ->orderBy('name')
+            ->get(['id', 'name', 'code']);
+        
+        return response()->json($subjects);
+    }
+
+    /**
+     * Get all classes for AJAX requests
+     */
+    public function getAllClasses()
+    {
+        $classes = \App\Models\SchoolClass::orderBy('name')
+            ->orderBy('section')
+            ->get(['id', 'name', 'section'])
+            ->map(function ($class) {
+                return [
+                    'id' => $class->id,
+                    'name' => $class->name,
+                    'section' => $class->section,
+                    'display_name' => $class->class_with_section
+                ];
+            });
+        
+        return response()->json($classes);
+    }
+
 
     /**
      * Show the form for editing the specified teacher
@@ -245,7 +290,7 @@ class TeacherController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->withInput()
-                ->with('error', 'Failed to update teacher: ' . $e->getMessage());
+                ->with('error', __('app.failed_to_update_teacher') . ': ' . $e->getMessage());
         }
     }
 
@@ -272,7 +317,7 @@ class TeacherController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->with('error', 'Failed to delete teacher: ' . $e->getMessage());
+            return back()->with('error', __('app.failed_to_delete_teacher') . ': ' . $e->getMessage());
         }
     }
 
@@ -296,7 +341,7 @@ class TeacherController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to update teacher status: ' . $e->getMessage()
+                'message' => __('app.failed_to_update_teacher_status') . ': ' . $e->getMessage()
             ], 500);
         }
     }
@@ -352,7 +397,7 @@ class TeacherController extends Controller
             DB::rollBack();
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to assign subjects: ' . $e->getMessage()
+                'message' => __('app.failed_to_assign_subjects') . ': ' . $e->getMessage()
             ], 500);
         }
     }

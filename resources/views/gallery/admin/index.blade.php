@@ -3,13 +3,14 @@
 @section('title', __('app.gallery'))
 
 @section('content')
-<div class="container mx-auto px-4 py-8">
-    <div class="flex items-center justify-between mb-6">
-        <h1 class="text-3xl font-bold text-gray-900">{{ __('app.gallery') }}</h1>
-        <div class="space-x-2">
+<div class="min-h-screen bg-gray-50">
+    <x-page-header>
+        <x-slot name="actions">
             <a href="{{ route('admin.gallery.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">{{ __('app.add') }}</a>
-        </div>
-    </div>
+        </x-slot>
+    </x-page-header>
+
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
 
     @if(session('success'))
         <div class="mb-4 bg-green-100 text-green-800 px-4 py-2 rounded">{{ session('success') }}</div>
@@ -50,6 +51,7 @@
     </div>
 
     <div class="mt-6">{{ $images->links() }}</div>
+    </div>
 </div>
 @endsection
 

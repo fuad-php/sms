@@ -3,13 +3,11 @@
 @section('title', __('app.reports_analytics'))
 
 @section('content')
-<div class="container mx-auto px-4 py-8">
-    <div class="max-w-7xl mx-auto">
-        <!-- Header -->
-        <div class="mb-8">
-            <h1 class="text-3xl font-bold text-gray-900 mb-2">{{ __('app.reports_analytics') }}</h1>
-            <p class="text-gray-600">{{ __('app.generate_comprehensive_reports') }}</p>
-        </div>
+<div class="min-h-screen bg-gray-50">
+    <x-page-header>
+    </x-page-header>
+
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
 
         <!-- Statistics Overview -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 mb-8">
@@ -327,4 +325,6 @@ function hideExportModal() {
     document.getElementById('exportModal').classList.add('hidden');
 }
 </script>
+    </div>
+</div>
 @endsection

@@ -62,7 +62,7 @@
                                         <div class="flex-shrink-0">
                                             <img id="profile-image-preview" 
                                                  src="{{ $user->profile_image_url }}" 
-                                                 alt="Profile Picture" 
+                                                 alt="{{ __('app.profile_picture') }}" 
                                                  class="h-20 w-20 rounded-full object-cover border-2 border-gray-300">
                                         </div>
                                         <div class="flex-1">

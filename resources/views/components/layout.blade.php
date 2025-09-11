@@ -5,7 +5,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1">
 		
-		<title>Chaparhat Girl's High School</title>
+		<title>{{ \App\Helpers\SettingsHelper::getSchoolName() }}</title>
 		<!-- Loading third party fonts -->
 		<link href="http://fonts.googleapis.com/css?family=Arvo:400,700|" rel="stylesheet" type="text/css">
 		<link href="{{ asset('fonts/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
@@ -38,11 +38,11 @@
 						<div class="main-navigation">
 							<button type="button" class="menu-toggle"><i class="fa fa-bars"></i></button>
 							<ul class="menu">
-								<li class="menu-item current-menu-item"><a href="index.html">Home</a></li>
-								<li class="menu-item"><a href="course.html">Courses</a></li>
-								<li class="menu-item"><a href="student.html">Students</a></li>
-								<li class="menu-item"><a href="event.html">Events</a></li>
-								<li class="menu-item"><a href="contact.html">Contact</a></li>
+							<li class="menu-item current-menu-item"><a href="{{ route('home') }}">Home</a></li>
+							<li class="menu-item"><a href="{{ route('announcements.public') }}">Announcements</a></li>
+							<li class="menu-item"><a href="{{ route('events') }}">Events</a></li>
+							<li class="menu-item"><a href="{{ route('gallery') }}">Gallery</a></li>
+							<li class="menu-item"><a href="{{ route('contact.index') }}">Contact</a></li>
 							</ul> <!-- .menu -->
 						</div> <!-- .main-navigation -->
 

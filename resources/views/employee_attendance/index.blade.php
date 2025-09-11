@@ -3,7 +3,16 @@
 @section('title', __('app.employee_attendance'))
 
 @section('content')
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="min-h-screen bg-gray-50">
+    <x-page-header>
+        <x-slot name="actions">
+            <a href="{{ route('employee-attendance.create') }}" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                <i class="fas fa-plus mr-2"></i>{{ __('app.mark_employee_attendance') }}
+            </a>
+        </x-slot>
+    </x-page-header>
+
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         <div class="bg-white shadow rounded-lg p-6">
             <form method="GET" class="mb-4 grid grid-cols-1 md:grid-cols-4 gap-2">
                 <select name="user_id" class="border rounded px-3 py-2">
@@ -53,6 +62,7 @@
             <div class="mt-4">{{ $records->links() }}</div>
         </div>
     </div>
+</div>
 @endsection
 
 

@@ -3,23 +3,20 @@
 @section('title', __('app.performance_analytics'))
 
 @section('content')
-<div class="container mx-auto px-4 py-8">
-    <!-- Header -->
-    <div class="mb-8">
-        <div class="flex items-center justify-between">
-            <div>
-                <h1 class="text-3xl font-bold text-gray-900">{{ __('app.performance_analytics') }}</h1>
-                <p class="mt-2 text-gray-600">{{ __('app.teacher_performance_analytics') }}</p>
-            </div>
+<div class="min-h-screen bg-gray-50">
+    <x-page-header>
+        <x-slot name="actions">
             <a href="{{ route('teachers.dashboard') }}" 
-               class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors">
-                <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+               class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg flex items-center transition-colors">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
                 {{ __('app.back_to_dashboard') }}
             </a>
-        </div>
-    </div>
+        </x-slot>
+    </x-page-header>
+
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
 
     <!-- Filters -->
     <div class="bg-white rounded-lg shadow mb-6">
@@ -126,6 +123,7 @@
                 <p class="mt-1 text-sm text-gray-500">{{ __('app.try_adjusting_search_criteria') }}</p>
             </div>
         @endif
+    </div>
     </div>
 </div>
 @endsection

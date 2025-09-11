@@ -3,15 +3,18 @@
 @section('title', __('app.announcements'))
 
 @section('content')
-<div class="container mx-auto px-4 py-8">
-    <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold text-gray-900">{{ __('app.announcements') }}</h1>
-        @can('create', App\Models\Announcement::class)
-        <a href="{{ route('announcements.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200">
-            <i class="fas fa-plus mr-2"></i>{{ __('app.new_announcement') }}
-        </a>
-        @endcan
-    </div>
+<div class="min-h-screen bg-gray-50">
+    <x-page-header>
+        <x-slot name="actions">
+            @can('create', App\Models\Announcement::class)
+            <a href="{{ route('announcements.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                <i class="fas fa-plus mr-2"></i>{{ __('app.new_announcement') }}
+            </a>
+            @endcan
+        </x-slot>
+    </x-page-header>
+
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
 
     <!-- Filters -->
     <div class="bg-white rounded-lg shadow-md p-6 mb-6">
@@ -186,11 +189,12 @@
         @endforelse
     </div>
 
-    <!-- Pagination -->
-    @if($announcements->hasPages())
-    <div class="mt-8">
-        {{ $announcements->appends(request()->query())->links() }}
+        <!-- Pagination -->
+        @if($announcements->hasPages())
+        <div class="mt-8">
+            {{ $announcements->appends(request()->query())->links() }}
+        </div>
+        @endif
     </div>
-    @endif
 </div>
 @endsection

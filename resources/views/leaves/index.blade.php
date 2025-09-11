@@ -3,19 +3,22 @@
 @section('title', __('app.leaves'))
 
 @section('content')
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="min-h-screen bg-gray-50">
+    <x-page-header>
+        <x-slot name="actions">
+            <a href="{{ route('leaves.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded">{{ __('app.apply_leave') }}</a>
+        </x-slot>
+    </x-page-header>
+
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         <div class="bg-white shadow rounded-lg p-6">
-            <div class="flex items-center justify-between mb-4">
-                <div>
-                    <h3 class="text-lg font-semibold">{{ __('app.leaves') }}</h3>
-                    <div class="mt-2 inline-flex rounded-md shadow-sm" role="group">
-                        <a href="{{ route('leaves.my') }}" class="px-4 py-2 text-sm border {{ ($mode ?? 'my') === 'my' ? 'bg-blue-600 text-white' : 'bg-white text-gray-700' }}">{{ __('app.my_leaves') }}</a>
-                        @if(auth()->user()->role === 'admin')
-                            <a href="{{ route('leaves.all') }}" class="px-4 py-2 text-sm border-t border-b border-r {{ ($mode ?? 'my') === 'all' ? 'bg-blue-600 text-white' : 'bg-white text-gray-700' }}">{{ __('app.all_leaves') }}</a>
-                        @endif
-                    </div>
+            <div class="mb-4">
+                <div class="inline-flex rounded-md shadow-sm" role="group">
+                    <a href="{{ route('leaves.my') }}" class="px-4 py-2 text-sm border {{ ($mode ?? 'my') === 'my' ? 'bg-blue-600 text-white' : 'bg-white text-gray-700' }}">{{ __('app.my_leaves') }}</a>
+                    @if(auth()->user()->role === 'admin')
+                        <a href="{{ route('leaves.all') }}" class="px-4 py-2 text-sm border-t border-b border-r {{ ($mode ?? 'my') === 'all' ? 'bg-blue-600 text-white' : 'bg-white text-gray-700' }}">{{ __('app.all_leaves') }}</a>
+                    @endif
                 </div>
-                <a href="{{ route('leaves.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded">{{ __('app.apply_leave') }}</a>
             </div>
             <form method="GET" class="mb-4 grid grid-cols-1 md:grid-cols-4 gap-2">
                 @if(($users->count() ?? 0) > 0)
@@ -83,6 +86,7 @@
             </div>
         </div>
     </div>
+</div>
 @endsection
 
 

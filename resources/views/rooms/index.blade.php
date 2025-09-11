@@ -3,11 +3,17 @@
 @section('title', __('app.rooms'))
 
 @section('content')
-<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <div class="flex items-center justify-between mb-6">
-        <h1 class="text-2xl font-bold text-gray-900">{{ __('app.rooms') }}</h1>
-        <a href="{{ route('rooms.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm">{{ __('app.create_room') }}</a>
-    </div>
+<div class="min-h-screen bg-gray-50">
+    <x-page-header>
+        <x-slot name="actions">
+            <a href="{{ route('rooms.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                <i class="fas fa-plus mr-2"></i>{{ __('app.add_room') }}
+            </a>
+        </x-slot>
+    </x-page-header>
+
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-5xl mx-auto">
 
     <div class="bg-white rounded-lg shadow-sm border overflow-x-auto">
         <table class="min-w-full divide-y divide-gray-200">
@@ -45,6 +51,8 @@
     </div>
 
     <div class="mt-6">{{ $rooms->links() }}</div>
+        </div>
+    </div>
 </div>
 @endsection
 
