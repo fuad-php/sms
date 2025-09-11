@@ -230,7 +230,19 @@
 
             <!-- Page Content -->
             @isset($slot)
-                {{ $slot }}
+                @if(is_string($slot))
+                    {{ $slot }}
+                @elseif(is_array($slot))
+                    @foreach($slot as $item)
+                        @if(is_string($item))
+                            {{ $item }}
+                        @else
+                            {{ json_encode($item) }}
+                        @endif
+                    @endforeach
+                @else
+                    {{ $slot }}
+                @endif
             @else
                 @yield('content')
             @endisset

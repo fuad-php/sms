@@ -84,6 +84,30 @@ class Student extends Model
     /**
      * Helper methods
      */
+    public function getNextRollNumber($classId)
+    {
+        $lastStudent = static::where('class_id', $classId)
+                           ->orderBy('roll_number', 'desc')
+                           ->first();
+        
+        return $lastStudent ? $lastStudent->roll_number + 1 : 1;
+    }
+
+    public function getCurrentEnrollment()
+    {
+        return $this->enrollments()
+                   ->where('is_active', true)
+                   ->where('status', 'enrolled')
+                   ->first();
+    }
+
+    public function getEnrollmentHistory()
+    {
+        return $this->enrollments()
+                   ->with(['class', 'section'])
+                   ->orderBy('enrolled_at', 'desc')
+                   ->get();
+    }
     public function getFullNameAttribute()
     {
         return $this->user->name;

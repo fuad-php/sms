@@ -50,6 +50,59 @@ class SettingsController extends Controller
     }
 
     /**
+     * Update timing settings
+     */
+    public function updateTiming(Request $request)
+    {
+        $request->validate([
+            'class_start_time' => 'required|date_format:H:i',
+            'class_interval_minutes' => 'required|integer|min:1|max:60',
+            'class_duration_minutes' => 'required|integer|min:15|max:180',
+            'weekly_offdays' => 'required|array',
+            'weekly_offdays.*' => 'string|in:Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday',
+        ]);
+
+        $settings = [
+            'class_start_time' => $request->class_start_time,
+            'class_interval_minutes' => $request->class_interval_minutes,
+            'class_duration_minutes' => $request->class_duration_minutes,
+            'weekly_offdays' => json_encode($request->weekly_offdays),
+        ];
+
+        foreach ($settings as $key => $value) {
+            Setting::setValue($key, $value);
+        }
+
+        return redirect()->back()->with('success', 'Timing settings updated successfully!');
+    }
+
+    /**
+     * Update format settings
+     */
+    public function updateFormat(Request $request)
+    {
+        $request->validate([
+            'date_format' => 'required|string|in:d/m/Y,m/d/Y,Y-m-d,d-m-Y,d M Y,M d, Y,l, F j, Y',
+            'time_format' => 'required|string|in:12,24',
+            'timezone' => 'required|string',
+            'timezone_offset' => 'required|string|regex:/^[+-]\d{2}:\d{2}$/',
+        ]);
+
+        $settings = [
+            'date_format' => $request->date_format,
+            'time_format' => $request->time_format,
+            'timezone' => $request->timezone,
+            'timezone_offset' => $request->timezone_offset,
+        ];
+
+        foreach ($settings as $key => $value) {
+            Setting::setValue($key, $value);
+        }
+
+        return redirect()->back()->with('success', 'Format settings updated successfully!');
+    }
+
+    /**
      * Update settings for a specific group
      */
     public function updateGroup(Request $request, $group)

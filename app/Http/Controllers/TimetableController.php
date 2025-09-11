@@ -227,4 +227,138 @@ class TimetableController extends Controller
 
         return $errors;
     }
+
+    /**
+     * Move timetable entry to new slot
+     */
+    public function move(Request $request, Timetable $timetable)
+    {
+        $validated = $request->validate([
+            'day' => 'required|in:monday,tuesday,wednesday,thursday,friday,saturday',
+            'time' => 'required|date_format:H:i',
+        ]);
+
+        // Calculate end time (assuming 45-minute duration)
+        $startTime = \Carbon\Carbon::parse($validated['time']);
+        $endTime = $startTime->copy()->addMinutes(45);
+
+        // Check for conflicts
+        $conflicts = $this->checkConflicts(
+            $timetable->class_id,
+            $timetable->section_id,
+            $timetable->teacher_id,
+            $timetable->room_id,
+            $validated['day'],
+            $startTime->format('H:i'),
+            $endTime->format('H:i'),
+            $timetable->id
+        );
+
+        if (!empty($conflicts)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Cannot move timetable due to conflicts',
+                'errors' => $conflicts
+            ], 422);
+        }
+
+        $timetable->update([
+            'day_of_week' => $validated['day'],
+            'start_time' => $startTime->format('H:i'),
+            'end_time' => $endTime->format('H:i'),
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Timetable moved successfully'
+        ]);
+    }
+
+    /**
+     * Update timetable room
+     */
+    public function updateRoom(Request $request, Timetable $timetable)
+    {
+        $validated = $request->validate([
+            'room' => 'nullable|string|max:50',
+        ]);
+
+        $timetable->update([
+            'room' => $validated['room'],
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Room updated successfully'
+        ]);
+    }
+
+    /**
+     * Display weekly timetable overview
+     */
+    public function weeklyOverview(Request $request)
+    {
+        $classes = SchoolClass::active()->orderBy('name')->get();
+        $sections = Section::orderBy('name')->get();
+        $teachers = User::where('role', 'teacher')->orderBy('name')->get();
+        $rooms = Room::where('is_active', true)->orderBy('name')->get();
+        
+        $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+        $timeSlots = $this->generateTimeSlots();
+        
+        $selectedClass = null;
+        $selectedSection = null;
+        $selectedTeacher = null;
+        $timetables = collect();
+        
+        // Get filter parameters
+        $classId = $request->get('class_id');
+        $sectionId = $request->get('section_id');
+        $teacherId = $request->get('teacher_id');
+        
+        if ($classId) {
+            $selectedClass = SchoolClass::find($classId);
+            $query = Timetable::with(['class', 'section', 'subject', 'teacher', 'room'])
+                             ->where('class_id', $classId);
+            
+            if ($sectionId) {
+                $selectedSection = Section::find($sectionId);
+                $query->where('section_id', $sectionId);
+            }
+            
+            if ($teacherId) {
+                $selectedTeacher = User::find($teacherId);
+                $query->where('teacher_id', $teacherId);
+            }
+            
+            $timetables = $query->where('is_active', true)
+                               ->orderBy('day_of_week')
+                               ->orderBy('start_time')
+                               ->get()
+                               ->groupBy('day_of_week');
+        } else {
+            $timetables = collect();
+        }
+        
+        return view('timetable.weekly-overview', compact(
+            'classes', 
+            'sections', 
+            'teachers', 
+            'rooms', 
+            'days', 
+            'timeSlots',
+            'timetables',
+            'selectedClass',
+            'selectedSection',
+            'selectedTeacher'
+        ));
+    }
+    
+    /**
+     * Generate time slots for the weekly view
+     */
+    private function generateTimeSlots()
+    {
+        return \App\Helpers\SettingsHelper::generateTimeSlots();
+    }
 }

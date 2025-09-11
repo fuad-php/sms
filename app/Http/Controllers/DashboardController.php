@@ -252,6 +252,36 @@ class DashboardController extends Controller
             ->limit(5)
             ->get();
 
+        // Fee information
+        $feeStructures = \App\Models\FeeStructure::forClass($student->class_id)
+            ->active()
+            ->with(['feeCategory'])
+            ->get();
+        
+        $payments = \App\Models\FeePayment::forStudent($student->id)
+            ->where('status', 'completed')
+            ->orderBy('payment_date', 'desc')
+            ->limit(5)
+            ->get();
+        
+        $installments = \App\Models\FeeInstallment::forStudent($student->id)
+            ->with(['feeStructure.feeCategory'])
+            ->orderBy('due_date')
+            ->get();
+        
+        // Calculate fee summary
+        $totalFees = $feeStructures->sum('amount');
+        $totalPaid = $payments->sum('total_amount');
+        $totalPending = $totalFees - $totalPaid;
+        $paymentPercentage = $totalFees > 0 ? round(($totalPaid / $totalFees) * 100, 2) : 0;
+        
+        $feeSummary = [
+            'total_fees' => $totalFees,
+            'total_paid' => $totalPaid,
+            'total_pending' => $totalPending,
+            'payment_percentage' => $paymentPercentage,
+        ];
+
         return view('dashboard.student', compact(
             'todayTimetable',
             'currentPeriod',
@@ -260,7 +290,11 @@ class DashboardController extends Controller
             'recentResults',
             'upcomingExams',
             'announcements',
-            'student'
+            'student',
+            'feeStructures',
+            'payments',
+            'installments',
+            'feeSummary'
         ));
     }
 

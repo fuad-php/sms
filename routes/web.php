@@ -137,6 +137,8 @@ Route::middleware(['auth', 'maintenance'])->group(function () {
     // Teacher Management Routes
     Route::group(['prefix' => 'teachers', 'as' => 'teachers.'], function () {
         Route::get('/', [App\Http\Controllers\TeacherController::class, 'index'])->name('index');
+        Route::get('/dashboard', [App\Http\Controllers\TeacherManagementController::class, 'dashboard'])->name('dashboard')->middleware('role:admin');
+        Route::get('/performance', [App\Http\Controllers\TeacherManagementController::class, 'performance'])->name('performance')->middleware('role:admin');
         Route::get('/create', [App\Http\Controllers\TeacherController::class, 'create'])->name('create');
         Route::post('/', [App\Http\Controllers\TeacherController::class, 'store'])->name('store');
         Route::get('/{teacher}', [App\Http\Controllers\TeacherController::class, 'show'])->name('show');
@@ -147,6 +149,10 @@ Route::middleware(['auth', 'maintenance'])->group(function () {
         Route::post('/{teacher}/assign-subjects', [App\Http\Controllers\TeacherController::class, 'assignSubjects'])->name('assign-subjects');
         Route::get('/statistics/data', [App\Http\Controllers\TeacherController::class, 'statistics'])->name('statistics');
         Route::get('/profile/view', [App\Http\Controllers\TeacherController::class, 'profile'])->name('profile');
+        
+        // Teacher Management Routes (Admin only)
+        Route::post('/bulk-action', [App\Http\Controllers\TeacherManagementController::class, 'bulkAction'])->name('bulk-action')->middleware('role:admin');
+        Route::get('/export/data', [App\Http\Controllers\TeacherManagementController::class, 'export'])->name('export')->middleware('role:admin');
     });
 
     // Staff Management (Admin)
@@ -188,6 +194,10 @@ Route::middleware(['auth', 'maintenance'])->group(function () {
         Route::get('/{timetable}/edit', [App\Http\Controllers\TimetableController::class, 'edit'])->name('edit')->middleware('role:admin,teacher');
         Route::put('/{timetable}', [App\Http\Controllers\TimetableController::class, 'update'])->name('update')->middleware('role:admin,teacher');
         Route::delete('/{timetable}', [App\Http\Controllers\TimetableController::class, 'destroy'])->name('destroy')->middleware('role:admin,teacher');
+        
+        // AJAX routes for enhanced UI
+        Route::post('/{timetable}/move', [App\Http\Controllers\TimetableController::class, 'move'])->name('move')->middleware('role:admin,teacher');
+        Route::post('/{timetable}/room', [App\Http\Controllers\TimetableController::class, 'updateRoom'])->name('room')->middleware('role:admin,teacher');
     });
     
     // Exam Management Routes
@@ -222,9 +232,35 @@ Route::middleware(['auth', 'maintenance'])->group(function () {
     });        
 
     // Enrollment Routes
+    Route::group(['prefix' => 'enrollments', 'as' => 'enrollments.'], function () {
+        Route::get('/dashboard', [EnrollmentController::class, 'dashboard'])->name('dashboard')->middleware('role:admin,teacher');
+        Route::get('/reports', [EnrollmentController::class, 'reports'])->name('reports')->middleware('role:admin,teacher');
+        Route::get('/statistics', [EnrollmentController::class, 'statistics'])->name('statistics')->middleware('role:admin,teacher');
+        Route::post('/bulk-enroll', [EnrollmentController::class, 'bulkEnroll'])->name('bulk-enroll')->middleware('role:admin');
+        Route::post('/promote-class', [EnrollmentController::class, 'promoteClass'])->name('promote-class')->middleware('role:admin');
+    });
+
+    // Student-specific enrollment routes
     Route::group(['prefix' => 'students/{student}/enrollments', 'as' => 'enrollments.'], function () {
         Route::get('/', [EnrollmentController::class, 'index'])->name('index')->middleware('role:admin,teacher');
         Route::post('/', [EnrollmentController::class, 'store'])->name('store')->middleware('role:admin,teacher');
+    });
+
+
+    // Teacher Scheduling Routes
+    Route::group(['prefix' => 'teacher-scheduling', 'as' => 'teacher-scheduling.'], function () {
+        Route::get('/dashboard', [App\Http\Controllers\TeacherSchedulingController::class, 'dashboard'])->name('dashboard')->middleware('role:admin,teacher');
+        Route::get('/workload-analytics', [App\Http\Controllers\TeacherSchedulingController::class, 'workloadAnalytics'])->name('workload-analytics')->middleware('role:admin,teacher');
+        Route::get('/create', [App\Http\Controllers\TeacherSchedulingController::class, 'create'])->name('create')->middleware('role:admin');
+        Route::post('/', [App\Http\Controllers\TeacherSchedulingController::class, 'store'])->name('store')->middleware('role:admin');
+        Route::get('/{schedule}/edit', [App\Http\Controllers\TeacherSchedulingController::class, 'edit'])->name('edit')->middleware('role:admin');
+        Route::put('/{schedule}', [App\Http\Controllers\TeacherSchedulingController::class, 'update'])->name('update')->middleware('role:admin');
+        Route::delete('/{schedule}', [App\Http\Controllers\TeacherSchedulingController::class, 'destroy'])->name('destroy')->middleware('role:admin');
+        Route::patch('/{schedule}/toggle-status', [App\Http\Controllers\TeacherSchedulingController::class, 'toggleStatus'])->name('toggle-status')->middleware('role:admin');
+        Route::post('/bulk-action', [App\Http\Controllers\TeacherSchedulingController::class, 'bulkAction'])->name('bulk-action')->middleware('role:admin');
+        Route::get('/teachers/{teacher}/schedule', [App\Http\Controllers\TeacherSchedulingController::class, 'showTeacherSchedule'])->name('teacher-schedule')->middleware('role:admin,teacher');
+        Route::get('/api/available-slots', [App\Http\Controllers\TeacherSchedulingController::class, 'getAvailableSlots'])->name('available-slots')->middleware('role:admin,teacher');
+        Route::get('/api/check-conflicts', [App\Http\Controllers\TeacherSchedulingController::class, 'checkConflicts'])->name('check-conflicts')->middleware('role:admin,teacher');
     });
 
     // Announcements Routes
@@ -350,6 +386,29 @@ Route::middleware(['auth', 'maintenance'])->group(function () {
         Route::get('/stats', [ContactController::class, 'getStats'])->name('stats')->middleware('role:admin');
         Route::get('/export', [ContactController::class, 'export'])->name('export')->middleware('role:admin');
     });
+
+    // Fee Management Routes
+    Route::group(['prefix' => 'fees', 'as' => 'fees.'], function () {
+        Route::get('/', [App\Http\Controllers\FeeManagementController::class, 'index'])->name('dashboard');
+        Route::get('/students', [App\Http\Controllers\FeeManagementController::class, 'studentFees'])->name('students');
+        Route::get('/students/{student}/details', [App\Http\Controllers\FeeManagementController::class, 'studentFeeDetails'])->name('student-details');
+        Route::get('/collect', [App\Http\Controllers\FeeManagementController::class, 'collectFee'])->name('collect');
+        Route::post('/process-payment', [App\Http\Controllers\FeeManagementController::class, 'processPayment'])->name('process-payment');
+        Route::get('/reports', [App\Http\Controllers\FeeManagementController::class, 'reports'])->name('reports');
+        Route::post('/generate-installments', [App\Http\Controllers\FeeManagementController::class, 'generateInstallments'])->name('generate-installments');
+    });
+
+    // Fee Categories Routes (Admin only)
+    Route::group(['prefix' => 'fee-categories', 'as' => 'fee-categories.'], function () {
+        Route::get('/', [App\Http\Controllers\FeeCategoryController::class, 'index'])->name('index')->middleware('role:admin');
+        Route::get('/create', [App\Http\Controllers\FeeCategoryController::class, 'create'])->name('create')->middleware('role:admin');
+        Route::post('/', [App\Http\Controllers\FeeCategoryController::class, 'store'])->name('store')->middleware('role:admin');
+        Route::get('/{feeCategory}', [App\Http\Controllers\FeeCategoryController::class, 'show'])->name('show')->middleware('role:admin');
+        Route::get('/{feeCategory}/edit', [App\Http\Controllers\FeeCategoryController::class, 'edit'])->name('edit')->middleware('role:admin');
+        Route::put('/{feeCategory}', [App\Http\Controllers\FeeCategoryController::class, 'update'])->name('update')->middleware('role:admin');
+        Route::delete('/{feeCategory}', [App\Http\Controllers\FeeCategoryController::class, 'destroy'])->name('destroy')->middleware('role:admin');
+        Route::post('/{feeCategory}/toggle-status', [App\Http\Controllers\FeeCategoryController::class, 'toggleStatus'])->name('toggle-status')->middleware('role:admin');
+    });
 });
 
 // Health check route
@@ -368,10 +427,40 @@ Route::get('/test-lang', function () {
 });
 
 // Simple test route
+// Library Management Routes
+Route::group(['prefix' => 'library', 'as' => 'library.', 'middleware' => ['auth']], function () {
+    // Dashboard
+    Route::get('/dashboard', [App\Http\Controllers\LibraryController::class, 'dashboard'])->name('dashboard');
+    
+    // Books Management
+    Route::resource('books', App\Http\Controllers\LibraryController::class)->except(['show']);
+    Route::get('books/{book}', [App\Http\Controllers\LibraryController::class, 'show'])->name('books.show');
+    
+    // Book Issues Management
+    Route::get('/issues', [App\Http\Controllers\LibraryController::class, 'issues'])->name('issues');
+    Route::post('/issue-book', [App\Http\Controllers\LibraryController::class, 'issueBook'])->name('issue-book');
+    Route::post('/return-book/{issue}', [App\Http\Controllers\LibraryController::class, 'returnBook'])->name('return-book');
+    Route::post('/renew-book/{issue}', [App\Http\Controllers\LibraryController::class, 'renewBook'])->name('renew-book');
+    
+    // Reports
+            Route::get('/reports', [App\Http\Controllers\LibraryController::class, 'reports'])->name('reports');
+            Route::get('/search', [App\Http\Controllers\LibraryController::class, 'search'])->name('search');
+            Route::get('/suggestions', [App\Http\Controllers\LibraryController::class, 'suggestions'])->name('suggestions');
+            Route::get('/export', [App\Http\Controllers\LibraryController::class, 'export'])->name('export');
+        });
+
 Route::get('/test-simple', function () {
     return 'Simple test route working! Current locale: ' . app()->getLocale();
 });
 
-
+// Settings routes
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/settings', [App\Http\Controllers\SettingsController::class, 'index'])->name('settings.index');
+    Route::get('/settings/{group}', [App\Http\Controllers\SettingsController::class, 'showGroup'])->name('settings.group');
+    Route::post('/settings', [App\Http\Controllers\SettingsController::class, 'update'])->name('settings.update');
+    Route::post('/settings/timing', [App\Http\Controllers\SettingsController::class, 'updateTiming'])->name('settings.timing.update');
+    Route::post('/settings/format', [App\Http\Controllers\SettingsController::class, 'updateFormat'])->name('settings.format.update');
+    Route::post('/settings/{group}', [App\Http\Controllers\SettingsController::class, 'updateGroup'])->name('settings.group.update');
+});
 
 require __DIR__.'/auth.php';
